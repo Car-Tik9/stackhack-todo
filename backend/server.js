@@ -9,7 +9,14 @@ const app = express();
 
 const dbUrl = 'mongodb+srv://todoAdmin:hack@todo@cluster0-u9h7j.mongodb.net/test?retryWrites=true&w=majority'
 app.use(bodyParser.json());
-app.use(cors())
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+    ],
+    credentials: true
+  })
+);
 app.use('/user',userroutes);
 app.use(express.static(path.join(__dirname, '../build')));
 app.get('*', (req, res) => {

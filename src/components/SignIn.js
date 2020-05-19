@@ -8,7 +8,6 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
-import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import EmailIcon from "@material-ui/icons/Email";
 import PasswordIcon from "@material-ui/icons/VpnKey";
@@ -16,6 +15,8 @@ import { withStyles } from "@material-ui/styles";
 import React from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import Image from "../images/todo_image1.jpg";
+import TodoApi from "../api/TodoApi";
+import history from '../utils/history'
 
 const styles = (theme) => ({
   root: {
@@ -55,6 +56,24 @@ class SignIn extends React.Component {
   componentDidMount() {}
   handleOnSubmit = (event) => {
     event.preventDefault();
+    const { email, password } = this.state;
+    this.setState({ submitted: true });
+    if (email === "" || password == "") {
+      return;
+    }
+    TodoApi.post("/user/login", { email, password },{withCredentials: true})
+      .then((response) => {
+        if (response.status === 200) {
+          history.push({pathname:"/dashboard",user:response.data});
+        } else {
+          const error = new Error(response.error);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        const { error } = err.response.data;
+        this.setState({ errorMessage: error });
+      });
   };
 
   render() {
