@@ -10,7 +10,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline/>
       <Router history={history}>
-            <Route exact path="/signin" component={SignIn}></Route>
+        <Switch>
+            <Route  exact path="/signin" component={SignIn}></Route>
+            <Route  path="/signup" component={SignIn}></Route>
+            <Route  path="/" component={SignIn}></Route>
+        </Switch>
       </Router>
     </ThemeProvider>
   );
