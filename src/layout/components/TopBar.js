@@ -36,7 +36,7 @@ class TopBar extends React.Component{
                 <Toolbar>
                     <RouterLink to="/" className ={classes.linkText}>
                         <Typography gutterBottom = {false} component="h1" variant="h6">
-                           BusBooking
+                            Memoranda
                         </Typography>
                     </RouterLink>
                     <div className ={classes.flexGrow} />

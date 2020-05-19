@@ -58,7 +58,7 @@ class SignIn extends React.Component {
     event.preventDefault();
     const { email, password } = this.state;
     this.setState({ submitted: true });
-    if (email === "" || password == "") {
+    if (email === "" || password === "") {
       return;
     }
     TodoApi.post("/user/login", { email, password },{withCredentials: true})
