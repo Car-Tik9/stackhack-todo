@@ -64,7 +64,7 @@ const ToDoForm = (props) => {
 			<FormControl variant="outlined">
 				<InputLabel id="priority">Priority</InputLabel>
 				<Select
-					for="priority"
+					htmlFor="priority"
 					name="priority" 
 					value={todo.priority} 
 					onChange={handleInputChange}
