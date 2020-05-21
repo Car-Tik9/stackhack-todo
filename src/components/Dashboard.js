@@ -29,7 +29,7 @@ function Dashboard() {
 	const deleteTodo = (id) => {
 		setTodos(todos.filter(todo => todo.id !== id))
 	}
-
+	//dummy commit
 	return (
 		<Fragment>
 			<TodoDialog open={isOpenDlg} addTodo={addTodo} isOpenDlg={setisOpenDlg}/>
