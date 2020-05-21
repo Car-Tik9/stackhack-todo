@@ -7,6 +7,8 @@ import React, { Fragment, useState } from 'react';
 import IntialCard from './IntialCard';
 import ToDoForm from './ToDoForm';
 import ToDoList from './ToDoList';
+import TodoDialog from './TodoDialog';
+import { Button } from '@material-ui/core';
 
 function Dashboard() {
 
@@ -17,6 +19,7 @@ function Dashboard() {
 	];
 
 	const [todos, setTodos] = useState(todoData);
+	const [isOpenDlg , setisOpenDlg] = useState(false);
 
 	const addTodo = (todo) => {		
 		todo.id = todos.length + 1;
@@ -29,12 +32,13 @@ function Dashboard() {
 
 	return (
 		<Fragment>
-			<ToDoForm addTodo={addTodo}/>
+			<TodoDialog open={isOpenDlg} addTodo={addTodo} isOpenDlg={setisOpenDlg}/>
 			<ToDoList 
 				todos={todos}
 				deleteTodo={deleteTodo}
 			/>
 			<IntialCard />
+			<Button color="primary" variant="contained" onClick={()=> setisOpenDlg(true)}>addTodo</Button>
 		</Fragment>
 	)
 }
