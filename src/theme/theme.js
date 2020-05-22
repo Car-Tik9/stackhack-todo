@@ -31,19 +31,19 @@ const theme = createMuiTheme({
 		},
 		h6:{
 			fontWeight : 'Light',
-			fontSize: '14px',
+			fontSize: '15px',
 		},
 		body1:{
-			fontSize: '14px',
+			fontSize: '15px',
 			color: 'rgba(0, 0, 0, 0.96)',
 		},
 		body2:{
-			fontSize: '14px',
+			fontSize: '15px',
 			color: 'rgba(0, 0, 0, 0.96)'
 		},
 		subtitle1:{
 			fontWeight: 'Medium',
-			fontSize: '14px',
+			fontSize: '15px',
 			color: 'rgba(0, 0, 0, 0.96)',
 		}
 	},

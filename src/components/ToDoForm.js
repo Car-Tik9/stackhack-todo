@@ -5,9 +5,10 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
-import Input from '@material-ui/core/Input';
-import { Box, Button, Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -49,28 +50,21 @@ const ToDoForm = (props) => {
     <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-
-          <Input
-            type="text"
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Title"
+            size="small"
             name="title"
-            placeholder="title"
             value={todo.title}
             onChange={handleInputChange}
           />
-
-          {/* <TextField
-            label="Title"
-            type="text"
-            name="title"
-            value={todo.title}
-            onChange={handleInputChange}
-            fullWidth
-          /> */}
         </Grid>
         <Grid item xs={12}>
           <TextField
             label="Description"
             type="text"
+            variant="outlined"
             name="description"
             value={todo.description}
             onChange={handleInputChange}
@@ -87,8 +81,7 @@ const ToDoForm = (props) => {
               htmlFor="priority"
               name="priority"
               value={todo.priority}
-              autoWidth={true}
-              native
+              fullWidth
               onChange={handleInputChange}
             >
               <option value={1}>High</option>

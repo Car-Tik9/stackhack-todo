@@ -1,9 +1,12 @@
-import { Button, Typography } from '@material-ui/core';
 import React, { Fragment, useContext, useState } from 'react';
+
+//utils
 import { userContext } from '../utils/userContext';
+
 //Material Components
+import { Button, Typography } from '@material-ui/core';
+
 //Custom Components
-import IntialCard from './IntialCard';
 import TodoDialog from './TodoDialog';
 import ToDoList from './ToDoList';
 
@@ -29,13 +32,12 @@ function Dashboard() {
 	}
 	return (
 		<Fragment>
-			<Typography>{value.name}</Typography>
+			<Typography component="h1" variant="h6">{value.name}</Typography>
 			<TodoDialog open={isOpenDlg} addTodo={addTodo} isOpenDlg={setisOpenDlg}/>
 			<ToDoList 
 				todos={todos}
 				deleteTodo={deleteTodo}
 			/>
-			<IntialCard />
 			<Button color="primary" variant="contained" onClick={()=> setisOpenDlg(true)}>addTodo</Button>
 		</Fragment>
 	)
