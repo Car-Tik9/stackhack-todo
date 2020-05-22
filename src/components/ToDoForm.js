@@ -1,10 +1,12 @@
-import { Box, Button, Grid } from "@material-ui/core";
+import React, { useState } from "react";
+
 //Material Components
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
-import React, { useState } from "react";
+import Input from '@material-ui/core/Input';
+import { Box, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,20 +49,27 @@ const ToDoForm = (props) => {
     <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <TextField
+
+          <Input
+            type="text"
+            name="title"
+            placeholder="title"
+            value={todo.title}
+            onChange={handleInputChange}
+          />
+
+          {/* <TextField
             label="Title"
-            variant="outlined"
             type="text"
             name="title"
             value={todo.title}
             onChange={handleInputChange}
             fullWidth
-          />
+          /> */}
         </Grid>
         <Grid item xs={12}>
           <TextField
             label="Description"
-            variant="outlined"
             type="text"
             name="description"
             value={todo.description}

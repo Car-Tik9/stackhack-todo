@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Router, Switch } from "react-router-dom";
-import { createMuiTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import history from './utils/history'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
@@ -8,7 +8,9 @@ import Dashboard from './components/Dashboard';
 import RouteWithLayout from './utils/RouteWithLayout';
 import Main from './layout/Main'
 import Account from './components/Account';
-const theme = createMuiTheme();
+// const theme = createMuiTheme();
+
+import theme from './theme/theme';
 
 function App() {
   return (

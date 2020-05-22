@@ -10,17 +10,13 @@ const cookie = new Cookies();
 const styles = theme  => ({
     root: {
         boxShadow: 'none'
-      },
-      flexGrow: {
+    },
+    flexGrow: {
         flexGrow: 1
-      },
-      signOutButton: {
+    },
+    signOutButton: {
         marginLeft: theme.spacing(1)
-      },
-      linkText :{
-          color:'white',
-          textDecoration:'none'
-      }
+    }
 });
 
 class TopBar extends React.Component{
@@ -35,7 +31,7 @@ class TopBar extends React.Component{
             className ={classes.root}>
                 <Toolbar>
                     <RouterLink to="/" className ={classes.linkText}>
-                        <Typography gutterBottom = {false} component="h1" variant="h6">
+                        <Typography gutterBottom = {false} component="h1" variant="h4">
                             Memoranda
                         </Typography>
                     </RouterLink>
