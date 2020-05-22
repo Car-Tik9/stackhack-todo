@@ -1,7 +1,7 @@
 import { Button, Hidden, List, ListItem } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import InputIcon from '@material-ui/icons/Input';
-import Receipt from "@material-ui/icons/Receipt";
+import AccountBox from "@material-ui/icons/AccountBox";
 import { withStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import React, { forwardRef } from 'react';
@@ -56,7 +56,7 @@ const CustomRouterLink = forwardRef((props, ref) => (
     {
         title:'Account',
         href:'/account',
-        icon:<Receipt/>
+        icon:<AccountBox/>
     },
 ];
 

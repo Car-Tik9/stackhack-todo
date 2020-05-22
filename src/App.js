@@ -7,6 +7,7 @@ import SignUp from './components/SignUp'
 import Dashboard from './components/Dashboard';
 import RouteWithLayout from './utils/RouteWithLayout';
 import Main from './layout/Main'
+import Account from './components/Account';
 const theme = createMuiTheme();
 
 function App() {
@@ -21,6 +22,11 @@ function App() {
               exact
               path="/dashboard"
               component={Dashboard} layout={Main}
+            ></RouteWithLayout>
+            <RouteWithLayout
+              exact
+              path="/account"
+              component={Account} layout={Main}
             ></RouteWithLayout>
             <Redirect exact from="/" to="/dashboard" />
         </Switch>
