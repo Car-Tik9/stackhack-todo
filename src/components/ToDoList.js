@@ -23,6 +23,7 @@ import {
   CardActions,
   Button,
   Box,
+  Chip,
 } from "@material-ui/core";
 
 
@@ -44,7 +45,16 @@ const useStyles = makeStyles((theme) => ({
 	},
 	icon:{
 		marginRight:theme.spacing(2)
-	}
+	},
+	textDanger:{
+		color:'#f83245'
+	},
+	textInfo:{
+		color:'#11c5db'
+	},
+	textWarning:{
+		color:'#f4772e'
+	},
   }));
 const ToDoList = (props) => {
 	const classes = useStyles();
@@ -88,8 +98,8 @@ const ToDoList = (props) => {
                   {index}
                 </TableCell>
                 <TableCell align="left">{todo.title}</TableCell>
-                <TableCell align="left">{todo.priority}</TableCell>
-				<TableCell align="left">{todo.priority}</TableCell>
+                <TableCell align="left"><Chip size="small" className={classes.textWarning}label={todo.priority}/></TableCell>
+				<TableCell align="left"><Chip size="small" className={classes.textInfo}label={todo.status}/></TableCell>
                 <TableCell align="left">{todo.duedate}</TableCell>
                 <TableCell align="left">
                   <IconButton size="small" className={classes.icon}>
