@@ -1,19 +1,16 @@
-import React, { Fragment, useContext, useState ,useEffect } from 'react';
-
-//utils
-import { userContext } from '../utils/userContext';
-
 //Material Components
-import { Button, Typography, Container } from '@material-ui/core';
-
+import { Container } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import TodoApi from '../api/TodoApi';
 //Custom Components
 import TodoDialog from './TodoDialog';
 import ToDoList from './ToDoList';
-import TodoApi from '../api/TodoApi'
+
+
+
 
 
 function Dashboard() {
-	const value =  useContext(userContext);
 	const todoData = [
 		{ id: 1, title: 'Hooks', description: 'Create CRUD app with React Hooks', priority: 'High' },
 		{ id: 2, title: 'Class', description: 'Create CRUD app w/o React Hooks', priority: 'Low' },
@@ -29,7 +26,7 @@ function Dashboard() {
 		})
 	},[])
 
-	const [todos, setTodos] = useState(todoData);
+	const [todos, setTodos] = useState([]);
 	const [isOpenDlg , setisOpenDlg] = useState(false);
 
 	const addTodo = (todo) => {		
@@ -43,17 +40,16 @@ function Dashboard() {
 	}
 
 	const deleteTodo = (id) => {
-		setTodos(todos.filter(todo => todo.id !== id))
+		setTodos(todos.filter(todo => todo._id !== id))
 	}
 	return (
-		<Container>
-			<Typography component="h1" variant="h6">{value.name}</Typography>
+		<Container style={{marginTop:16}}>
 			<TodoDialog open={isOpenDlg} addTodo={addTodo} isOpenDlg={setisOpenDlg}/>
 			<ToDoList 
 				todos={todos}
 				deleteTodo={deleteTodo}
+				addTodo={setisOpenDlg}
 			/>
-			<Button color="primary" variant="contained" onClick={()=> setisOpenDlg(true)}>addTodo</Button>
 		</Container>
 	)
 }
