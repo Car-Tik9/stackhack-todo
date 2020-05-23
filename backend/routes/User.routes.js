@@ -14,7 +14,9 @@ router.post('/register',(req,res) => {
             return res.status(421).json({'error':'Email already exists'})
         }else{
             const user = new User({name,email,password});
-            user.save().then( user => res.status(200).json({'message':'user created successfully'}))
+            user.save().then( user => {
+                res.status(200).json({'message':'user created successfully'})
+            })
             .catch(err => {
                 res.status(422).json(`error:${err.message}`);
             })

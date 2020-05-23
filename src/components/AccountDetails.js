@@ -28,7 +28,7 @@ const AccountDetails = (props) => {
   };
   return (
     <Paper className={classes.paper} elevation={2}>
-      <Typography gutterBottom variant="h6" component="header">
+      <Typography gutterBottom variant="h5" component="h1">
         Account Details
       </Typography>
       <Divider />

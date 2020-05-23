@@ -9,6 +9,7 @@ import { Button, Typography } from '@material-ui/core';
 //Custom Components
 import TodoDialog from './TodoDialog';
 import ToDoList from './ToDoList';
+import TodoApi from '../api/TodoApi'
 
 
 function Dashboard() {
@@ -23,8 +24,13 @@ function Dashboard() {
 	const [isOpenDlg , setisOpenDlg] = useState(false);
 
 	const addTodo = (todo) => {		
-		todo.id = todos.length + 1;
-		setTodos([...todos, todo]);
+		TodoApi.post('/todo/addTodo',{...todo}).then(res => {
+				if(res.status === 200){
+					setTodos([...todos, res.data.todo]);
+				}
+		}).catch( err => {
+			console.log(err)
+		})
 	}
 
 	const deleteTodo = (id) => {

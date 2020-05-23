@@ -14,7 +14,7 @@ const PasswordDetails = () => {
   const classes = useStyles();
   return (
     <Paper elevation={4} className={classes.paper}>
-      <Typography gutterBottom variant="h6" component="header">
+      <Typography gutterBottom variant="h5" component="h1">
         Update Password
       </Typography>
       <Divider />

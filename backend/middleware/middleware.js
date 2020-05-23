@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const secret = 'hack-todo';
 
 const withAuth = function(req, res, next) {
-  console.log(req.body)
   const token = 
       req.body.token ||
       req.query.token ||
