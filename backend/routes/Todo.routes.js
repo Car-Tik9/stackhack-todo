@@ -8,8 +8,14 @@ router.post('/addTodo',(req,res) => {
     const toDo = new Todo({title,description});
     toDo.save().then( todo => {
         res.status(200).json({'message':'todo created successfully',todo})
+    }).catch(err => {
+        res.status(422).json(`error:${err.message}`);
     })
-    .catch(err => {
+})
+router.get('/getTodos',(req,res) => {
+    Todo.find().then( todos => {
+        res.status(200).json({'message':'todo created successfully',todos})
+    }).catch(err => {
         res.status(422).json(`error:${err.message}`);
     })
 })
