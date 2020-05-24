@@ -21,11 +21,13 @@ const ToDoForm = (props) => {
     id: null,
     title: "",
     description: "",
-    priority: "",
+    priority: 1,
+    status:1,
   };
   const classes = useStyles();
   console.log(classes);
-  const [todo, setTodo] = useState(initialToDoState);
+  const todoState = props.isEditing  ? props.todo  : initialToDoState;
+  const [todo, setTodo] = useState(todoState);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,11 +42,20 @@ const ToDoForm = (props) => {
     e.preventDefault();
 
     if (!todo.title || !todo.description || !todo.priority) return;
-
-    props.addTodo(todo);
+    
+    if(props.isEditing){
+      props.updateTodo(todo);
+    }else{
+      props.addTodo(todo);
+    }
     setTodo(initialToDoState);
     props.isOpenDlg(false);
   };
+
+  const handleDialogClose = () =>{
+    setTodo(initialToDoState);
+    props.handleDialogClose(false);
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -73,15 +84,16 @@ const ToDoForm = (props) => {
             rows={5}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <FormControl variant="outlined">
             <InputLabel id="priority">Priority</InputLabel>
             <Select
+              autoWidth
+              native
               size="small"
-              htmlFor="priority"
               name="priority"
+              label="Priority"
               value={todo.priority}
-              fullWidth
               onChange={handleInputChange}
             >
               <option value={1}>High</option>
@@ -90,13 +102,31 @@ const ToDoForm = (props) => {
             </Select>
           </FormControl>
         </Grid>
+        <Grid item xs={6}>
+          <FormControl variant="outlined">
+            <InputLabel id="status">Status</InputLabel>
+            <Select
+              autoWidth
+              native
+              size="small"
+              name="status"
+              label="status"
+              value={todo.status}
+              onChange={handleInputChange}
+            >
+              <option value={1}>New</option>
+              <option value={2}>In Progress</option>
+              <option value={3}>Completed</option>
+            </Select>
+          </FormControl>
+        </Grid>
         <Grid item xs={12}>
           <Box display="flex" flexDirection="row-reverse">
             <Button type="submit" variant="contained" color="primary">
-              Add To Do
+            {props.isEditing ? "Edit Todo" :"Add Todo" }
             </Button>
             <Button
-              onClick={() => props.isOpenDlg(false)}
+              onClick={ handleDialogClose}
               className={classes.margin}
               variant="outlined"
               color="primary"

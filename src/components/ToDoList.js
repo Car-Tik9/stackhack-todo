@@ -102,7 +102,8 @@ const ToDoList = (props) => {
 				<TableCell align="left"><Chip size="small" className={classes.textInfo}label={todo.status}/></TableCell>
                 <TableCell align="left">{todo.duedate}</TableCell>
                 <TableCell align="left">
-                  <IconButton size="small" className={classes.icon}>
+                  <IconButton size="small" className={classes.icon}
+                  onClick ={() => props.editTodo(todo)}>
                     <EditIcon />
                   </IconButton>
                   <IconButton

@@ -5,10 +5,11 @@ import ToDoForm from './ToDoForm'
 
 const TodoDialog = (props) => {
     return (
-        <Dialog open={props.open} onClose={() => props.isOpenDlg(false)}>
-            <DialogTitle>Add Todo</DialogTitle>
+        <Dialog open={props.open}>
+            <DialogTitle>{props.isEditing ? "Edit Todo" :"Add Todo" }</DialogTitle>
             <DialogContent>
-                <ToDoForm addTodo={props.addTodo} isOpenDlg={props.isOpenDlg}/>
+                <ToDoForm addTodo={props.addTodo} todo={props.todo}
+                isEditing={props.isEditing} updateTodo={props.updateTodo} handleDialogClose={props.handleDialogClose}/>
             </DialogContent>
         </Dialog>
     )
