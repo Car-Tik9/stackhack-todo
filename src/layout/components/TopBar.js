@@ -16,6 +16,10 @@ const styles = theme  => ({
     },
     signOutButton: {
         marginLeft: theme.spacing(1)
+    },
+    linkText :{
+        color:'white',
+        textDecoration:'none'
     }
 });
 
@@ -31,7 +35,7 @@ class TopBar extends React.Component{
             className ={classes.root}>
                 <Toolbar>
                     <RouterLink to="/" className ={classes.linkText}>
-                        <Typography gutterBottom = {false} component="h1" variant="h4">
+                        <Typography gutterBottom = {false} color="textPrimary" component="h1" variant="h4">
                             Memoranda
                         </Typography>
                     </RouterLink>

@@ -34,17 +34,23 @@ const AddTodo = (props) => {
       setTodo(initialToDoState)
   }
 
+  const handleKeyDown = (event) => {
+    if (event.which === 13 || event.keyCode === 13) {
+        props.addTodo(todo);
+        setTodo(initialToDoState)
+    }
+  }
+
   const classes = useStyles();
   const [todo, setTodo] = useState(initialToDoState);
   return (
     <div className={classes.addTodoContainer}>
       <Grid container spacing={2}>
         <Grid item xs={10} md={11}>
-          <TextField id="title" name="title"value={todo.title} onChange={handleInputChange} fullWidth placeholder="Add Todo here"></TextField>
+          <TextField id="title" name="title"value={todo.title} onKeyDown={handleKeyDown}onChange={handleInputChange} fullWidth placeholder="Add Todo here"></TextField>
         </Grid>
         <Grid item xs={2} md={1}>
-          <Button onClick={handleAddClick} variant="contained" fullWidth color="inherit">
-            
+          <Button onClick={handleAddClick} variant="contained" fullWidth color="secondary">
             Add
           </Button>
         </Grid>

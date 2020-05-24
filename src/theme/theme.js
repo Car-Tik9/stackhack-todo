@@ -49,15 +49,15 @@ const theme = createMuiTheme({
 	},
 	palette: {
 		primary: {
-			light: '#2196f3',
-			main: '#2196f3',
-			dark: '#2196f3',
+			light: '#6200EE',
+			main: '#6200EE',
+			dark: '#6200EE',
 			contrastText: '#FFF',
 		},
 		secondary: {
-			light: 'rgba(0, 0, 0, 0.96)',
-			main: 'rgba(0, 0, 0, 0.96)',
-			dark: 'rgba(0, 0, 0, 0.96)',
+			light: '#018786',
+			main: '#009688',
+			dark: '#018786',
 			contrastText: '#FFF',
 		},
 		link: {

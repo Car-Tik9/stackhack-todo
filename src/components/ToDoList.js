@@ -110,7 +110,7 @@ const ToDoList = (props) => {
                     size="small"
                     onClick={() => props.deleteTodo(todo._id)}
                   >
-                    <DeleteIcon color="action" />
+                    <DeleteIcon style={{color:'#d11a2a'}}/>
                   </IconButton>
                 </TableCell>
               </TableRow>
