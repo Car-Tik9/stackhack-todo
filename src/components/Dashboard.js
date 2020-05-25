@@ -61,7 +61,7 @@ function Dashboard() {
   };
 
   const deleteTodo = (_id) => {
-    TodoApi.post("/todo/deleteTodo", _id)
+    TodoApi.post("/todo/deleteTodo", {_id})
       .then((res) => {
         if (res.status === 200) {
           setTodos(todos.filter((todo) => todo._id !== _id));

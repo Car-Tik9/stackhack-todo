@@ -14,9 +14,7 @@ router.post('/addTodo',(req,res) => {
 })
 router.post('/deleteTodo',(req,res) => {
     const { _id } = req.body;
-    console.log(req);
-    const toDo = new Todo({_id});
-    toDo.remove().then( todo => {
+    Todo.deleteOne({_id}).then( todo => {
         res.status(200).json({'message':'todo deleted successfully',todo})
     }).catch(err => {
         res.status(422).json(`error:${err.message}`);
