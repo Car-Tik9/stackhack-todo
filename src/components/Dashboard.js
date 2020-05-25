@@ -1,13 +1,12 @@
 //Material Components
+import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-
-//Custom Components
-import TodoDialog from "./TodoDialog";
-import ToDoList from "./ToDoList";
 import TodoApi from "../api/TodoApi";
 import AddTodo from "./AddTodo";
 import OcrDialog from "./OcrDialog/OcrDialog";
-import { Button } from "@material-ui/core";
+//Custom Components
+import TodoDialog from "./TodoDialog";
+import ToDoList from "./ToDoList";
 
 function Dashboard() {
   
@@ -70,6 +69,7 @@ function Dashboard() {
   };
 
   const changePriority = (id, priority) => {
+    menuItemClick();
     setTodos(todos.map(todo => (todo._id === id ? todo.priority = priority : todo)))
     console.log(todos);
   }

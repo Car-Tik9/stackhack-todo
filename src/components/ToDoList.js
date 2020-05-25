@@ -1,5 +1,4 @@
-import React from "react";
-
+import { Button, Card, CardActions, CardContent, CardHeader, Chip, IconButton, Typography } from "@material-ui/core";
 //Material Components
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -8,21 +7,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add"
-import {makeStyles} from "@material-ui/styles"
-import {
-  IconButton,
-  Card,
-  CardContent,
-  CardHeader,
-  Typography,
-  Divider,
-  CardActions,
-  Button,
-  Chip,
-} from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import {makeStyles} from "@material-ui/styles";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import React from "react";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -111,11 +101,11 @@ const ToDoList = (props) => {
                     onClose={props.menuItemClick}
                     elevation={1}
                   >
-                    <MenuItem onClick={() => props.changePriority(todo._id, "C")}>Critical</MenuItem>
-                    <MenuItem onClick={() => props.changePriority(todo._id, "H")}>High</MenuItem>
-                    <MenuItem onClick={() => props.changePriority(todo._id, "M")}>Medium</MenuItem>
-                    <MenuItem onClick={() => props.changePriority(todo._id, "L")}>Low</MenuItem>
-                    <MenuItem onClick={() => props.changePriority(todo._id, "VL")}>Very Low</MenuItem>
+                    <MenuItem onClick={() => props.changePriority(todo._id, 1)}>Critical</MenuItem>
+                    <MenuItem onClick={() => props.changePriority(todo._id, 2)}>High</MenuItem>
+                    <MenuItem onClick={() => props.changePriority(todo._id, 3)}>Medium</MenuItem>
+                    <MenuItem onClick={() => props.changePriority(todo._id, 4)}>Low</MenuItem>
+                    <MenuItem onClick={() => props.changePriority(todo._id, 5)}>Very Low</MenuItem>
                   </Menu>
                 </TableCell>
                 
