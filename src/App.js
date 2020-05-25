@@ -1,13 +1,16 @@
 import React from 'react';
 import { Redirect, Route, Router, Switch } from "react-router-dom";
-import { createMuiTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import history from './utils/history'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import Dashboard from './components/Dashboard';
 import RouteWithLayout from './utils/RouteWithLayout';
 import Main from './layout/Main'
-const theme = createMuiTheme();
+import Account from './components/Account';
+// const theme = createMuiTheme();
+
+import theme from './theme/theme';
 
 function App() {
   return (
@@ -21,6 +24,11 @@ function App() {
               exact
               path="/dashboard"
               component={Dashboard} layout={Main}
+            ></RouteWithLayout>
+            <RouteWithLayout
+              exact
+              path="/account"
+              component={Account} layout={Main}
             ></RouteWithLayout>
             <Redirect exact from="/" to="/dashboard" />
         </Switch>
