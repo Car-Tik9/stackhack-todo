@@ -10,26 +10,7 @@ import OcrDialog from "./OcrDialog/OcrDialog";
 import { Button } from "@material-ui/core";
 
 function Dashboard() {
-  const todoData = [
-    {
-      id: 1,
-      title: "Hooks",
-      description: "Create CRUD app with React Hooks",
-      priority: "High",
-    },
-    {
-      id: 2,
-      title: "Class",
-      description: "Create CRUD app w/o React Hooks",
-      priority: "Low",
-    },
-    {
-      id: 3,
-      title: "RR",
-      description: "Create CRUD app with Hooks + Redux",
-      priority: "Medium",
-    },
-  ];
+  
   useEffect(() => {
     TodoApi.get("/todo/getTodos")
       .then((res) => {
@@ -47,6 +28,16 @@ function Dashboard() {
   const [currentTodo, setCurrentTodo] = useState();
   const [editing, setEditing] = useState(false);
   const [openOcrDlg, setOpenOcrDlg] = useState(false);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const menuButtonClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const menuItemClick = () => {
+    setAnchorEl(null);
+  };
 
   const addTodo = (todo) => {
     TodoApi.post("/todo/addTodo", { ...todo })
@@ -78,6 +69,11 @@ function Dashboard() {
     setCurrentTodo({ ...todo });
   };
 
+  const changePriority = (id, priority) => {
+    setTodos(todos.map(todo => (todo._id === id ? todo.priority = priority : todo)))
+    console.log(todos);
+  }
+
   const updateTodo = (updatedTodo) => {
 	  setEditing(false);
     setTodos(
@@ -97,17 +93,21 @@ function Dashboard() {
         updateTodo={updateTodo}
         isEditing={editing}
         addTodo={addTodo}
-		handleDialogClose={handleDialogClose}
-		todo={currentTodo}
+        handleDialogClose={handleDialogClose}
+        todo={currentTodo}
       />
-    <Button variant="outlined" color="primary" onClick={() => setOpenOcrDlg(true)}>Open OCR Dialog</Button>
-    <OcrDialog open={openOcrDlg} handleDialogClose={setOpenOcrDlg}/>
-	  <AddTodo addTodo={addTodo}/>
+      <Button variant="outlined" color="primary" onClick={() => setOpenOcrDlg(true)}>Open OCR Dialog</Button>
+      <OcrDialog open={openOcrDlg} handleDialogClose={setOpenOcrDlg}/>
+      <AddTodo addTodo={addTodo}/>
       <ToDoList
         todos={todos}
         deleteTodo={deleteTodo}
         addTodo={setisOpenDlg}
         editTodo={editTodo}
+        changePriority={changePriority}
+        menuButtonClick={menuButtonClick}
+        menuItemClick={menuItemClick}
+        anchorEl={anchorEl}
       />
     </div>
   );

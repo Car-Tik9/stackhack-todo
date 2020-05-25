@@ -24,18 +24,20 @@ const ToDoForm = (props) => {
     priority: 1,
     status:1,
   };
+
   const classes = useStyles();
-  console.log(classes);
   const todoState = props.isEditing  ? props.todo  : initialToDoState;
   const [todo, setTodo] = useState(todoState);
 
   const handleInputChange = (e) => {
+
     const { name, value } = e.target;
 
     setTodo({
       ...todo,
       [name]: value,
     });
+    
   };
 
   const handleSubmit = (e) => {
@@ -96,9 +98,9 @@ const ToDoForm = (props) => {
               value={todo.priority}
               onChange={handleInputChange}
             >
-              <option value={1}>High</option>
-              <option value={2}>Medium</option>
-              <option value={3}>Low</option>
+              <option value="1">High</option>
+              <option value="2">Medium</option>
+              <option value="3">Low</option>
             </Select>
           </FormControl>
         </Grid>

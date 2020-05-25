@@ -4,10 +4,8 @@ import React from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add"
@@ -19,12 +17,12 @@ import {
   CardHeader,
   Typography,
   Divider,
-  CardActionArea,
   CardActions,
   Button,
-  Box,
   Chip,
 } from "@material-ui/core";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,28 +53,29 @@ const useStyles = makeStyles((theme) => ({
 	textWarning:{
 		color:'#f4772e'
 	},
-  }));
+}));
 const ToDoList = (props) => {
-	const classes = useStyles();
+
+  const classes = useStyles();
+
   return (
     <Card>
       <CardHeader
         disableTypography={true}
-		 title={<Typography variant="h5" component="div">Todo</Typography>}
-		action={
-			<Button
-		  	align="end"
+		    title={<Typography variant="h5" component="div">Todo</Typography>}
+		    action={
+          <Button
+            align="end"
             variant="outlined"
             onClick={props.addTodo}
             size="small"
-			color="primary"
-			startIcon={<AddIcon/>}
+            color="primary"
+            startIcon={<AddIcon/>}
           >
             Add Todo
           </Button>
-		}
+        }
       ></CardHeader>
-      <Divider className={classes.divider} />
       <CardContent className={classes.cardContentPadding}>
         {/* <TableContainer> */}
         <Table aria-label="simple table">
@@ -85,22 +84,46 @@ const ToDoList = (props) => {
               <TableCell className={classes.headerCell}>#</TableCell>
               <TableCell className={classes.headerCell} align="left">Title</TableCell>
               <TableCell className={classes.headerCell} align="left">Priority</TableCell>
-			  <TableCell className={classes.headerCell} align="left">Status</TableCell>
+			        <TableCell className={classes.headerCell} align="left">Status</TableCell>
               <TableCell className={classes.headerCell} align="left">Due date</TableCell>
               <TableCell className={classes.headerCell} align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
-		  <Divider/>
           <TableBody>
             {props.todos.map((todo, index) => (
               <TableRow key={index}>
+
                 <TableCell component="th" scope="todo">
                   {index}
                 </TableCell>
+
                 <TableCell align="left">{todo.title}</TableCell>
-                <TableCell align="left"><Chip size="small" className={classes.textWarning}label={todo.priority}/></TableCell>
-				<TableCell align="left"><Chip size="small" className={classes.textInfo}label={todo.status}/></TableCell>
+
+                <TableCell align="left" >
+                  <Button aria-controls={index} aria-haspopup="true" onClick={props.menuButtonClick}>
+                    {todo.priority}
+                  </Button>
+                  <Menu
+                    id={index}
+                    anchorEl={props.anchorEl}
+                    keepMounted
+                    open={Boolean(props.anchorEl)}
+                    onClose={props.menuItemClick}
+                    elevation={1}
+                  >
+                    <MenuItem onClick={() => props.changePriority(todo._id, "C")}>Critical</MenuItem>
+                    <MenuItem onClick={() => props.changePriority(todo._id, "H")}>High</MenuItem>
+                    <MenuItem onClick={() => props.changePriority(todo._id, "M")}>Medium</MenuItem>
+                    <MenuItem onClick={() => props.changePriority(todo._id, "L")}>Low</MenuItem>
+                    <MenuItem onClick={() => props.changePriority(todo._id, "VL")}>Very Low</MenuItem>
+                  </Menu>
+                </TableCell>
+                
+
+				        <TableCell align="left"><Chip size="small" className={classes.textInfo}label={todo.status}/></TableCell>
+
                 <TableCell align="left">{todo.duedate}</TableCell>
+
                 <TableCell align="left">
                   <IconButton size="small" className={classes.icon}
                   onClick ={() => props.editTodo(todo)}>
@@ -113,6 +136,7 @@ const ToDoList = (props) => {
                     <DeleteIcon style={{color:'#d11a2a'}}/>
                   </IconButton>
                 </TableCell>
+
               </TableRow>
             ))}
           </TableBody>
