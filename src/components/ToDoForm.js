@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-
-//Material Components
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import TextField from "@material-ui/core/TextField";
+import DateFnsUtils from "@date-io/date-fns";
+import { FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import React, { useState } from "react";
+
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -21,12 +20,13 @@ const ToDoForm = (props) => {
     id: null,
     title: "",
     description: "",
-    priority: 1,
-    status:1,
+    priority: "1",
+    status: "1",
+    dueDate:new Date()
   };
   const classes = useStyles();
   console.log(classes);
-  const todoState = props.isEditing  ? props.todo  : initialToDoState;
+  const todoState = props.isEditing ? props.todo : initialToDoState;
   const [todo, setTodo] = useState(todoState);
 
   const handleInputChange = (e) => {
@@ -42,20 +42,27 @@ const ToDoForm = (props) => {
     e.preventDefault();
 
     if (!todo.title || !todo.description || !todo.priority) return;
-    
-    if(props.isEditing){
+
+    if (props.isEditing) {
       props.updateTodo(todo);
-    }else{
+    } else {
       props.addTodo(todo);
     }
     setTodo(initialToDoState);
     props.handleDialogClose(false);
   };
 
-  const handleDialogClose = () =>{
+  const handleDialogClose = () => {
     setTodo(initialToDoState);
     props.handleDialogClose(false);
-  }
+  };
+
+  const handleDateChange = (dueDate) => {
+    setTodo({
+      ...todo,
+      "dueDate": dueDate,
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -84,49 +91,57 @@ const ToDoForm = (props) => {
             rows={5}
           />
         </Grid>
-        <Grid item xs={6}>
-          <FormControl variant="outlined">
-            <InputLabel id="priority">Priority</InputLabel>
-            <Select
-              autoWidth
-              native
-              size="small"
-              name="priority"
-              label="Priority"
-              value={todo.priority}
-              onChange={handleInputChange}
-            >
-              <option value={1}>High</option>
-              <option value={2}>Medium</option>
-              <option value={3}>Low</option>
-            </Select>
-          </FormControl>
+        <Grid item xs={8}>
+        <FormLabel component="legend">Priority</FormLabel>
+          <RadioGroup
+            label="Priority"
+            value={todo.priority}
+            onChange={handleInputChange}
+            row={true}
+            name="priority"
+          >
+            <FormControlLabel value="1" control={<Radio/>} label="Low" />
+            <FormControlLabel value="2" control={<Radio/>} label="Medium" />
+            <FormControlLabel value="3" control={<Radio/>} label="High" />
+          </RadioGroup>
         </Grid>
-        <Grid item xs={6}>
-          <FormControl variant="outlined">
-            <InputLabel id="status">Status</InputLabel>
-            <Select
-              autoWidth
-              native
+        <Grid item xs={4}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              variant="inline"
+              inputVariant="outlined"
+              id="date"
+              format="MM/dd/yyyy"
+              label="Date of Journey"
               size="small"
-              name="status"
-              label="status"
-              value={todo.status}
-              onChange={handleInputChange}
-            >
-              <option value={1}>New</option>
-              <option value={2}>In Progress</option>
-              <option value={3}>Completed</option>
-            </Select>
-          </FormControl>
+              value={todo.dueDate}
+              disablePast
+              autoOk
+              onChange={handleDateChange}
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs={12}>
+        <FormLabel component="legend">Status</FormLabel>
+          <RadioGroup
+            label="Status"
+            value={todo.status}
+            onChange={handleInputChange}
+            row={true}
+            name="status"
+          >
+            <FormControlLabel value="1" control={<Radio/>} label="New" />
+            <FormControlLabel value="2" control={<Radio/>} label="In Progress" />
+            <FormControlLabel value="3" control={<Radio/>} label="Completed" />
+          </RadioGroup>
         </Grid>
         <Grid item xs={12}>
           <Box display="flex" flexDirection="row-reverse">
             <Button type="submit" variant="contained" color="primary">
-            {props.isEditing ? "Edit Todo" :"Add Todo" }
+              {props.isEditing ? "Edit Todo" : "Add Todo"}
             </Button>
             <Button
-              onClick={ handleDialogClose}
+              onClick={handleDialogClose}
               className={classes.margin}
               variant="outlined"
               color="primary"
