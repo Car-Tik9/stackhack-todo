@@ -49,7 +49,7 @@ const ToDoForm = (props) => {
       props.addTodo(todo);
     }
     setTodo(initialToDoState);
-    props.isOpenDlg(false);
+    props.handleDialogClose(false);
   };
 
   const handleDialogClose = () =>{

@@ -35,7 +35,7 @@ class TopBar extends React.Component{
             className ={classes.root}>
                 <Toolbar>
                     <RouterLink to="/" className ={classes.linkText}>
-                        <Typography gutterBottom = {false} color="textPrimary" component="h1" variant="h4">
+                        <Typography gutterBottom = {false}  component="h1" variant="h4">
                             Memoranda
                         </Typography>
                     </RouterLink>
