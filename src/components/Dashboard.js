@@ -59,24 +59,37 @@ function Dashboard() {
         console.log(err);
       });
   };
+
+  const deleteTodo = (_id) => {
+    TodoApi.post("/todo/deleteTodo", _id)
+      .then((res) => {
+        if (res.status === 200) {
+          setTodos(todos.filter((todo) => todo._id !== _id));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const editTodo = (todo) => {
-	setEditing(true);
-	setisOpenDlg(true);
+	  setEditing(true);
+	  setisOpenDlg(true);
     setCurrentTodo({ ...todo });
   };
+
   const updateTodo = (updatedTodo) => {
-	setEditing(false);
+	  setEditing(false);
     setTodos(
       todos.map((todo) => (todo._id === updatedTodo._id ? updatedTodo : todo))
     );
   };
+
   const handleDialogClose = () => {
-	setEditing(false);
-	setisOpenDlg(false);
+	  setEditing(false);
+	  setisOpenDlg(false);
   }
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo._id !== id));
-  };
+
   return (
     <div style={{ margin: 16 }}>
       <TodoDialog

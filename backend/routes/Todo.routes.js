@@ -12,6 +12,16 @@ router.post('/addTodo',(req,res) => {
         res.status(422).json(`error:${err.message}`);
     })
 })
+router.post('/deleteTodo',(req,res) => {
+    const { _id } = req.body;
+    console.log(req);
+    const toDo = new Todo({_id});
+    toDo.remove().then( todo => {
+        res.status(200).json({'message':'todo deleted successfully',todo})
+    }).catch(err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
 router.get('/getTodos',(req,res) => {
     Todo.find().then( todos => {
         res.status(200).json({'message':'todo created successfully',todos})
