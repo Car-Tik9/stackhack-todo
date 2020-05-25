@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, CardContent, Grid, Typography, TextField } from '@material-ui/core';
+import { Card, CardContent, Grid, TextField } from '@material-ui/core';
 
 const TodoCard  = (props) => {
 
@@ -20,7 +20,7 @@ const TodoCard  = (props) => {
     return(
         todos.map((todo)=> (
             <Card style={{marginBottom:8}}>
-                <CardContent>
+                <CardContent>‚
                     <Grid   container>
                         <Grid item xs={6}>
                             <TextField value={todo.title} fullWidth></TextField>

@@ -1,35 +1,14 @@
 //Material Components
+import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-
-//Custom Components
-import TodoDialog from "./TodoDialog";
-import ToDoList from "./ToDoList";
 import TodoApi from "../api/TodoApi";
 import AddTodo from "./AddTodo";
 import OcrDialog from "./OcrDialog/OcrDialog";
-import { Button } from "@material-ui/core";
+//Custom Components
+import TodoDialog from "./TodoDialog";
+import ToDoList from "./ToDoList";
 
 function Dashboard() {
-  const todoData = [
-    {
-      id: 1,
-      title: "Hooks",
-      description: "Create CRUD app with React Hooks",
-      priority: "High",
-    },
-    {
-      id: 2,
-      title: "Class",
-      description: "Create CRUD app w/o React Hooks",
-      priority: "Low",
-    },
-    {
-      id: 3,
-      title: "RR",
-      description: "Create CRUD app with Hooks + Redux",
-      priority: "Medium",
-    },
-  ];
   useEffect(() => {
     TodoApi.get("/todo/getTodos")
       .then((res) => {

@@ -2,7 +2,6 @@ import React, { useState, Fragment } from "react";
 import { Stepper, Step, StepLabel, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import UploadImage from "./UploadImage";
-import TodoApi from "../../../api/TodoApi";
 import TodoCard from "./TodoCards";
 import BeatLoader from "react-spinners/BeatLoader";
 
