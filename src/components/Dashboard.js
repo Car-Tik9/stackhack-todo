@@ -1,12 +1,13 @@
 //Material Components
-import { Container } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import TodoApi from "../api/TodoApi";
+
 //Custom Components
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
-import ImageToTodList from "./ImageToTodList";
+import TodoApi from "../api/TodoApi";
 import AddTodo from "./AddTodo";
+import OcrDialog from "./OcrDialog/OcrDialog";
+import { Button } from "@material-ui/core";
 
 function Dashboard() {
   const todoData = [
@@ -45,6 +46,7 @@ function Dashboard() {
   const [isOpenDlg, setisOpenDlg] = useState(false);
   const [currentTodo, setCurrentTodo] = useState();
   const [editing, setEditing] = useState(false);
+  const [openOcrDlg, setOpenOcrDlg] = useState(false);
 
   const addTodo = (todo) => {
     TodoApi.post("/todo/addTodo", { ...todo })
@@ -85,7 +87,8 @@ function Dashboard() {
 		handleDialogClose={handleDialogClose}
 		todo={currentTodo}
       />
-      <ImageToTodList></ImageToTodList>
+    <Button variant="outlined" color="primary" onClick={() => setOpenOcrDlg(true)}>Open OCR Dialog</Button>
+    <OcrDialog open={openOcrDlg} handleDialogClose={setOpenOcrDlg}/>
 	  <AddTodo addTodo={addTodo}/>
       <ToDoList
         todos={todos}
