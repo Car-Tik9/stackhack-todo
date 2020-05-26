@@ -1,12 +1,14 @@
+import React, { useEffect, useState } from "react";
+import { useContext } from "react";
 //Material Components
 import { Button } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
 import TodoApi from "../api/TodoApi";
 import AddTodo from "./AddTodo";
 import OcrDialog from "./OcrDialog/OcrDialog";
 //Custom Components
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
+import { userContext } from "../utils/userContext";
 
 function Dashboard() {
   
@@ -21,7 +23,7 @@ function Dashboard() {
         console.log(err);
       });
   }, []);
-
+  const user = useContext(userContext);
   const [todos, setTodos] = useState([]);
   const [isOpenDlg, setisOpenDlg] = useState(false);
   const [currentTodo, setCurrentTodo] = useState();
@@ -39,7 +41,7 @@ function Dashboard() {
   };
 
   const addTodo = (todo) => {
-    TodoApi.post("/todo/addTodo", { ...todo })
+    TodoApi.post("/todo/addTodo", { ...todo , username : user.email})
       .then((res) => {
         if (res.status === 200) {
           setTodos([...todos, res.data.todo]);

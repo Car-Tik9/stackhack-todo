@@ -4,8 +4,8 @@ const router = express.Router();
 const Todo = require('../models/Todo')
 
 router.post('/addTodo',(req,res) => {
-    const { title ,description} = req.body;
-    const toDo = new Todo({title,description});
+    const { title ,description,username} = req.body;
+    const toDo = new Todo({title,description,username});
     toDo.save().then( todo => {
         res.status(200).json({'message':'todo created successfully',todo})
     }).catch(err => {
