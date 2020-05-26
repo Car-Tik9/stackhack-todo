@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 const ToDoList = (props) => {
-
+  console.log(props)
   const classes = useStyles();
 
   return (
@@ -90,15 +90,15 @@ const ToDoList = (props) => {
                 <TableCell align="left">{todo.title}</TableCell>
 
                 <TableCell align="left" >
-                  <Button aria-controls={index} aria-haspopup="true" onClick={props.menuButtonClick}>
+                  <Button aria-controls={index} aria-haspopup="true" onClick={event=> {props.menuButtonClick(event,todo._id)}}>
                     {todo.priority}
                   </Button>
                   <Menu
                     id={index}
-                    anchorEl={props.anchorEl}
+                    anchorEl={props.anchorEl[todo._id]}
                     keepMounted
-                    open={Boolean(props.anchorEl)}
-                    onClose={props.menuItemClick}
+                    open={Boolean(props.anchorEl[todo._id])}
+                    onClose={() => {props.menuItemClick(todo._id)}}
                     elevation={1}
                   >
                     <MenuItem onClick={() => props.changePriority(todo._id, 1)}>Critical</MenuItem>

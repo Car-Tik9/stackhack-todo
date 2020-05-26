@@ -28,14 +28,14 @@ function Dashboard() {
   const [editing, setEditing] = useState(false);
   const [openOcrDlg, setOpenOcrDlg] = useState(false);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState({});
 
-  const menuButtonClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const menuButtonClick = (event,id) => {
+    setAnchorEl({...anchorEl, [id]:event.currentTarget});
   };
 
-  const menuItemClick = () => {
-    setAnchorEl(null);
+  const menuItemClick = (id) => {
+    setAnchorEl({...anchorEl, [id]:null});
   };
 
   const addTodo = (todo) => {
@@ -69,9 +69,9 @@ function Dashboard() {
   };
 
   const changePriority = (id, priority) => {
-    menuItemClick();
-    setTodos(todos.map(todo => (todo._id === id ? todo.priority = priority : todo)))
-    console.log(todos);
+    menuItemClick(id);
+    const todosNew =  todos.map(todo => (todo._id === id ? Object.assign({},todo,{priority}) : todo));
+    setTodos(todosNew)
   }
 
   const updateTodo = (updatedTodo) => {
