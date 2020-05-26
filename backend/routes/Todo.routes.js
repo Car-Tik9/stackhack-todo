@@ -20,8 +20,9 @@ router.post('/deleteTodo',(req,res) => {
         res.status(422).json(`error:${err.message}`);
     })
 })
-router.get('/getTodos',(req,res) => {
-    Todo.find().then( todos => {
+router.get('/getTodos/:username',(req,res) => {
+    const {username} = req.params;
+    Todo.find({username}).then( todos => {
         res.status(200).json({'message':'todo created successfully',todos})
     }).catch(err => {
         res.status(422).json(`error:${err.message}`);

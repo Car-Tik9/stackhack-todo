@@ -11,9 +11,9 @@ import ToDoList from "./ToDoList";
 import { userContext } from "../utils/userContext";
 
 function Dashboard() {
-  
+  const user = useContext(userContext);
   useEffect(() => {
-    TodoApi.get("/todo/getTodos")
+    TodoApi.get(`/todo/getTodos/${user.email}`)
       .then((res) => {
         if (res.status === 200) {
           setTodos(res.data.todos);
@@ -23,7 +23,7 @@ function Dashboard() {
         console.log(err);
       });
   }, []);
-  const user = useContext(userContext);
+  
   const [todos, setTodos] = useState([]);
   const [isOpenDlg, setisOpenDlg] = useState(false);
   const [currentTodo, setCurrentTodo] = useState();
