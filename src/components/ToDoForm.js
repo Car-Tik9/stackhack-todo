@@ -22,7 +22,8 @@ const ToDoForm = (props) => {
     description: "",
     priority: "1",
     status: "1",
-    dueDate:new Date()
+    dueDate: new Date(),
+    isCompleted: false
   };
 
   const classes = useStyles();

@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const TodoSchema = new Schema({
     username:{
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
     title:{
         type: String,
