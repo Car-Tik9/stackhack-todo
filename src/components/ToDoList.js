@@ -50,9 +50,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 const ToDoList = (props) => {
-  console.log(props)
   const classes = useStyles();
-
   return (
     <Card>
       <CardHeader
@@ -62,7 +60,7 @@ const ToDoList = (props) => {
           <Button
             align="end"
             variant="outlined"
-            onClick={props.addTodo}
+            onClick={() => {props.addTodo(true)}}
             size="small"
             color="primary"
             startIcon={<AddIcon/>}

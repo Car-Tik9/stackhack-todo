@@ -77,10 +77,17 @@ function Dashboard() {
   }
 
   const updateTodo = (updatedTodo) => {
-	  setEditing(false);
-    setTodos(
-      todos.map((todo) => (todo._id === updatedTodo._id ? updatedTodo : todo))
-    );
+    setEditing(false);
+    TodoApi.post('/todo/updateTodo',{...updatedTodo}).then(res => {
+      if(res.status === 200){
+        setTodos(
+          todos.map((todo) => (todo._id === updatedTodo._id ? updatedTodo : todo))
+        );
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+    
   };
 
   const handleDialogClose = () => {

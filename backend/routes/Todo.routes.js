@@ -4,8 +4,7 @@ const router = express.Router();
 const Todo = require('../models/Todo')
 
 router.post('/addTodo',(req,res) => {
-    const { title ,description,username} = req.body;
-    const toDo = new Todo({title,description,username});
+    const toDo = new Todo(req.body);
     toDo.save().then( todo => {
         res.status(200).json({'message':'todo created successfully',todo})
     }).catch(err => {
@@ -25,6 +24,15 @@ router.get('/getTodos/:username',(req,res) => {
     Todo.find({username}).then( todos => {
         res.status(200).json({'message':'todo created successfully',todos})
     }).catch(err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
+
+router.post('/updateTodo',(req,res) => {
+    const {_id} = req.body 
+    Todo.findByIdAndUpdate({_id},req.body).then( updatedTodo => {
+        res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
+    }).catch( err => {
         res.status(422).json(`error:${err.message}`);
     })
 })
