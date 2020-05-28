@@ -13,13 +13,13 @@ const TodoSchema = new Schema({
     description:{
         type: String,
     },
-    duedate:{
+    dueDate:{
         type: Date,
         default: new Date()
     },
     priority:{
-        type: String,
-        default: "Medium"
+        type: Number,
+        default: 1
     },
     status:{
         type: String,

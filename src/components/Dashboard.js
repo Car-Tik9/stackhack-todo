@@ -23,7 +23,7 @@ function Dashboard() {
         console.log(err);
       });
   }, []);
-  
+
   const [todos, setTodos] = useState([]);
   const [isOpenDlg, setisOpenDlg] = useState(false);
   const [currentTodo, setCurrentTodo] = useState();
@@ -32,16 +32,16 @@ function Dashboard() {
 
   const [anchorEl, setAnchorEl] = React.useState({});
 
-  const menuButtonClick = (event,id) => {
-    setAnchorEl({...anchorEl, [id]:event.currentTarget});
+  const menuButtonClick = (event, id) => {
+    setAnchorEl({ ...anchorEl, [id]: event.currentTarget });
   };
 
   const menuItemClick = (id) => {
-    setAnchorEl({...anchorEl, [id]:null});
+    setAnchorEl({ ...anchorEl, [id]: null });
   };
 
   const addTodo = (todo) => {
-    TodoApi.post("/todo/addTodo", { ...todo , username : user.email})
+    TodoApi.post("/todo/addTodo", { ...todo, username: user.email })
       .then((res) => {
         if (res.status === 200) {
           setTodos([...todos, res.data.todo]);
@@ -53,7 +53,7 @@ function Dashboard() {
   };
 
   const deleteTodo = (_id) => {
-    TodoApi.post("/todo/deleteTodo", {_id})
+    TodoApi.post("/todo/deleteTodo", { _id })
       .then((res) => {
         if (res.status === 200) {
           setTodos(todos.filter((todo) => todo._id !== _id));
@@ -65,35 +65,48 @@ function Dashboard() {
   };
 
   const editTodo = (todo) => {
-	  setEditing(true);
-	  setisOpenDlg(true);
+    setEditing(true);
+    setisOpenDlg(true);
     setCurrentTodo({ ...todo });
   };
 
-  const changePriority = (id, priority) => {
-    menuItemClick(id);
-    const todosNew =  todos.map(todo => (todo._id === id ? Object.assign({},todo,{priority}) : todo));
-    setTodos(todosNew)
-  }
+  const changePriority = (_id, priority) => {
+    menuItemClick(_id);
+    TodoApi.post("/todo/updatePriority", { _id, priority })
+      .then((res) => {
+        if (res.status === 200) {
+          const todosNew = todos.map((todo) =>
+            todo._id === _id ? Object.assign({}, todo, { priority }) : todo
+          );
+          setTodos(todosNew);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const updateTodo = (updatedTodo) => {
     setEditing(false);
-    TodoApi.post('/todo/updateTodo',{...updatedTodo}).then(res => {
-      if(res.status === 200){
-        setTodos(
-          todos.map((todo) => (todo._id === updatedTodo._id ? updatedTodo : todo))
-        );
-      }
-    }).catch(err => {
-      console.log(err)
-    })
-    
+    TodoApi.post("/todo/updateTodo", { ...updatedTodo })
+      .then((res) => {
+        if (res.status === 200) {
+          setTodos(
+            todos.map((todo) =>
+              todo._id === updatedTodo._id ? updatedTodo : todo
+            )
+          );
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleDialogClose = () => {
-	  setEditing(false);
-	  setisOpenDlg(false);
-  }
+    setEditing(false);
+    setisOpenDlg(false);
+  };
 
   return (
     <div style={{ margin: 16 }}>
@@ -105,9 +118,15 @@ function Dashboard() {
         handleDialogClose={handleDialogClose}
         todo={currentTodo}
       />
-      <Button variant="outlined" color="primary" onClick={() => setOpenOcrDlg(true)}>Open OCR Dialog</Button>
-      <OcrDialog open={openOcrDlg} handleDialogClose={setOpenOcrDlg}/>
-      <AddTodo addTodo={addTodo}/>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => setOpenOcrDlg(true)}
+      >
+        Open OCR Dialog
+      </Button>
+      <OcrDialog open={openOcrDlg} handleDialogClose={setOpenOcrDlg} />
+      <AddTodo addTodo={addTodo} />
       <ToDoList
         todos={todos}
         deleteTodo={deleteTodo}

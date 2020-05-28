@@ -116,7 +116,7 @@ const ToDoList = (props) => {
 
                 <TableCell align="left">
                   <Moment format="Do MMM YYYY">
-                    {todo.duedate}
+                    {todo.dueDate}
                   </Moment>
                 </TableCell>
 

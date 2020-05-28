@@ -27,12 +27,12 @@ const ToDoForm = (props) => {
     id: null,
     title: "",
     description: "",
-    priority: "1",
+    priority: 1,
     status: "1",
     dueDate: new Date(),
     isCompleted: false,
   };
-
+  console.log(props);
   const classes = useStyles();
   const todoState = props.isEditing ? props.todo : initialToDoState;
   const [todo, setTodo] = useState(todoState);
@@ -113,9 +113,9 @@ const ToDoForm = (props) => {
             row={true}
             name="priority"
           >
-            <FormControlLabel value="1" control={<Radio />} label="Low" />
-            <FormControlLabel value="2" control={<Radio />} label="Medium" />
-            <FormControlLabel value="3" control={<Radio />} label="High" />
+            <FormControlLabel value={1} control={<Radio />} label="Low" />
+            <FormControlLabel value={2} control={<Radio />} label="Medium" />
+            <FormControlLabel value={3} control={<Radio />} label="High" />
           </RadioGroup>
         </Grid>
         <Grid item xs={4}>

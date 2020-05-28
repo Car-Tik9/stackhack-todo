@@ -37,4 +37,13 @@ router.post('/updateTodo',(req,res) => {
     })
 })
 
+router.post('/updatePriority',(req,res) => {
+    const {_id,priority} = req.body;
+    Todo.findByIdAndUpdate({_id},{priority}).then( updatedTodo => {
+        res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
+    }).catch( err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
+
 module.exports = router;
