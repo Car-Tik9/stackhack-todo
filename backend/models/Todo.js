@@ -25,6 +25,10 @@ const TodoSchema = new Schema({
         type: String,
         default: "New"
     },
+    completed:{
+        type:Boolean,
+        default:false
+    },
     createdDate:{
         type: Date,
         default: new Date()

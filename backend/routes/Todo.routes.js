@@ -21,7 +21,7 @@ router.post('/deleteTodo',(req,res) => {
 })
 router.get('/getTodos/:username',(req,res) => {
     const {username} = req.params;
-    Todo.find({username}).then( todos => {
+    Todo.find({username,completed:false}).then( todos => {
         res.status(200).json({'message':'todo created successfully',todos})
     }).catch(err => {
         res.status(422).json(`error:${err.message}`);
@@ -40,6 +40,15 @@ router.post('/updateTodo',(req,res) => {
 router.post('/updatePriority',(req,res) => {
     const {_id,priority} = req.body;
     Todo.findByIdAndUpdate({_id},{priority}).then( updatedTodo => {
+        res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
+    }).catch( err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
+
+router.post('/updateCompleted',(req,res) => {
+    const {_id,completed} = req.body;
+    Todo.findByIdAndUpdate({_id},{completed}).then( updatedTodo => {
         res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
     }).catch( err => {
         res.status(422).json(`error:${err.message}`);

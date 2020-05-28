@@ -103,6 +103,19 @@ function Dashboard() {
       });
   };
 
+  const changeCompleted = (_id,completed) => {
+    console.log(completed)
+    TodoApi.post("/todo/updateCompleted", { _id, completed })
+      .then((res) => {
+        if (res.status === 200) {
+          setTodos(todos.filter((todo) => todo._id !== _id));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const handleDialogClose = () => {
     setEditing(false);
     setisOpenDlg(false);
@@ -133,6 +146,7 @@ function Dashboard() {
         addTodo={setisOpenDlg}
         editTodo={editTodo}
         changePriority={changePriority}
+        changeCompleted = {changeCompleted}
         menuButtonClick={menuButtonClick}
         menuItemClick={menuItemClick}
         anchorEl={anchorEl}
