@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 //Material Components
 import {
@@ -10,6 +10,7 @@ import {
   Chip,
   IconButton,
   Typography,
+  Select,
 } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -27,7 +28,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 //Thirdparty packages
 import Moment from "react-moment";
 
-import {getPriorityButton} from '../utils/todoUtils'
+import { getPriorityButton , getStatusButton} from "../utils/todoUtils";
 
 const useStyles = makeStyles((theme) => ({
   cardContentPadding: {
@@ -59,6 +60,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const ToDoList = (props) => {
+  const [anchorEl,setAnchorEl] = useState([]);
+
+  const handleStatusButtonClick = (event,id) => {
+    setAnchorEl({ ...anchorEl, [id]: event.currentTarget });
+  }
+  const handleMenuClose = (id) => {
+    setAnchorEl({ ...anchorEl, [id]: null });
+  }
+
+  const handleMenuItemClick = (id,status) =>{
+    handleMenuClose(id)
+    props.changeStatus(id,status);
+  }
   const classes = useStyles();
   return (
     <Card>
@@ -110,18 +124,20 @@ const ToDoList = (props) => {
             {props.todos.map((todo, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="todo">
-                  <Checkbox inputProps={{ "aria-label": "primary checkbox" }} onChange={() => props.changeCompleted(todo._id,true)}/>
+                  <Checkbox
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                    onChange={() => props.changeCompleted(todo._id, true)}
+                  />
                 </TableCell>
                 <TableCell align="left">{todo.title}</TableCell>
-                <TableCell
-                  align="left"
-                  aria-controls={index}
-                >
-                <div onClick={(event) => {
-                    props.menuButtonClick(event, todo._id);
-                  }}>
-                 { getPriorityButton(todo.priority)}
-                 </div>
+                <TableCell align="left" aria-controls={index}>
+                  <div
+                    onClick={(event) => {
+                      props.menuButtonClick(event, todo._id);
+                    }}
+                  >
+                    {getPriorityButton(todo.priority)}
+                  </div>
                 </TableCell>
                 <Menu
                   id={index}
@@ -143,15 +159,29 @@ const ToDoList = (props) => {
                     Low
                   </MenuItem>
                 </Menu>
-
                 <TableCell align="left">
-                  <Chip
-                    size="small"
-                    className={classes.textInfo}
-                    label={todo.status}
-                  />
+                <div onClick={(event) => handleStatusButtonClick(event,todo._id)}>
+                  {getStatusButton(todo.status)}
+                </div>
+                <Menu
+                  id={index}
+                  anchorEl={anchorEl[todo._id]}
+                  keepMounted
+                  open={Boolean(anchorEl[todo._id])}
+                  onClose={() =>handleMenuClose(todo._id)}
+                  elevation={1}
+                >
+                  <MenuItem onClick={ (event) => handleMenuItemClick(todo._id,1)}>
+                    New
+                  </MenuItem>
+                  <MenuItem onClick={ (event) => handleMenuItemClick(todo._id,2)}>
+                    In Progress
+                  </MenuItem>
+                  <MenuItem onClick={ (event) => handleMenuItemClick(todo._id,3)}>
+                    Completed
+                  </MenuItem>
+                </Menu>
                 </TableCell>
-
                 <TableCell align="left">
                   <Moment format="Do MMM YYYY">{todo.dueDate}</Moment>
                 </TableCell>

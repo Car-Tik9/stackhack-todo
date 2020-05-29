@@ -29,3 +29,32 @@ export const getPriorityButton = (priority) => {
       );
   }
 };
+
+export const getStatusButton = (status) => {
+    switch (status) {
+        case 1:
+          return (
+            <Button style={{backgroundColor: "#7fd9ff"}} size="small" variant="contained">
+              New
+            </Button>
+          );
+        case 2:
+          return (
+            <Button size="small" style={{backgroundColor: "#5185fc"}} variant="contained">
+              In progress
+            </Button>
+          );
+        case 3:
+          return (
+            <Button style={{backgroundColor: "#4dd778"}} size="small" variant="contained">
+              Completed
+            </Button>
+          );
+        default:
+          return (
+            <Button style={{backgroundColor: "#fc7150"}} size="small" variant="contained">
+              New
+            </Button>
+          );
+      }
+}

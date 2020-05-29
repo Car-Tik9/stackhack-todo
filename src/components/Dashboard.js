@@ -86,6 +86,21 @@ function Dashboard() {
       });
   };
 
+  const changeStatus = (_id, status) => {
+    TodoApi.post("/todo/updateStatus", { _id, status })
+      .then((res) => {
+        if (res.status === 200) {
+          const todosNew = todos.map((todo) =>
+            todo._id === _id ? Object.assign({}, todo, { status }) : todo
+          );
+          setTodos(todosNew);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const updateTodo = (updatedTodo) => {
     setEditing(false);
     TodoApi.post("/todo/updateTodo", { ...updatedTodo })
@@ -149,6 +164,7 @@ function Dashboard() {
         changeCompleted = {changeCompleted}
         menuButtonClick={menuButtonClick}
         menuItemClick={menuItemClick}
+        changeStatus= {changeStatus}
         anchorEl={anchorEl}
       />
     </div>

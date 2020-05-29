@@ -22,8 +22,8 @@ const TodoSchema = new Schema({
         default: 1
     },
     status:{
-        type: String,
-        default: "New"
+        type: Number,
+        default: 1
     },
     completed:{
         type:Boolean,

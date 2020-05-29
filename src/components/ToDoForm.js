@@ -29,7 +29,7 @@ const ToDoForm = (props) => {
     title: "",
     description: "",
     priority: 1,
-    status: "1",
+    status: 1,
     dueDate: new Date(),
     isCompleted: false,
     chipId : 0
@@ -158,17 +158,17 @@ const ToDoForm = (props) => {
           <RadioGroup
             label="Status"
             value={todo.status}
-            onChange={handleInputChange}
+            onChange={handleRadioGroupChange}
             row={true}
             name="status"
           >
-            <FormControlLabel value="1" control={<Radio />} label="New" />
+            <FormControlLabel value={1} control={<Radio />} label="New" />
             <FormControlLabel
-              value="2"
+              value={2}
               control={<Radio />}
               label="In Progress"
             />
-            <FormControlLabel value="3" control={<Radio />} label="Completed" />
+            <FormControlLabel value={3} control={<Radio />} label="Completed" />
           </RadioGroup>
         </Grid>
         <Grid item xs={12}>
