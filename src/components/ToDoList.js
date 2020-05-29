@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 
 //Material Components
 import {
@@ -7,10 +7,8 @@ import {
   CardActions,
   CardContent,
   CardHeader,
-  Chip,
   IconButton,
   Typography,
-  Select,
 } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -24,12 +22,16 @@ import { makeStyles } from "@material-ui/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
+
 import history from "../utils/history";
 
 //Thirdparty packages
 import Moment from "react-moment";
 
-import { getPriorityChip , getStatusChip} from "../utils/todoUtils";
+import { getPriorityChip , getStatusChip, getChipLabel } from "../utils/todoUtils";
 
 const useStyles = makeStyles((theme) => ({
   cardContentPadding: {
@@ -61,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const ToDoList = (props) => {
+
+  const [search, setSearch] = useState(null);
+
   const [anchorEl,setAnchorEl] = useState([]);
 
   const handleStatusButtonClick = (event,id) => {
@@ -78,7 +83,14 @@ const ToDoList = (props) => {
   const handleArchievedClick = () => {
     history.push('/view-archieved')
   }
+
+  const searchTodo = (event) => {
+    let keyword = event.target.value;
+    setSearch(keyword);
+  }
+
   const classes = useStyles();
+
   return (
     <Card>
       <CardHeader
@@ -89,18 +101,35 @@ const ToDoList = (props) => {
           </Typography>
         }
         action={
-          <Button
-            align="end"
-            variant="outlined"
-            onClick={() => {
-              props.addTodo(true);
-            }}
-            size="small"
-            color="primary"
-            startIcon={<AddIcon />}
-          >
-            Add Todo
-          </Button>
+          <Fragment>
+             <TextField 
+              label="Search Your Todo"
+              onChange={ (e) => searchTodo(e)}
+              size="small"
+              autoFocus
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment>
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Button
+              align="end"
+              variant="outlined"
+              onClick={() => {
+                props.addTodo(true);
+              }}
+              size="small"
+              color="primary"
+              startIcon={<AddIcon />}
+            >
+              Add Todo
+            </Button>
+          </Fragment>
         }
       ></CardHeader>
       <CardContent className={classes.cardContentPadding}>
@@ -110,6 +139,9 @@ const ToDoList = (props) => {
               <TableCell className={classes.headerCell}></TableCell>
               <TableCell className={classes.headerCell} align="left">
                 Title
+              </TableCell>
+              <TableCell className={classes.headerCell} align="left">
+
               </TableCell>
               <TableCell className={classes.headerCell} align="left">
                 Priority
@@ -126,7 +158,12 @@ const ToDoList = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.todos.map((todo, index) => (
+            {props.todos.filter((todo)=>{
+              if(search == null)
+                return todo
+              else if(todo.title.toLowerCase().includes(search.toLowerCase()) || todo.description.toLowerCase().includes(search.toLowerCase())){
+                return todo
+              }}).map((todo, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="todo">
                   <Checkbox checked={false}
@@ -135,6 +172,7 @@ const ToDoList = (props) => {
                   />
                 </TableCell>
                 <TableCell align="left">{todo.title}</TableCell>
+                <TableCell align="left">{getChipLabel(todo.chipId)}</TableCell>
                 <TableCell align="left" aria-controls={index}>
                   <div
                     onClick={(event) => {
