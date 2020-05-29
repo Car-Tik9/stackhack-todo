@@ -4,8 +4,7 @@ const router = express.Router();
 const Todo = require('../models/Todo')
 
 router.post('/addTodo',(req,res) => {
-    const { title ,description,username} = req.body;
-    const toDo = new Todo({title,description,username});
+    const toDo = new Todo(req.body);
     toDo.save().then( todo => {
         res.status(200).json({'message':'todo created successfully',todo})
     }).catch(err => {
@@ -22,11 +21,61 @@ router.post('/deleteTodo',(req,res) => {
 })
 router.get('/getTodos/:username',(req,res) => {
     const {username} = req.params;
-    Todo.find({username}).then( todos => {
+    Todo.find({username,completed:false}).then( todos => {
         res.status(200).json({'message':'todo created successfully',todos})
     }).catch(err => {
         res.status(422).json(`error:${err.message}`);
     })
 })
+
+router.get('/getArchivedTodos/:username',(req,res) => {
+    const {username} = req.params;
+    Todo.find({username,completed:true}).then( todos => {
+        res.status(200).json({'message':'todo created successfully',todos})
+    }).catch(err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
+
+router.post('/updateTodo',(req,res) => {
+    const {_id} = req.body 
+    Todo.findByIdAndUpdate({_id},req.body).then( updatedTodo => {
+        res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
+    }).catch( err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
+
+router.post('/updatePriority',(req,res) => {
+    const {_id,priority} = req.body;
+    Todo.findByIdAndUpdate({_id},{priority}).then( updatedTodo => {
+        res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
+    }).catch( err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
+
+router.post('/updateCompleted',(req,res) => {
+    const {_id,completed} = req.body;
+    Todo.findByIdAndUpdate({_id},{completed}).then( updatedTodo => {
+        res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
+    }).catch( err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
+
+router.post('/updateStatus',(req,res) => {
+    const {_id,status} = req.body;
+    let completed = false;
+    if(status ===3){
+        completed = true;
+    }
+    Todo.findByIdAndUpdate({_id},{status,completed}).then( updatedTodo => {
+        res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
+    }).catch( err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
+
 
 module.exports = router;

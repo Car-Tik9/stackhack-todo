@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const TodoSchema = new Schema({
     username:{
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
     title:{
         type: String,
@@ -13,17 +13,25 @@ const TodoSchema = new Schema({
     description:{
         type: String,
     },
-    duedate:{
+    dueDate:{
         type: Date,
         default: new Date()
     },
     priority:{
-        type: String,
-        default: "Medium"
+        type: Number,
+        default: 1
     },
     status:{
-        type: String,
-        default: "New"
+        type: Number,
+        default: 1
+    },
+    completed:{
+        type:Boolean,
+        default:false
+    },
+    chipId:{
+        type:Number,
+        default:0
     },
     createdDate:{
         type: Date,

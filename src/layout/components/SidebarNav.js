@@ -1,5 +1,6 @@
 import { Button, Hidden, List, ListItem } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import ArchievedIcom from '@material-ui/icons/ArchiveOutlined'
 import InputIcon from '@material-ui/icons/Input';
 import AccountBox from "@material-ui/icons/AccountBox";
 import { withStyles } from '@material-ui/styles';
@@ -54,10 +55,15 @@ const CustomRouterLink = forwardRef((props, ref) => (
         icon:<DashboardIcon/>
     },
     {
+        title:'Archieved Todos',
+        href:'/view-archieved',
+        icon:<ArchievedIcom/>
+    },
+    {
         title:'Account',
         href:'/account',
         icon:<AccountBox/>
-    },
+    }
 ];
 
 class SidebarNav extends React.Component{
