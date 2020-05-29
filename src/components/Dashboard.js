@@ -9,6 +9,7 @@ import OcrDialog from "./OcrDialog/OcrDialog";
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
 import { userContext } from "../utils/userContext";
+import EmptyData from "./EmptyData";
 
 function Dashboard() {
   const user = useContext(userContext);
@@ -159,6 +160,7 @@ function Dashboard() {
       </Button>
       <OcrDialog open={openOcrDlg} handleDialogClose={setOpenOcrDlg} />
       <AddTodo addTodo={addTodo} />
+      {todos.length > 0 ? 
       <ToDoList
         todos={todos}
         deleteTodo={deleteTodo}
@@ -170,7 +172,8 @@ function Dashboard() {
         menuItemClick={menuItemClick}
         changeStatus={changeStatus}
         anchorEl={anchorEl}
-      />
+      /> : <EmptyData message="Create your first Todo"/>
+}
     </div>
   );
 }

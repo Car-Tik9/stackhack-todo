@@ -8,7 +8,7 @@ import Dashboard from './components/Dashboard';
 import RouteWithLayout from './utils/RouteWithLayout';
 import Main from './layout/Main'
 import Account from './components/Account';
-// const theme = createMuiTheme();
+import ArchievedTodosMain from './components/ArchievedTodos/ArchievedTodosMain'
 
 import theme from './theme/theme';
 
@@ -29,6 +29,11 @@ function App() {
               exact
               path="/account"
               component={Account} layout={Main}
+            ></RouteWithLayout>
+            <RouteWithLayout
+              exact
+              path="/view-archieved"
+              component={ArchievedTodosMain} layout={Main}
             ></RouteWithLayout>
             <Redirect exact from="/" to="/dashboard" />
         </Switch>

@@ -24,11 +24,12 @@ import { makeStyles } from "@material-ui/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
+import history from "../utils/history";
 
 //Thirdparty packages
 import Moment from "react-moment";
 
-import { getPriorityButton , getStatusButton} from "../utils/todoUtils";
+import { getPriorityChip , getStatusChip} from "../utils/todoUtils";
 
 const useStyles = makeStyles((theme) => ({
   cardContentPadding: {
@@ -72,6 +73,10 @@ const ToDoList = (props) => {
   const handleMenuItemClick = (id,status) =>{
     handleMenuClose(id)
     props.changeStatus(id,status);
+  }
+
+  const handleArchievedClick = () => {
+    history.push('/view-archieved')
   }
   const classes = useStyles();
   return (
@@ -124,7 +129,7 @@ const ToDoList = (props) => {
             {props.todos.map((todo, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="todo">
-                  <Checkbox
+                  <Checkbox checked={false}
                     inputProps={{ "aria-label": "primary checkbox" }}
                     onChange={() => props.changeCompleted(todo._id, true)}
                   />
@@ -136,7 +141,7 @@ const ToDoList = (props) => {
                       props.menuButtonClick(event, todo._id);
                     }}
                   >
-                    {getPriorityButton(todo.priority)}
+                    {getPriorityChip(todo.priority)}
                   </div>
                 </TableCell>
                 <Menu
@@ -161,7 +166,7 @@ const ToDoList = (props) => {
                 </Menu>
                 <TableCell align="left">
                 <div onClick={(event) => handleStatusButtonClick(event,todo._id)}>
-                  {getStatusButton(todo.status)}
+                  {getStatusChip(todo.status)}
                 </div>
                 <Menu
                   id={index}
@@ -210,7 +215,7 @@ const ToDoList = (props) => {
         <Button align="end" variant="outlined" size="small" color="primary">
           View All
         </Button>
-        <Button align="end" variant="outlined" size="small" color="primary">
+        <Button onClick ={ handleArchievedClick}align="end" variant="outlined" size="small" color="primary">
           View Archieved
         </Button>
       </CardActions>

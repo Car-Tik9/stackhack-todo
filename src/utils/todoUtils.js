@@ -1,60 +1,158 @@
 import React from "react";
-import { Button} from "@material-ui/core";
+import { Chip } from "@material-ui/core";
 
-export const getPriorityButton = (priority) => {
+export const getPriorityChip = (priority) => {
   switch (priority) {
     case 1:
       return (
-        <Button style={{backgroundColor: "#7fd9ff"}} size="small" variant="contained">
-          Low
-        </Button>
+        <Chip
+          style={{ backgroundColor: "#7fd9ff" }}
+          size="small"
+          variant="contained"
+          label="Low"
+        >
+        </Chip>
       );
     case 2:
       return (
-        <Button size="small" style={{backgroundColor: "#98c14a"}} variant="contained">
-          Middle
-        </Button>
+        <Chip
+          size="small"
+          style={{ backgroundColor: "#98c14a" }}
+          variant="contained"
+          label="Middle"
+        >
+        </Chip>
       );
     case 3:
       return (
-        <Button style={{backgroundColor: "#dc143c"}} size="small" variant="contained">
-          High
-        </Button>
+        <Chip
+          style={{ backgroundColor: "#dc143c" }}
+          size="small"
+          variant="contained"
+          label="High"
+        >
+        </Chip>
       );
     default:
       return (
-        <Button style={{backgroundColor: "#7fd9ff"}} size="small" variant="contained">
-          Low
-        </Button>
+        <Chip
+          style={{ backgroundColor: "#7fd9ff" }}
+          size="small"
+          variant="contained"
+          label="Low"
+        >
+        </Chip>
       );
   }
 };
 
-export const getStatusButton = (status) => {
-    switch (status) {
-        case 1:
-          return (
-            <Button style={{backgroundColor: "#7fd9ff"}} size="small" variant="contained">
-              New
-            </Button>
-          );
-        case 2:
-          return (
-            <Button size="small" style={{backgroundColor: "#5185fc"}} variant="contained">
-              In progress
-            </Button>
-          );
-        case 3:
-          return (
-            <Button style={{backgroundColor: "#4dd778"}} size="small" variant="contained">
-              Completed
-            </Button>
-          );
-        default:
-          return (
-            <Button style={{backgroundColor: "#fc7150"}} size="small" variant="contained">
-              New
-            </Button>
-          );
-      }
-}
+export const getStatusChip = (status) => {
+  switch (status) {
+    case 1:
+      return (
+        <Chip
+          style={{ backgroundColor: "#7fd9ff" }}
+          size="small"
+          variant="contained"
+          label="New"
+        >
+        </Chip>
+      );
+    case 2:
+      return (
+        <Chip
+          size="small"
+          style={{ backgroundColor: "#5185fc" }}
+          variant="contained"
+          label="In progress"
+        >
+        </Chip>
+      );
+    case 3:
+      return (
+        <Chip
+          style={{ backgroundColor: "#4dd778" }}
+          size="small"
+          variant="contained"
+          label="Completed"
+        >
+        </Chip>
+      );
+    default:
+      return (
+        <Chip
+          style={{ backgroundColor: "#fc7150" }}
+          size="small"
+          variant="contained"
+          label="New"
+        >
+        </Chip>
+      );
+  }
+};
+
+export const getChipLabel = (chipId) => {
+  switch (chipId) {
+    case 1:
+      return (
+        <Chip
+          style={{ backgroundColor: "#7fd9ff" }}
+          size="small"
+          variant="contained"
+          label="Personal"
+        >
+        </Chip>
+      );
+    case 2:
+      return (
+        <Chip
+          size="small"
+          style={{ backgroundColor: "#5185fc" }}
+          variant="contained"
+          label="Shopping"
+        >
+        </Chip>
+      );
+    case 3:
+      return (
+        <Chip
+          style={{ backgroundColor: "#4dd778" }}
+          size="small"
+          variant="contained"
+          label="Home"
+        >
+        </Chip>
+      );
+
+    case 4:
+      return (
+        <Chip
+          style={{ backgroundColor: "#4dd778" }}
+          size="small"
+          variant="contained"
+          label="Work"
+        >
+        </Chip>
+      );
+    case 5:
+      return (
+        <Chip
+          style={{ backgroundColor: "#4dd778" }}
+          size="small"
+          variant="contained"
+          label="Other"
+        >
+        </Chip>
+      );
+    default:
+      return (
+        <Chip
+          style={{ backgroundColor: "#fc7150" }}
+          size="small"
+          variant="contained"
+          label="New"
+        >
+        </Chip>
+      );
+  }
+};

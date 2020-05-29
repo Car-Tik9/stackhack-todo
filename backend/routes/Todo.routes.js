@@ -28,6 +28,15 @@ router.get('/getTodos/:username',(req,res) => {
     })
 })
 
+router.get('/getArchivedTodos/:username',(req,res) => {
+    const {username} = req.params;
+    Todo.find({username,completed:true}).then( todos => {
+        res.status(200).json({'message':'todo created successfully',todos})
+    }).catch(err => {
+        res.status(422).json(`error:${err.message}`);
+    })
+})
+
 router.post('/updateTodo',(req,res) => {
     const {_id} = req.body 
     Todo.findByIdAndUpdate({_id},req.body).then( updatedTodo => {
