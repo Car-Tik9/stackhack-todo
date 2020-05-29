@@ -15,6 +15,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import React, { useState } from "react";
+import ChoiceChips from "../api/ChoiceChips";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -31,6 +32,7 @@ const ToDoForm = (props) => {
     status: "1",
     dueDate: new Date(),
     isCompleted: false,
+    chipId : 0
   };
   console.log(props);
   const classes = useStyles();
@@ -40,11 +42,21 @@ const ToDoForm = (props) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log({name,value})
     setTodo({
       ...todo,
       [name]: value,
     });
   };
+
+  const handleRadioGroupChange = (e) => {
+    const { name, value } = e.target;
+    console.log({name,value})
+    setTodo({
+      ...todo,
+      [name]: parseInt(value),
+    });
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,6 +87,13 @@ const ToDoForm = (props) => {
       dueDate: dueDate,
     });
   };
+
+  const handleChipClick = (chipId) => {
+    setTodo({
+      ...todo,
+      chipId
+    });
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -109,7 +128,7 @@ const ToDoForm = (props) => {
           <RadioGroup
             label="Priority"
             value={todo.priority}
-            onChange={handleInputChange}
+            onChange={handleRadioGroupChange}
             row={true}
             name="priority"
           >
@@ -118,7 +137,7 @@ const ToDoForm = (props) => {
             <FormControlLabel value={3} control={<Radio />} label="High" />
           </RadioGroup>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={4} style={{marginTop:16}}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               variant="inline"
@@ -151,6 +170,9 @@ const ToDoForm = (props) => {
             />
             <FormControlLabel value="3" control={<Radio />} label="Completed" />
           </RadioGroup>
+        </Grid>
+        <Grid item xs={12}>
+            <ChoiceChips chipId={todo.chipId} handleChipClick = {handleChipClick}/>
         </Grid>
         <Grid item xs={12}>
           <Box display="flex" flexDirection="row-reverse">

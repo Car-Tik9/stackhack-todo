@@ -29,6 +29,10 @@ const TodoSchema = new Schema({
         type:Boolean,
         default:false
     },
+    chipId:{
+        type:Number,
+        default:0
+    },
     createdDate:{
         type: Date,
         default: new Date()

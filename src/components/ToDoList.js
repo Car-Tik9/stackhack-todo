@@ -27,6 +27,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 //Thirdparty packages
 import Moment from "react-moment";
 
+import {getPriorityButton} from '../utils/todoUtils'
+
 const useStyles = makeStyles((theme) => ({
   cardContentPadding: {
     padding: 0,
@@ -114,12 +116,12 @@ const ToDoList = (props) => {
                 <TableCell
                   align="left"
                   aria-controls={index}
-                  aria-haspopup="true"
-                  onClick={(event) => {
-                    props.menuButtonClick(event, todo._id);
-                  }}
                 >
-                  {todo.priority}
+                <div onClick={(event) => {
+                    props.menuButtonClick(event, todo._id);
+                  }}>
+                 { getPriorityButton(todo.priority)}
+                 </div>
                 </TableCell>
                 <Menu
                   id={index}
