@@ -57,7 +57,11 @@ router.post('/updateCompleted',(req,res) => {
 
 router.post('/updateStatus',(req,res) => {
     const {_id,status} = req.body;
-    Todo.findByIdAndUpdate({_id},{status}).then( updatedTodo => {
+    let completed = false;
+    if(status ===3){
+        completed = true;
+    }
+    Todo.findByIdAndUpdate({_id},{status,completed}).then( updatedTodo => {
         res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
     }).catch( err => {
         res.status(422).json(`error:${err.message}`);

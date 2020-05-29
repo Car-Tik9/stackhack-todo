@@ -90,10 +90,14 @@ function Dashboard() {
     TodoApi.post("/todo/updateStatus", { _id, status })
       .then((res) => {
         if (res.status === 200) {
-          const todosNew = todos.map((todo) =>
-            todo._id === _id ? Object.assign({}, todo, { status }) : todo
-          );
-          setTodos(todosNew);
+          if (status === 3) {
+            setTodos(todos.filter((todo) => todo._id !== _id));
+          } else {
+            const todosNew = todos.map((todo) =>
+              todo._id === _id ? Object.assign({}, todo, { status }) : todo
+            );
+            setTodos(todosNew);
+          }
         }
       })
       .catch((err) => {
@@ -118,8 +122,8 @@ function Dashboard() {
       });
   };
 
-  const changeCompleted = (_id,completed) => {
-    console.log(completed)
+  const changeCompleted = (_id, completed) => {
+    console.log(completed);
     TodoApi.post("/todo/updateCompleted", { _id, completed })
       .then((res) => {
         if (res.status === 200) {
@@ -129,7 +133,7 @@ function Dashboard() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   const handleDialogClose = () => {
     setEditing(false);
@@ -161,10 +165,10 @@ function Dashboard() {
         addTodo={setisOpenDlg}
         editTodo={editTodo}
         changePriority={changePriority}
-        changeCompleted = {changeCompleted}
+        changeCompleted={changeCompleted}
         menuButtonClick={menuButtonClick}
         menuItemClick={menuItemClick}
-        changeStatus= {changeStatus}
+        changeStatus={changeStatus}
         anchorEl={anchorEl}
       />
     </div>
