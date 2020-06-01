@@ -6,7 +6,7 @@ export const getPriorityChip = (priority) => {
     case 1:
       return (
         <Chip
-          style={{ backgroundColor: "#7fd9ff" }}
+          style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
           size="small"
           variant="contained"
           label="Low"
@@ -17,16 +17,16 @@ export const getPriorityChip = (priority) => {
       return (
         <Chip
           size="small"
-          style={{ backgroundColor: "#98c14a" }}
+          style={{ backgroundColor: "#98c14a", "cursor": "pointer", "color": "white"}}
           variant="contained"
-          label="Middle"
+          label="Medium"
         >
         </Chip>
       );
     case 3:
       return (
         <Chip
-          style={{ backgroundColor: "#dc143c" }}
+          style={{ backgroundColor: "#dc143c", "cursor": "pointer", "color": "white"}}
           size="small"
           variant="contained"
           label="High"
@@ -36,7 +36,7 @@ export const getPriorityChip = (priority) => {
     default:
       return (
         <Chip
-          style={{ backgroundColor: "#7fd9ff" }}
+          style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
           size="small"
           variant="contained"
           label="Low"
@@ -51,7 +51,7 @@ export const getStatusChip = (status) => {
     case 1:
       return (
         <Chip
-          style={{ backgroundColor: "#7fd9ff" }}
+          style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
           size="small"
           variant="contained"
           label="New"
@@ -62,7 +62,7 @@ export const getStatusChip = (status) => {
       return (
         <Chip
           size="small"
-          style={{ backgroundColor: "#5185fc" }}
+          style={{ backgroundColor: "rgb(81, 133, 252)", "cursor": "pointer", "color": "white"}}
           variant="contained"
           label="In progress"
         >
@@ -71,7 +71,7 @@ export const getStatusChip = (status) => {
     case 3:
       return (
         <Chip
-          style={{ backgroundColor: "#4dd778" }}
+          style={{ backgroundColor: "rgb(77, 215, 120)", "cursor": "pointer", "color": "white"}}
           size="small"
           variant="contained"
           label="Completed"
@@ -81,7 +81,7 @@ export const getStatusChip = (status) => {
     default:
       return (
         <Chip
-          style={{ backgroundColor: "#fc7150" }}
+          style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
           size="small"
           variant="contained"
           label="New"
@@ -96,9 +96,9 @@ export const getChipLabel = (chipId) => {
     case 1:
       return (
         <Chip
-          style={{ backgroundColor: "#7fd9ff" }}
+          style={{ color: "#7fd9ff"}}
           size="small"
-          variant="contained"
+          variant="outlined"
           label="Personal"
         >
         </Chip>
@@ -107,8 +107,8 @@ export const getChipLabel = (chipId) => {
       return (
         <Chip
           size="small"
-          style={{ backgroundColor: "#5185fc" }}
-          variant="contained"
+          style={{ color: "#5185fc"}}
+          variant="outlined"
           label="Shopping"
         >
         </Chip>
@@ -116,9 +116,9 @@ export const getChipLabel = (chipId) => {
     case 3:
       return (
         <Chip
-          style={{ backgroundColor: "#4dd778" }}
+          style={{ color: "#4dd778" }}
           size="small"
-          variant="contained"
+          variant="outlined"
           label="Home"
         >
         </Chip>
@@ -127,9 +127,9 @@ export const getChipLabel = (chipId) => {
     case 4:
       return (
         <Chip
-          style={{ backgroundColor: "#4dd778" }}
+          style={{ color: "#4dd778" }}
           size="small"
-          variant="contained"
+          variant="outlined"
           label="Work"
         >
         </Chip>
@@ -137,9 +137,9 @@ export const getChipLabel = (chipId) => {
     case 5:
       return (
         <Chip
-          style={{ backgroundColor: "#4dd778" }}
+          style={{ color: "#4dd778" }}
           size="small"
-          variant="contained"
+          variant="outlined"
           label="Other"
         >
         </Chip>
@@ -147,10 +147,10 @@ export const getChipLabel = (chipId) => {
     default:
       return (
         <Chip
-          style={{ backgroundColor: "#fc7150" }}
+          style={{ color: "#fc7150" }}
           size="small"
-          variant="contained"
-          label="New"
+          variant="outlined"
+          label="Personal"
         >
         </Chip>
       );
