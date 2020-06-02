@@ -31,7 +31,7 @@ import history from "../utils/history";
 //Thirdparty packages
 import Moment from "react-moment";
 
-import { getPriorityChip , getStatusChip, getChipLabel } from "../utils/todoUtils";
+import { getPriorityButton , getStatusButton, getChipLabel } from "../utils/todoUtils";
 
 const useStyles = makeStyles((theme) => ({
   cardContentPadding: {
@@ -169,7 +169,7 @@ const ToDoList = (props) => {
                       handlePriorityButtonClick(event,todo._id);
                     }}
                   >
-                    {getPriorityChip(todo.priority)}
+                    {getPriorityButton(todo.priority)}
                   </div>
                 </TableCell>
                 <Menu
@@ -194,7 +194,7 @@ const ToDoList = (props) => {
                 </Menu>
                 <TableCell align="left">
                 <div onClick={(event) => handleStatusButtonClick(event,todo._id)}>
-                  {getStatusChip(todo.status)}
+                  {getStatusButton(todo.status)}
                 </div>
                 <Menu
                   id={index}
