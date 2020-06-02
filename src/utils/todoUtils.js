@@ -8,7 +8,7 @@ export const getPriorityChip = (priority) => {
         <Chip
           style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="contained"
+          variant="default"
           label="Low"
         >
         </Chip>
@@ -18,7 +18,7 @@ export const getPriorityChip = (priority) => {
         <Chip
           size="small"
           style={{ backgroundColor: "#98c14a", "cursor": "pointer", "color": "white"}}
-          variant="contained"
+          variant="default"
           label="Medium"
         >
         </Chip>
@@ -28,7 +28,7 @@ export const getPriorityChip = (priority) => {
         <Chip
           style={{ backgroundColor: "#dc143c", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="contained"
+          variant="default"
           label="High"
         >
         </Chip>
@@ -38,7 +38,7 @@ export const getPriorityChip = (priority) => {
         <Chip
           style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="contained"
+          variant="default"
           label="Low"
         >
         </Chip>
@@ -53,7 +53,7 @@ export const getStatusChip = (status) => {
         <Chip
           style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="contained"
+          variant="default"
           label="New"
         >
         </Chip>
@@ -63,7 +63,7 @@ export const getStatusChip = (status) => {
         <Chip
           size="small"
           style={{ backgroundColor: "rgb(81, 133, 252)", "cursor": "pointer", "color": "white"}}
-          variant="contained"
+          variant="default"
           label="In progress"
         >
         </Chip>
@@ -73,7 +73,7 @@ export const getStatusChip = (status) => {
         <Chip
           style={{ backgroundColor: "rgb(77, 215, 120)", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="contained"
+          variant="default"
           label="Completed"
         >
         </Chip>
@@ -83,7 +83,7 @@ export const getStatusChip = (status) => {
         <Chip
           style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="contained"
+          variant="default"
           label="New"
         >
         </Chip>

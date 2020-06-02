@@ -34,7 +34,7 @@ const ToDoForm = (props) => {
     isCompleted: false,
     chipId : 0
   };
-  console.log(props);
+  
   const classes = useStyles();
   const todoState = props.isEditing ? props.todo : initialToDoState;
   const [todo, setTodo] = useState(todoState);
@@ -42,7 +42,6 @@ const ToDoForm = (props) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log({name,value})
     setTodo({
       ...todo,
       [name]: value,
@@ -51,7 +50,6 @@ const ToDoForm = (props) => {
 
   const handleRadioGroupChange = (e) => {
     const { name, value } = e.target;
-    console.log({name,value})
     setTodo({
       ...todo,
       [name]: parseInt(value),
