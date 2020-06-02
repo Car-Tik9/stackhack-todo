@@ -74,6 +74,7 @@ const Main = (props) => {
             let confidence = result.confidence;
             let text = result.text;
             let arrayOfLines = text.match(/[^\r\n]+/g);
+            console.log(arrayOfLines);
             setTodos(arrayOfLines);
             resolve(true);
           });
