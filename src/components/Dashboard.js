@@ -5,9 +5,9 @@ import { Button } from "@material-ui/core";
 import TodoApi from "../api/TodoApi";
 import AddTodo from "./AddTodo";
 import OcrDialog from "./OcrDialog/OcrDialog";
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import SortIcon from '@material-ui/icons/Sort';
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import SortIcon from "@material-ui/icons/Sort";
 
 //Custom Components
 import TodoDialog from "./TodoDialog";
@@ -15,9 +15,7 @@ import ToDoList from "./ToDoList";
 import { userContext } from "../utils/userContext";
 import EmptyData from "./EmptyData";
 
-
 function Dashboard() {
-
   const user = useContext(userContext);
 
   const [todos, setTodos] = useState([]);
@@ -25,7 +23,7 @@ function Dashboard() {
   const [currentTodo, setCurrentTodo] = useState();
   const [editing, setEditing] = useState(false);
   const [openOcrDlg, setOpenOcrDlg] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(false);
+  const [sortAnchorEl, setSortAnchorEl] = React.useState(null);
 
   useEffect(() => {
     TodoApi.get(`/todo/getTodos/${user.email}`)
@@ -37,16 +35,21 @@ function Dashboard() {
       .catch((err) => {
         console.log(err);
       });
-
   }, []);
 
-  const menuButtonClick = (event, id) => {
-    setAnchorEl({ ...anchorEl, [id]: event.currentTarget });
-  };
+ 
+  const handleSortCllck = (event) => {
+      setSortAnchorEl(event.currentTarget);
+  } 
 
-  const menuItemClick = (id) => {
-    setAnchorEl({ ...anchorEl, [id]: null });
-  };
+  const hanndleMenuClose = () => {
+    setSortAnchorEl(null)
+  }
+
+  const handleMenuItemclick = (sortType) => {
+    hanndleMenuClose();
+    setSortType(sortType);
+  }
 
   const addTodo = (todo) => {
     TodoApi.post("/todo/addTodo", { ...todo, username: user.email })
@@ -79,7 +82,7 @@ function Dashboard() {
   };
 
   const changePriority = (_id, priority) => {
-    menuItemClick(_id);
+   // menuItemClick(_id);
     TodoApi.post("/todo/updatePriority", { _id, priority })
       .then((res) => {
         if (res.status === 200) {
@@ -151,22 +154,18 @@ function Dashboard() {
   const [sortType, setSortType] = useState();
 
   useEffect(() => {
-
     const sortTodos = (sortType) => {
+      console.log("sortType: " + sortType);
 
-      console.log('sortType: ' + sortType);      
-
-      const sortedTodos = [...todos].sort(function(a, b){
+      const sortedTodos = [...todos].sort(function (a, b) {
         return b[sortType] - a[sortType];
       });
 
       setTodos(sortedTodos);
       console.log(todos);
-      
-    }
+    };
 
     sortTodos(sortType);
-
   }, [sortType]);
 
   return (
@@ -190,47 +189,74 @@ function Dashboard() {
       <AddTodo addTodo={addTodo} />
 
       {/* START: SORT BUTTON */}
-      <Button 
+      <Button
         variant="outlined"
-        size="small"        
+        size="small"
         startIcon={<SortIcon />}
-        onClick={(e) => menuButtonClick(e, "sort")}>
-          Sort
+        onClick={handleSortCllck}
+      >
+        Sort
       </Button>
-      <Menu     
+      <Menu
         id="sort-todo"
-        anchorEl={anchorEl}
+        anchorEl={sortAnchorEl}
         keepMounted
-        open={Boolean(anchorEl)}
-        onClose={() => {
-          menuItemClick("sort");
-        }}
+        open={Boolean(sortAnchorEl)}
+        onClose={hanndleMenuClose}
         elevation={1}
       >
-        <MenuItem onClick={() => {menuItemClick("sort"); setSortType('')}}><em>Sort by</em></MenuItem>
-        <MenuItem onClick={() => {menuItemClick("sort"); setSortType('priority')}}>Priority</MenuItem>
-        <MenuItem onClick={() => {menuItemClick("sort"); setSortType('dueDate')}}>Due date</MenuItem>
-        <MenuItem onClick={() => {menuItemClick("sort"); setSortType('status')}}>Status</MenuItem>
-        <MenuItem onClick={() => {menuItemClick("sort"); setSortType('title')}}>Title</MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleDialogClose("");
+          }}
+        >
+          <em>Sort by</em>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleMenuItemclick("priority");
+          }}
+        >
+          Priority
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            
+            handleMenuItemclick("dueDate");
+          }}
+        >
+          Due date
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleMenuItemclick("status");
+          }}
+        >
+          Status
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleMenuItemclick("title");
+          }}
+        >
+          Title
+        </MenuItem>
       </Menu>
       {/* END: SORT BUTTON */}
 
-      {
-        todos.length > 0 
-        ? <ToDoList
-            todos={todos}
-            deleteTodo={deleteTodo}
-            addTodo={setisOpenDlg}
-            editTodo={editTodo}
-            changePriority={changePriority}
-            changeCompleted={changeCompleted}
-            menuButtonClick={menuButtonClick}
-            menuItemClick={menuItemClick}
-            changeStatus={changeStatus}
-            anchorEl={anchorEl}
-          /> 
-        : <EmptyData message="Create your first Todo"/>
-      }
+      {todos.length > 0 ? (
+        <ToDoList
+          todos={todos}
+          deleteTodo={deleteTodo}
+          addTodo={setisOpenDlg}
+          editTodo={editTodo}
+          changePriority={changePriority}
+          changeCompleted={changeCompleted}
+          changeStatus={changeStatus}
+        />
+      ) : (
+        <EmptyData message="Create your first Todo" />
+      )}
     </div>
   );
 }

@@ -66,14 +66,26 @@ const ToDoList = (props) => {
   
   const [search, setSearch] = useState(null);
   const [anchorEl,setAnchorEl] = useState([]);
+  const [priorityAnchorEl,setPriorityAnchorEl] = useState([]);
 
+  const handlePriorityButtonClick = (event,id)=> {
+    setPriorityAnchorEl({ ...priorityAnchorEl, [id]: event.currentTarget });
+  } 
   const handleStatusButtonClick = (event,id) => {
     setAnchorEl({ ...anchorEl, [id]: event.currentTarget });
+  }
+
+  const handlePriorityMenuClose = (id) =>{
+    setPriorityAnchorEl({ ...priorityAnchorEl, [id]: null });
   }
   const handleMenuClose = (id) => {
     setAnchorEl({ ...anchorEl, [id]: null });
   }
 
+  const handlePriorityItemClick = (id ,priority) => {
+    handlePriorityMenuClose(id);
+    props.changePriority(id,priority)
+  } 
   const handleMenuItemClick = (id,status) =>{
     handleMenuClose(id)
     props.changeStatus(id,status);
@@ -175,7 +187,7 @@ const ToDoList = (props) => {
                 <TableCell align="left" aria-controls={index}>
                   <div
                     onClick={(event) => {
-                      props.menuButtonClick(event, todo._id);
+                      handlePriorityButtonClick(event,todo._id);
                     }}
                   >
                     {getPriorityChip(todo.priority)}
@@ -183,21 +195,21 @@ const ToDoList = (props) => {
                 </TableCell>
                 <Menu
                   id={index}
-                  anchorEl={props.anchorEl[todo._id]}
+                  anchorEl={priorityAnchorEl[todo._id]}
                   keepMounted
-                  open={Boolean(props.anchorEl[todo._id])}
+                  open={Boolean(priorityAnchorEl[todo._id])}
                   onClose={() => {
-                    props.menuItemClick(todo._id);
+                    handlePriorityMenuClose(todo._id);
                   }}
                   elevation={1}
                 >
-                  <MenuItem onClick={() => props.changePriority(todo._id, 3)}>
+                  <MenuItem onClick={() => handlePriorityItemClick(todo._id, 3)}>
                     High
                   </MenuItem>
-                  <MenuItem onClick={() => props.changePriority(todo._id, 2)}>
+                  <MenuItem onClick={() => handlePriorityItemClick(todo._id, 2)}>
                     Medium
                   </MenuItem>
-                  <MenuItem onClick={() => props.changePriority(todo._id, 1)}>
+                  <MenuItem onClick={() => handlePriorityItemClick(todo._id, 1)}>
                     Low
                   </MenuItem>
                 </Menu>
