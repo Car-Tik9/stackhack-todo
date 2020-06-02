@@ -1,92 +1,78 @@
 import React from "react";
-import { Chip } from "@material-ui/core";
+import { Button, Chip } from "@material-ui/core";
 
-export const getPriorityChip = (priority) => {
+export const getPriorityButton = (priority) => {
   switch (priority) {
     case 1:
       return (
-        <Chip
+        <Button
           style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="default"
-          label="Low"
-        >
-        </Chip>
+        >Low
+        </Button>
       );
     case 2:
       return (
-        <Chip
+        <Button
           size="small"
           style={{ backgroundColor: "#98c14a", "cursor": "pointer", "color": "white"}}
-          variant="default"
-          label="Medium"
-        >
-        </Chip>
+        >Medium
+        </Button>
       );
     case 3:
       return (
-        <Chip
+        <Button
           style={{ backgroundColor: "#dc143c", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="default"
-          label="High"
-        >
-        </Chip>
+        >High
+        </Button>
       );
     default:
       return (
-        <Chip
+        <Button
           style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="default"
-          label="Low"
-        >
-        </Chip>
+        >Low
+        </Button>
       );
   }
 };
 
-export const getStatusChip = (status) => {
+export const getStatusButton = (status) => {
   switch (status) {
     case 1:
       return (
-        <Chip
+        <Button
           style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="default"
-          label="New"
-        >
-        </Chip>
+        >New
+        </Button>
       );
     case 2:
       return (
-        <Chip
+        <Button
           size="small"
           style={{ backgroundColor: "rgb(81, 133, 252)", "cursor": "pointer", "color": "white"}}
-          variant="default"
-          label="In progress"
-        >
-        </Chip>
+        >In progress
+        </Button>
       );
     case 3:
       return (
-        <Chip
+        <Button
           style={{ backgroundColor: "rgb(77, 215, 120)", "cursor": "pointer", "color": "white"}}
           size="small"
           variant="default"
-          label="Completed"
-        >
-        </Chip>
+        >Completed
+        </Button>
       );
     default:
       return (
-        <Chip
+        <Button
           style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
           size="small"
           variant="default"
-          label="New"
-        >
-        </Chip>
+        >New
+        </Button>
       );
   }
 };
