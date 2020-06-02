@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 //Material Components
-import { Button } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
 import TodoApi from "../api/TodoApi";
 import AddTodo from "./AddTodo";
 import OcrDialog from "./OcrDialog/OcrDialog";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import SortIcon from "@material-ui/icons/Sort";
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
 
 //Custom Components
 import TodoDialog from "./TodoDialog";
@@ -39,7 +44,7 @@ function Dashboard() {
 
  
   const handleSortCllck = (event) => {
-      setSortAnchorEl(event.currentTarget);
+    setSortAnchorEl(event.currentTarget);
   } 
 
   const hanndleMenuClose = () => {
@@ -152,6 +157,12 @@ function Dashboard() {
   };
 
   const [sortType, setSortType] = useState();
+  const [search, setSearch] = useState(null);
+
+  const searchTodo = (event) => {
+    let keyword = event.target.value;
+    setSearch(keyword);
+  }
 
   useEffect(() => {
     const sortTodos = (sortType) => {
@@ -188,61 +199,68 @@ function Dashboard() {
       <OcrDialog open={openOcrDlg} handleDialogClose={setOpenOcrDlg} />
       <AddTodo addTodo={addTodo} />
 
-      {/* START: SORT BUTTON */}
-      <Button
-        variant="outlined"
-        size="small"
-        startIcon={<SortIcon />}
-        onClick={handleSortCllck}
-      >
-        Sort
-      </Button>
-      <Menu
-        id="sort-todo"
-        anchorEl={sortAnchorEl}
-        keepMounted
-        open={Boolean(sortAnchorEl)}
-        onClose={hanndleMenuClose}
-        elevation={1}
-      >
-        <MenuItem
-          onClick={() => {
-            handleDialogClose("");
-          }}
-        >
-          <em>Sort by</em>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleMenuItemclick("priority");
-          }}
-        >
-          Priority
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            
-            handleMenuItemclick("dueDate");
-          }}
-        >
-          Due date
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleMenuItemclick("status");
-          }}
-        >
-          Status
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleMenuItemclick("title");
-          }}
-        >
-          Title
-        </MenuItem>
-      </Menu>
-      {/* END: SORT BUTTON */}
+      {/* START: Todo Controls */}
+
+      <Card>
+        <CardContent>
+          {/* START: SEARCH */}
+          <TextField 
+            label="Search Your Todo"
+            onChange={ (e) => searchTodo(e)}
+            size="small"
+            autoFocus
+            InputProps={{
+              endAdornment: (
+                <InputAdornment>
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {/* END: SEARCH */}
+          {/* START: SORT BUTTON */}
+          <Button variant="outlined" size="small" startIcon={<SortIcon />} onClick={handleSortCllck} >
+            Sort
+          </Button>
+          <Menu
+            id="sort-todo"
+            anchorEl={sortAnchorEl}
+            keepMounted
+            open={Boolean(sortAnchorEl)}
+            onClose={hanndleMenuClose}
+            elevation={1}
+          >
+            <MenuItem onClick={() => { handleDialogClose("") }}><em>Sort by</em></MenuItem>
+            <MenuItem onClick={() => { handleMenuItemclick("priority"); }}>Priority</MenuItem>
+            <MenuItem onClick={() => { handleMenuItemclick("dueDate");}}>Due date</MenuItem>
+            <MenuItem onClick={() => {handleMenuItemclick("status");}}>Status</MenuItem>
+          </Menu>
+          {/* END: SORT BUTTON */}
+          {/* START: FILTERS */}
+          <Button variant="outlined" size="small" startIcon={<SortIcon />} onClick={handleSortCllck} >
+            Filters
+          </Button>
+          <Menu
+            id="sort-todo"
+            anchorEl={sortAnchorEl}
+            keepMounted
+            open={Boolean(sortAnchorEl)}
+            onClose={hanndleMenuClose}
+            elevation={1}
+          >
+            <MenuItem onClick={() => { handleDialogClose("") }}><em>Sort by</em></MenuItem>
+            <MenuItem onClick={() => { handleMenuItemclick("priority"); }}>Priority</MenuItem>
+            <MenuItem onClick={() => { handleMenuItemclick("dueDate");}}>Due date</MenuItem>
+            <MenuItem onClick={() => {handleMenuItemclick("status");}}>Status</MenuItem>
+          </Menu>
+          {/* END: FILTERS */}
+        </CardContent>
+      </Card>
+      <br></br>
+      
+      {/* END: Todo COntrols */}
 
       {todos.length > 0 ? (
         <ToDoList
@@ -253,6 +271,7 @@ function Dashboard() {
           changePriority={changePriority}
           changeCompleted={changeCompleted}
           changeStatus={changeStatus}
+          search={search}
         />
       ) : (
         <EmptyData message="Create your first Todo" />

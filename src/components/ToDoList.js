@@ -22,9 +22,9 @@ import { makeStyles } from "@material-ui/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import SearchIcon from '@material-ui/icons/Search';
+// import TextField from '@material-ui/core/TextField';
+// import InputAdornment from '@material-ui/core/InputAdornment';
+// import SearchIcon from '@material-ui/icons/Search';
 
 import history from "../utils/history";
 
@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ToDoList = (props) => {
   
-  const [search, setSearch] = useState(null);
   const [anchorEl,setAnchorEl] = useState([]);
   const [priorityAnchorEl,setPriorityAnchorEl] = useState([]);
 
@@ -95,11 +94,6 @@ const ToDoList = (props) => {
     history.push('/view-archieved')
   }
 
-  const searchTodo = (event) => {
-    let keyword = event.target.value;
-    setSearch(keyword);
-  }
-
   const classes = useStyles();
 
   return (
@@ -113,21 +107,6 @@ const ToDoList = (props) => {
         }
         action={
           <Fragment>
-             <TextField 
-              label="Search Your Todo"
-              onChange={ (e) => searchTodo(e)}
-              size="small"
-              autoFocus
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment>
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
             <Button
               align="end"
               variant="outlined"
@@ -170,9 +149,9 @@ const ToDoList = (props) => {
           </TableHead>
           <TableBody>
             {props.todos.filter((todo)=>{
-              if(search == null)
+              if(props.search == null)
                 return todo
-              else if(todo.title.toLowerCase().includes(search.toLowerCase()) || todo.description.toLowerCase().includes(search.toLowerCase())){
+              else if(todo.title.toLowerCase().includes(props.search.toLowerCase()) || todo.description.toLowerCase().includes(props.search.toLowerCase())){
                 return todo
               }}).map((todo, index) => (
               <TableRow key={index}>
