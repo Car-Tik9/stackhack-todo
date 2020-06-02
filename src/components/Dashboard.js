@@ -12,7 +12,16 @@ import { userContext } from "../utils/userContext";
 import EmptyData from "./EmptyData";
 
 function Dashboard() {
+
   const user = useContext(userContext);
+
+  const [todos, setTodos] = useState([]);
+  const [isOpenDlg, setisOpenDlg] = useState(false);
+  const [currentTodo, setCurrentTodo] = useState();
+  const [editing, setEditing] = useState(false);
+  const [openOcrDlg, setOpenOcrDlg] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState({});
+
   useEffect(() => {
     TodoApi.get(`/todo/getTodos/${user.email}`)
       .then((res) => {
@@ -23,15 +32,8 @@ function Dashboard() {
       .catch((err) => {
         console.log(err);
       });
+
   }, []);
-
-  const [todos, setTodos] = useState([]);
-  const [isOpenDlg, setisOpenDlg] = useState(false);
-  const [currentTodo, setCurrentTodo] = useState();
-  const [editing, setEditing] = useState(false);
-  const [openOcrDlg, setOpenOcrDlg] = useState(false);
-
-  const [anchorEl, setAnchorEl] = React.useState({});
 
   const menuButtonClick = (event, id) => {
     setAnchorEl({ ...anchorEl, [id]: event.currentTarget });
@@ -141,6 +143,15 @@ function Dashboard() {
     setisOpenDlg(false);
   };
 
+  const sortTodos = () => {
+    const sortedTodos = todos.sort(function(a, b){
+      return a.priority - b.priority;
+    });
+
+    setTodos(sortedTodos);
+    
+  }
+
   return (
     <div style={{ margin: 16 }}>
       <TodoDialog
@@ -160,6 +171,9 @@ function Dashboard() {
       </Button>
       <OcrDialog open={openOcrDlg} handleDialogClose={setOpenOcrDlg} />
       <AddTodo addTodo={addTodo} />
+
+      <button onClick={() => sortTodos()}>Sort</button>
+
       {todos.length > 0 ? 
       <ToDoList
         todos={todos}
