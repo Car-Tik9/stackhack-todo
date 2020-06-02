@@ -22,9 +22,6 @@ import { makeStyles } from "@material-ui/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
-// import TextField from '@material-ui/core/TextField';
-// import InputAdornment from '@material-ui/core/InputAdornment';
-// import SearchIcon from '@material-ui/icons/Search';
 
 import history from "../utils/history";
 
@@ -60,8 +57,9 @@ const useStyles = makeStyles((theme) => ({
   },
   textWarning: {
     color: "#f4772e",
-  },
+  }
 }));
+
 const ToDoList = (props) => {
   
   const [anchorEl,setAnchorEl] = useState([]);
