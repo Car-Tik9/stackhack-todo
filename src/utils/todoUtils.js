@@ -131,14 +131,6 @@ export const getChipLabel = (chipId) => {
         </Chip>
       );
     default:
-      return (
-        <Chip
-          style={{ color: "#fc7150" }}
-          size="small"
-          variant="outlined"
-          label="Personal"
-        >
-        </Chip>
-      );
+      return null
   }
 };
