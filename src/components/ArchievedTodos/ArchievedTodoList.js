@@ -1,13 +1,13 @@
 import React from "react";
+
 import {
   Card,
   CardContent,
   Typography,
   Checkbox,
-  Slide,
   Grid,
 } from "@material-ui/core";
-
+import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from "@material-ui/styles";
 import {getChipLabel, getStatusButton, getPriorityButton} from '../../utils/todoUtils'
 
@@ -27,7 +27,9 @@ const ArchievedTodoList = (props) => {
         <CardContent className={classes.cardContent}>
           <Grid container alignItems="center">
               <Grid item xs={1}>
-                <Checkbox checked={false} onChange={() => props.changeCompleted(todo._id, false)}></Checkbox>
+                <Tooltip title="Mark as Open" arrow>
+                  <Checkbox checked={false} onChange={() => props.changeCompleted(todo._id, false)}></Checkbox>
+                </Tooltip>
               </Grid>
               <Grid item xs={5}>
               <Typography variant="body1">{todo.title}</Typography>
