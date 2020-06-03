@@ -1,39 +1,35 @@
-import React, { useEffect, useState, useContext } from "react";
-
 //Material Components
 import { Button, IconButton } from "@material-ui/core";
-import TodoApi from "../api/TodoApi";
-import AddTodo from "./AddTodo";
-import OcrDialog from "./OcrDialog/OcrDialog";
-import MenuItem from "@material-ui/core/MenuItem";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import Menu from "@material-ui/core/Menu";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
+import AddIcon from "@material-ui/icons/AddCircle";
+import FilterListIcon from "@material-ui/icons/FilterList";
+import SearchIcon from "@material-ui/icons/Search";
 import SortIcon from "@material-ui/icons/Sort";
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import SearchIcon from '@material-ui/icons/Search';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import { makeStyles } from "@material-ui/styles";
-import AddIcon from "@material-ui/icons/AddCircle"
-
+import React, { useContext, useEffect, useState } from "react";
+import TodoApi from "../api/TodoApi";
+import { userContext } from "../utils/userContext";
+import AddTodo from "./AddTodo";
+import EmptyData from "./EmptyData";
+import OcrDialog from "./OcrDialog/OcrDialog";
 //Custom Components
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
-import { userContext } from "../utils/userContext";
-import EmptyData from "./EmptyData";
 
 const useStyles = makeStyles((theme) => ({
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  }
-}))
+  buttonConatainer: {
+    display: "flex",
+    height: 30,
+    justifyContent: "flex-end",
+    marginBottom: 8,
+  },
+  button: {
+    marginRight: 8,
+  },
+}));
 
 function Dashboard() {
   const user = useContext(userContext);
@@ -46,19 +42,19 @@ function Dashboard() {
   const [sortAnchorEl, setSortAnchorEl] = React.useState(null);
   const [filtersAnchorEl, setFiltersAnchorEl] = useState(null);
   const [sortType, setSortType] = useState();
-  const [search, setSearch] = useState(null);
+  
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [filterLabel, setFilterLabel] = useState([]);
   const [filterValue, setFilterValue] = useState([]);
-  const [reload,setReload] = useState(false);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     TodoApi.get(`/todo/getTodos/${user.email}`)
       .then((res) => {
         if (res.status === 200) {
           setTodos(res.data.todos);
-          setReload(false)
+          setReload(false);
         }
       })
       .catch((err) => {
@@ -66,24 +62,23 @@ function Dashboard() {
       });
   }, [reload]);
 
- 
   const handleSortCllck = (event) => {
     setSortAnchorEl(event.currentTarget);
     clearFilters();
-  } 
+  };
 
   const handleFilterCllck = (event) => {
     setFiltersAnchorEl(event.currentTarget);
-  } 
+  };
 
   const hanndleMenuClose = () => {
     setSortAnchorEl(null);
-  }
+  };
 
   const handleMenuItemclick = (sortType) => {
     hanndleMenuClose();
     setSortType(sortType);
-  }
+  };
 
   const addTodo = (todo) => {
     TodoApi.post("/todo/addTodo", { ...todo, username: user.email })
@@ -116,7 +111,7 @@ function Dashboard() {
   };
 
   const changePriority = (_id, priority) => {
-   // menuItemClick(_id);
+    // menuItemClick(_id);
     TodoApi.post("/todo/updatePriority", { _id, priority })
       .then((res) => {
         if (res.status === 200) {
@@ -185,15 +180,10 @@ function Dashboard() {
     setisOpenDlg(false);
   };
 
-  const searchTodo = (event) => {
-    let keyword = event.target.value;
-    setSearch(keyword);
-  }
-
   useEffect(() => {
     const sortTodos = (sortType) => {
       const sortedTodos = [...todos].sort(function (a, b) {
-        return (sortType === 'dueDate') 
+        return sortType === "dueDate"
           ? new Date(b[sortType]).getTime() - new Date(a[sortType]).getTime()
           : b[sortType] - a[sortType];
       });
@@ -203,37 +193,34 @@ function Dashboard() {
     sortTodos(sortType);
   }, [sortType]);
 
-  const filterMethod = (label, value) => {    
+  const filterMethod = (label, value) => {
     setFiltersAnchorEl(null);
     setIsFiltered(true);
     setFilterLabel(label);
     setFilterValue(value);
-  }
+  };
 
-  const clearFilters = () => {    
+  const clearFilters = () => {
     setFiltersAnchorEl(null);
     setIsFiltered(false);
     setFilterLabel([]);
     setFilterValue([]);
-  }
+  };
 
   useEffect(() => {
     const filterTodos = (filterLabel, filterValue) => {
-
-      console.log('FilterLabel: ' + filterLabel);
-      console.log('FilterValue: ' + filterValue);      
+      console.log("FilterLabel: " + filterLabel);
+      console.log("FilterValue: " + filterValue);
 
       const filteredTodos = [...todos].filter((todo) => {
-        return todo[filterLabel] === filterValue
+        return todo[filterLabel] === filterValue;
       });
 
       setFilteredTodos(filteredTodos);
 
       console.log(filteredTodos);
-      
-    }
+    };
     filterTodos(filterLabel, filterValue);
-
   }, [filterValue]);
 
   const classes = useStyles();
@@ -248,78 +235,141 @@ function Dashboard() {
         handleDialogClose={handleDialogClose}
         todo={currentTodo}
       />
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={() => setOpenOcrDlg(true)}
-      >
-        Open OCR Dialog
-      </Button>
-      <OcrDialog open={openOcrDlg} setReload={setReload} handleDialogClose={setOpenOcrDlg} />
+      <OcrDialog
+        open={openOcrDlg}
+        setReload={setReload}
+        handleDialogClose={setOpenOcrDlg}
+      />
       <AddTodo addTodo={addTodo} />
 
-      {/* START: Todo Controls */}
-
-      <div>
-          {/* START: SEARCH */}
-          <TextField 
-            label="Search Your Todo"
-            onChange={ (e) => searchTodo(e)}
-            size="small"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment>
-                  <IconButton>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
+      <div className={classes.buttonConatainer}>
+        <Button
+              align="end"
+              variant="outlined"
+              className={classes.button}
+              onClick={() => {
+                setisOpenDlg(true);
+              }}
+              size="small"
+              color="primary"
+              startIcon={<AddIcon />}
+            >
+              Add Todo
+            </Button>
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => setOpenOcrDlg(true)}
+          className={classes.button}
+        >
+          Open OCR Dialog
+        </Button>
+        {/* END: SEARCH */}
+        {/* START: SORT BUTTON */}
+        <Button
+          className={classes.button}
+          variant="outlined"
+          size="small"
+          startIcon={<SortIcon />}
+          onClick={handleSortCllck}
+        >
+          Sort
+        </Button>
+        <Menu
+          id="sort-todo"
+          anchorEl={sortAnchorEl}
+          keepMounted
+          open={Boolean(sortAnchorEl)}
+          onClose={hanndleMenuClose}
+          elevation={1}
+        >
+          <MenuItem
+            onClick={() => {
+              handleMenuItemclick("priority");
             }}
-          />
-          {/* END: SEARCH */}
-          {/* START: SORT BUTTON */}
-          <Button variant="outlined" size="small" startIcon={<SortIcon />} onClick={handleSortCllck} >
-            Sort
-          </Button>
-          <Menu
-            id="sort-todo"
-            anchorEl={sortAnchorEl}
-            keepMounted
-            open={Boolean(sortAnchorEl)}
-            onClose={hanndleMenuClose}
-            elevation={1}
           >
-            <MenuItem onClick={() => {handleMenuItemclick("priority");}}>Priority</MenuItem>
-            <MenuItem onClick={() => {handleMenuItemclick("dueDate");}}>Due date</MenuItem>
-            <MenuItem onClick={() => {handleMenuItemclick("status");}}>Status</MenuItem>
-          </Menu>
-          {/* END: SORT BUTTON */}
-          {/* START: FILTERS */}
-          <Button variant={isFiltered ? "contained" : "outlined"} 
-            size="small" 
-            startIcon={<FilterListIcon />} 
-            onClick={handleFilterCllck} > 
-            Filters
-          </Button>
-          <Menu
-            id="filter-todo"
-            anchorEl={filtersAnchorEl}
-            keepMounted
-            open={Boolean(filtersAnchorEl)}
-            onClose={hanndleMenuClose}
-            elevation={1}
+            Priority
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleMenuItemclick("dueDate");
+            }}
           >
-            <MenuItem disabled={true}>Priority</MenuItem>
-            <MenuItem onClick={() => { filterMethod('priority', 3); }}>High</MenuItem>
-            <MenuItem onClick={() => { filterMethod('priority', 2); }}>Medium</MenuItem>
-            <MenuItem onClick={() => { filterMethod('priority', 1); }}>Low</MenuItem>
-            <MenuItem disabled={true}>Status</MenuItem>
-            <MenuItem onClick={() => { filterMethod('status', 1); }}>New</MenuItem>
-            <MenuItem onClick={() => { filterMethod('status', 2); }}>In-progress</MenuItem>
-            <MenuItem onClick={() => { clearFilters(); }}>Clear Filters</MenuItem>
-          </Menu>
-          {/* END: FILTERS */}
-        </div>
+            Due date
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleMenuItemclick("status");
+            }}
+          >
+            Status
+          </MenuItem>
+        </Menu>
+        {/* END: SORT BUTTON */}
+        {/* START: FILTERS */}
+        <Button
+          variant={isFiltered ? "contained" : "outlined"}
+          size="small"
+          startIcon={<FilterListIcon />}
+          onClick={handleFilterCllck}
+        >
+          Filters
+        </Button>
+        <Menu
+          id="filter-todo"
+          anchorEl={filtersAnchorEl}
+          keepMounted
+          open={Boolean(filtersAnchorEl)}
+          onClose={hanndleMenuClose}
+          elevation={1}
+        >
+          <MenuItem disabled={true}>Priority</MenuItem>
+          <MenuItem
+            onClick={() => {
+              filterMethod("priority", 3);
+            }}
+          >
+            High
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              filterMethod("priority", 2);
+            }}
+          >
+            Medium
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              filterMethod("priority", 1);
+            }}
+          >
+            Low
+          </MenuItem>
+          <MenuItem disabled={true}>Status</MenuItem>
+          <MenuItem
+            onClick={() => {
+              filterMethod("status", 1);
+            }}
+          >
+            New
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              filterMethod("status", 2);
+            }}
+          >
+            In-progress
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              clearFilters();
+            }}
+          >
+            Clear Filters
+          </MenuItem>
+        </Menu>
+        {/* END: FILTERS */}
+      </div>
       {/* END: Todo COntrols */}
       {todos.length > 0 ? (
         <ToDoList
@@ -330,12 +380,15 @@ function Dashboard() {
           changePriority={changePriority}
           changeCompleted={changeCompleted}
           changeStatus={changeStatus}
-          search={search}
           isFiltered={isFiltered}
           filteredTodos={filteredTodos}
         />
       ) : (
-        <EmptyData height={500} icon ={AddIcon}message="Create your first Todo" />
+        <EmptyData
+          height={500}
+          icon={AddIcon}
+          message="Create your first Todo"
+        />
       )}
     </div>
   );

@@ -9,6 +9,8 @@ import {
   CardHeader,
   IconButton,
   Typography,
+  TextField,
+  InputAdornment,
 } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -22,12 +24,17 @@ import { makeStyles } from "@material-ui/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
+import SearchIcon from "@material-ui/icons/Search";
 
 import history from "../utils/history";
 //Thirdparty packages
 import Moment from "react-moment";
 
-import { getPriorityButton , getStatusButton, getChipLabel } from "../utils/todoUtils";
+import {
+  getPriorityButton,
+  getStatusButton,
+  getChipLabel,
+} from "../utils/todoUtils";
 import PriorityMenuItem from "./MenuItems/PriorityMenuItem";
 import StatusMenuItem from "./MenuItems/StatusMenuItem";
 
@@ -58,67 +65,45 @@ const useStyles = makeStyles((theme) => ({
   },
   textWarning: {
     color: "#f4772e",
-  }
+  },
 }));
 
 const ToDoList = (props) => {
-  
-  const [anchorEl,setAnchorEl] = useState([]);
-  const [priorityAnchorEl,setPriorityAnchorEl] = useState([]);
-
-  const handlePriorityButtonClick = (event,id)=> {
-    setPriorityAnchorEl({ ...priorityAnchorEl, [id]: event.currentTarget });
-  } 
-  const handleStatusButtonClick = (event,id) => {
-    setAnchorEl({ ...anchorEl, [id]: event.currentTarget });
-  }
-
-  const handlePriorityMenuClose = (id) =>{
-    setPriorityAnchorEl({ ...priorityAnchorEl, [id]: null });
-  }
-  const handleMenuClose = (id) => {
-    setAnchorEl({ ...anchorEl, [id]: null });
-  }
-
-  const handlePriorityItemClick = (id ,priority) => {
-    handlePriorityMenuClose(id);
-    props.changePriority(id,priority)
-  } 
-  const handleMenuItemClick = (id,status) =>{
-    handleMenuClose(id)
-    props.changeStatus(id,status);
-  }
-
+  const [search, setSearch] = useState(null);
+  const searchTodo = (event) => {
+    let keyword = event.target.value;
+    setSearch(keyword);
+  };
   const handleArchievedClick = () => {
-    history.push('/view-archieved')
-  }
-
+    history.push("/view-archieved");
+  };
   const classes = useStyles();
 
   return (
-        
     <Card>
       <CardHeader
         disableTypography={true}
         title={
-          <Typography variant="h3" component="div">
+          <Typography variant="h5" component="h1">
             Todos
           </Typography>
         }
         action={
           <Fragment>
-            <Button
-              align="end"
-              variant="outlined"
-              onClick={() => {
-                props.addTodo(true);
-              }}
+            <TextField
+              label="Search Your Todo"
+              onChange={(e) => searchTodo(e)}
               size="small"
-              color="primary"
-              startIcon={<AddIcon />}
-            >
-              Add Todo
-            </Button>
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment>
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
           </Fragment>
         }
       ></CardHeader>
@@ -130,9 +115,10 @@ const ToDoList = (props) => {
               <TableCell className={classes.headerCell} align="left">
                 Title
               </TableCell>
-              <TableCell className={classes.headerCell} align="left">
-
-              </TableCell>
+              <TableCell
+                className={classes.headerCell}
+                align="left"
+              ></TableCell>
               <TableCell className={classes.headerCell} align="left">
                 Priority
               </TableCell>
@@ -148,49 +134,62 @@ const ToDoList = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {
-              (!props.isFiltered ? props.todos : props.filteredTodos).filter((todo)=>{
-              if(props.search == null)
-                return todo
-              else if(todo.title.toLowerCase().includes(props.search.toLowerCase()) || todo.description.toLowerCase().includes(props.search.toLowerCase())){
-                return todo
-              }}).map((todo, index) => (
-              <TableRow key={index}>
-                <TableCell component="th" scope="todo">
-                  <Checkbox checked={false}
-                    inputProps={{ "aria-label": "primary checkbox" }}
-                    onChange={() => props.changeCompleted(todo._id, true)}
-                  />
-                </TableCell>
-                <TableCell align="left">{todo.title}</TableCell>
-                <TableCell align="left">{getChipLabel(todo.chipId)}</TableCell>
-                <TableCell align="left" aria-controls={index}>
-                  <PriorityMenuItem todo={todo} handlePriorityChange={props.changePriority}/>
-                </TableCell>
-                <TableCell align="left">
-                  <StatusMenuItem todo={todo} handleStatusChange={props.changeStatus}/>
-                </TableCell>
-                <TableCell align="left">
-                  <Moment format="Do MMM YYYY">{todo.dueDate}</Moment>
-                </TableCell>
+            {(!props.isFiltered ? props.todos : props.filteredTodos)
+              .filter((todo) => {
+                if (search == null) return todo;
+                else if (
+                  todo.title.toLowerCase().includes(search.toLowerCase()) ||
+                  todo.description.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return todo;
+                }
+              })
+              .map((todo, index) => (
+                <TableRow key={index}>
+                  <TableCell component="th" scope="todo">
+                    <Checkbox
+                      checked={false}
+                      inputProps={{ "aria-label": "primary checkbox" }}
+                      onChange={() => props.changeCompleted(todo._id, true)}
+                    />
+                  </TableCell>
+                  <TableCell align="left">{todo.title}</TableCell>
+                  <TableCell align="left">
+                    {getChipLabel(todo.chipId)}
+                  </TableCell>
+                  <TableCell align="left" aria-controls={index}>
+                    <PriorityMenuItem
+                      todo={todo}
+                      handlePriorityChange={props.changePriority}
+                    />
+                  </TableCell>
+                  <TableCell align="left">
+                    <StatusMenuItem
+                      todo={todo}
+                      handleStatusChange={props.changeStatus}
+                    />
+                  </TableCell>
+                  <TableCell align="left">
+                    <Moment format="Do MMM YYYY">{todo.dueDate}</Moment>
+                  </TableCell>
 
-                <TableCell align="left">
-                  <IconButton
-                    size="small"
-                    className={classes.icon}
-                    onClick={() => props.editTodo(todo)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    onClick={() => props.deleteTodo(todo._id)}
-                  >
-                    <DeleteIcon style={{ color: "#d11a2a" }} />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+                  <TableCell align="left">
+                    <IconButton
+                      size="small"
+                      className={classes.icon}
+                      onClick={() => props.editTodo(todo)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => props.deleteTodo(todo._id)}
+                    >
+                      <DeleteIcon style={{ color: "#d11a2a" }} />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </CardContent>
@@ -198,7 +197,13 @@ const ToDoList = (props) => {
         <Button align="end" variant="outlined" size="small" color="primary">
           View All
         </Button>
-        <Button onClick ={ handleArchievedClick}align="end" variant="outlined" size="small" color="primary">
+        <Button
+          onClick={handleArchievedClick}
+          align="end"
+          variant="outlined"
+          size="small"
+          color="primary"
+        >
           View Archieved
         </Button>
       </CardActions>
