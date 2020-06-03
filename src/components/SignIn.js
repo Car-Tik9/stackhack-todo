@@ -16,7 +16,9 @@ import React from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import Image from "../images/todo_image1.jpg";
 import TodoApi from "../api/TodoApi";
-import history from '../utils/history'
+import history from '../utils/history';
+
+import ClipLoader from "react-spinners/ClipLoader";
 
 const styles = (theme) => ({
   root: {
@@ -52,26 +54,35 @@ class SignIn extends React.Component {
     submitted: false,
     email: "",
     errorMessage: "",
+    isLoading: false
   };
-  componentDidMount() {}
+
   handleOnSubmit = (event) => {
     event.preventDefault();
+
     const { email, password } = this.state;
+    this.setState({ isLoading: true });
     this.setState({ submitted: true });
+
     if (email === "" || password === "") {
+      this.setState({ isLoading: false });
       return;
     }
+
     TodoApi.post("/user/login", { email, password },{withCredentials: true})
       .then((response) => {
         if (response.status === 200) {
           history.push({pathname:"/dashboard",user:response.data});
+          this.setState({ isLoading: false });
         } else {
           const error = new Error(response.error);
+          this.setState({ isLoading: false });
           throw error;
         }
       })
       .catch((err) => {
         const { error } = err.response.data;
+        this.setState({ isLoading: false });
         this.setState({ errorMessage: error });
       });
   };
@@ -166,7 +177,9 @@ class SignIn extends React.Component {
                 color="primary"
                 className={classes.submit}
               >
-                SignIn
+                {
+                  !this.state.isLoading ? `SignIn` : <ClipLoader color="#FFF" size="20"/> 
+                } 
               </Button>
               <Grid container>
                 <Grid item>

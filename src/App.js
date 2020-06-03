@@ -18,8 +18,8 @@ function App() {
       <CssBaseline/>
       <Router history={history}>
         <Switch>
-            <Route  exact path="/signin" component={SignIn}></Route>
-            <Route  exact path="/signup" component={SignUp}></Route>
+            <Route exact path="/signin" component={SignIn}></Route>
+            <Route exact path="/signup" component={SignUp}></Route>
             <RouteWithLayout
               exact
               path="/dashboard"
