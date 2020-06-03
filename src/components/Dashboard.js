@@ -260,8 +260,7 @@ function Dashboard() {
 
       {/* START: Todo Controls */}
 
-      <Card>
-        <CardContent className={classes.controls}>
+      <div>
           {/* START: SEARCH */}
           <TextField 
             label="Search Your Todo"
@@ -279,7 +278,7 @@ function Dashboard() {
           />
           {/* END: SEARCH */}
           {/* START: SORT BUTTON */}
-          <Button variant="outlined" size="medium" startIcon={<SortIcon />} onClick={handleSortCllck} >
+          <Button variant="outlined" size="small" startIcon={<SortIcon />} onClick={handleSortCllck} >
             Sort
           </Button>
           <Menu
@@ -296,9 +295,10 @@ function Dashboard() {
           </Menu>
           {/* END: SORT BUTTON */}
           {/* START: FILTERS */}
-          <Button variant={isFiltered ? "contained" : "outlined"} size="medium" 
+          <Button variant={isFiltered ? "contained" : "outlined"} 
+            size="small" 
             startIcon={<FilterListIcon />} 
-            onClick={handleFilterCllck} >
+            onClick={handleFilterCllck} > 
             Filters
           </Button>
           <Menu
@@ -319,12 +319,8 @@ function Dashboard() {
             <MenuItem onClick={() => { clearFilters(); }}>Clear Filters</MenuItem>
           </Menu>
           {/* END: FILTERS */}
-        </CardContent>
-      </Card>
-      <br></br>
-      
+        </div>
       {/* END: Todo COntrols */}
-
       {todos.length > 0 ? (
         <ToDoList
           todos={todos}

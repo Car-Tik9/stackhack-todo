@@ -24,11 +24,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import history from "../utils/history";
-
 //Thirdparty packages
 import Moment from "react-moment";
 
 import { getPriorityButton , getStatusButton, getChipLabel } from "../utils/todoUtils";
+import PriorityMenuItem from "./MenuItems/PriorityMenuItem";
+import StatusMenuItem from "./MenuItems/StatusMenuItem";
 
 const useStyles = makeStyles((theme) => ({
   cardContentPadding: {
@@ -164,56 +165,10 @@ const ToDoList = (props) => {
                 <TableCell align="left">{todo.title}</TableCell>
                 <TableCell align="left">{getChipLabel(todo.chipId)}</TableCell>
                 <TableCell align="left" aria-controls={index}>
-                  <div
-                    onClick={(event) => {
-                      handlePriorityButtonClick(event,todo._id);
-                    }}
-                  >
-                    {getPriorityButton(todo.priority)}
-                  </div>
+                  <PriorityMenuItem todo={todo} handlePriorityChange={props.changePriority}/>
                 </TableCell>
-                <Menu
-                  id={index}
-                  anchorEl={priorityAnchorEl[todo._id]}
-                  keepMounted
-                  open={Boolean(priorityAnchorEl[todo._id])}
-                  onClose={() => {
-                    handlePriorityMenuClose(todo._id);
-                  }}
-                  elevation={1}
-                >
-                  <MenuItem onClick={() => handlePriorityItemClick(todo._id, 3)}>
-                    High
-                  </MenuItem>
-                  <MenuItem onClick={() => handlePriorityItemClick(todo._id, 2)}>
-                    Medium
-                  </MenuItem>
-                  <MenuItem onClick={() => handlePriorityItemClick(todo._id, 1)}>
-                    Low
-                  </MenuItem>
-                </Menu>
                 <TableCell align="left">
-                <div onClick={(event) => handleStatusButtonClick(event,todo._id)}>
-                  {getStatusButton(todo.status)}
-                </div>
-                <Menu
-                  id={index}
-                  anchorEl={anchorEl[todo._id]}
-                  keepMounted
-                  open={Boolean(anchorEl[todo._id])}
-                  onClose={() =>handleMenuClose(todo._id)}
-                  elevation={1}
-                >
-                  <MenuItem onClick={ (event) => handleMenuItemClick(todo._id,1)}>
-                    New
-                  </MenuItem>
-                  <MenuItem onClick={ (event) => handleMenuItemClick(todo._id,2)}>
-                    In Progress
-                  </MenuItem>
-                  <MenuItem onClick={ (event) => handleMenuItemClick(todo._id,3)}>
-                    Completed
-                  </MenuItem>
-                </Menu>
+                  <StatusMenuItem todo={todo} handleStatusChange={props.changeStatus}/>
                 </TableCell>
                 <TableCell align="left">
                   <Moment format="Do MMM YYYY">{todo.dueDate}</Moment>
