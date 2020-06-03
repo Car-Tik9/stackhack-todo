@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
-import { Box, Avatar, Card, CardMedia, Typography } from "@material-ui/core";
-import PlainImage from "../../../images/todo_image_tobeconverted.png";
-import Converted from "../../../images/converted_image.png";
+import { Box, Typography } from "@material-ui/core";
 import ArrowForward from "@material-ui/icons/ArrowForward";
 import { makeStyles } from "@material-ui/styles";
+import React, { Fragment } from "react";
+import Converted from "../../../images/converted_image.png";
+import PlainImage from "../../../images/todo_image_tobeconverted.png";
 
 const useStyles = makeStyles((theme) => ({
   imageConatiner: {

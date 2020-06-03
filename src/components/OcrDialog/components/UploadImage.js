@@ -1,26 +1,9 @@
-import { Button, Box } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 import React, { Fragment, useState } from "react";
-import { makeStyles } from "@material-ui/styles";
 import BeatLoader from "react-spinners/BeatLoader";
 import UsageDisplay from "./UsageDisplay";
 
 var Tesseract = window.Tesseract;
-const useStyles = makeStyles((theme) => ({
-  stepper: {
-    padding: theme.spacing(3, 0, 5),
-  },
-  stepContent: {
-    padding: theme.spacing(2),
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
-}));
 const UploadImage = (props) => {
   const [processing, setProcessing] = useState(false);
   const handleChangeFile = (event) => {
@@ -77,6 +60,9 @@ const UploadImage = (props) => {
           Upload Image
           <input type="file" style={{ display: "none" }} />
         </Button>
+      </Box>
+      <Box display="flex" justifyContent="flex-end">
+        <Button onClick= {() => props.handleDialogClose(false)} variant="contained">Cancel</Button> 
       </Box>
     </Fragment>
   );

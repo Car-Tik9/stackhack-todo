@@ -135,7 +135,7 @@ const TodoCard = (props) => {
         </Card>
       ))}
       <Box display="flex" justifyContent="flex-end">
-        <Button variant="default" color="primary">
+        <Button style={{marginRight:8}} variant="contained" >
           Back
         </Button>
         <Button onClick={addTodos} variant="contained" color="primary">

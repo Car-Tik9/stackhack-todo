@@ -338,7 +338,7 @@ function Dashboard() {
           filteredTodos={filteredTodos}
         />
       ) : (
-        <EmptyData icon ={AddIcon}message="Create your first Todo" />
+        <EmptyData height={500} icon ={AddIcon}message="Create your first Todo" />
       )}
     </div>
   );

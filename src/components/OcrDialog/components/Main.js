@@ -31,6 +31,7 @@ const Main = (props) => {
             handleNext={handleNext}
             setTodos={setTodos}
             setConfidence={setConfidence}
+            handleDialogClose={props.handleDialogClose}
           />
         );
       case 1:
@@ -44,11 +45,16 @@ const Main = (props) => {
         );
       case 2:{
         return (
-          <Summary/>
+          <Summary handleNext={handleNext} handleDialogClose={props.handleDialogClose}/>
         )
       }
       default:
-        return <UploadImage />;
+        return <UploadImage
+        handleNext={handleNext}
+        setTodos={setTodos}
+        setConfidence={setConfidence}
+        handleDialogClose={props.handleDialogClose}
+      />;
     }
   };
   const handleNext = () => {
