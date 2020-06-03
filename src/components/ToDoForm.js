@@ -34,7 +34,7 @@ const ToDoForm = (props) => {
     isCompleted: false,
     chipId : 0
   };
-  console.log(props);
+  
   const classes = useStyles();
   const todoState = props.isEditing ? props.todo : initialToDoState;
   const [todo, setTodo] = useState(todoState);
@@ -42,7 +42,6 @@ const ToDoForm = (props) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log({name,value})
     setTodo({
       ...todo,
       [name]: value,
@@ -51,7 +50,6 @@ const ToDoForm = (props) => {
 
   const handleRadioGroupChange = (e) => {
     const { name, value } = e.target;
-    console.log({name,value})
     setTodo({
       ...todo,
       [name]: parseInt(value),
@@ -144,7 +142,7 @@ const ToDoForm = (props) => {
               inputVariant="outlined"
               id="date"
               format="MM/dd/yyyy"
-              label="Date of Journey"
+              label="Due date"
               size="small"
               value={todo.dueDate}
               disablePast
@@ -177,7 +175,7 @@ const ToDoForm = (props) => {
         <Grid item xs={12}>
           <Box display="flex" flexDirection="row-reverse">
             <Button type="submit" variant="contained" color="primary">
-              {props.isEditing ? "Edit Todo" : "Add Todo"}
+              {props.isEditing ? "Update Todo" : "Add Todo"}
             </Button>
             <Button
               onClick={handleDialogClose}

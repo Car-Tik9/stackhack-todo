@@ -93,7 +93,7 @@ class SignIn extends React.Component {
           square
         >
           <div className={classes.paper}>
-            <Typography component="h1" variant="h5" align="left">
+            <Typography component="h1" variant="h3" align="left">
               Sign in
             </Typography>
             <ValidatorForm

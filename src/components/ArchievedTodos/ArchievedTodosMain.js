@@ -4,6 +4,7 @@ import TodoApi from "../../api/TodoApi";
 import ArchievedTodoList from "./ArchievedTodoList";
 import { Typography } from "@material-ui/core";
 import EmptyData from "../EmptyData";
+import HighLighOff from "@material-ui/icons/HighlightOffRounded";
 
 const ArchievedTodosMain = () => {
   const user = useContext(userContext);
@@ -35,16 +36,19 @@ const ArchievedTodosMain = () => {
   return (
     <div style={{ padding: 16 }}>
       <Typography variant="h5" component="h1">
-            Archieved Todos
+        Archieved Todos
       </Typography>
       {todos.length > 0 ? (
-        
-          <ArchievedTodoList
-            changeCompleted={changeCompleted}
-            todos={todos}
-          ></ArchievedTodoList>
+        <ArchievedTodoList
+          changeCompleted={changeCompleted}
+          todos={todos}
+        ></ArchievedTodoList>
       ) : (
-        <EmptyData message='No Archieved todos '/>
+        <EmptyData
+          height={500}
+          icon={HighLighOff}
+          message="No Archieved todos "
+        />
       )}
     </div>
   );
