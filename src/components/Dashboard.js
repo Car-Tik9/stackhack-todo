@@ -48,6 +48,11 @@ function Dashboard() {
   const [sortType, setSortType] = useState();
   const [search, setSearch] = useState(null);
 
+  const [filteredTodos, setFilteredTodos] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [filterLabel, setFilterLabel] = useState([]);
+  const [filterValue, setFilterValue] = useState([]);
+
   useEffect(() => {
     TodoApi.get(`/todo/getTodos/${user.email}`)
       .then((res) => {
@@ -63,6 +68,7 @@ function Dashboard() {
  
   const handleSortCllck = (event) => {
     setSortAnchorEl(event.currentTarget);
+    clearFilters();
   } 
 
   const handleFilterCllck = (event) => {
@@ -71,7 +77,6 @@ function Dashboard() {
 
   const hanndleMenuClose = () => {
     setSortAnchorEl(null);
-    setFiltersAnchorEl(null);
   }
 
   const handleMenuItemclick = (sortType) => {
@@ -187,13 +192,48 @@ function Dashboard() {
   useEffect(() => {
     const sortTodos = (sortType) => {
       const sortedTodos = [...todos].sort(function (a, b) {
-        return b[sortType] - a[sortType];
+        return (sortType === 'dueDate') 
+          ? new Date(b[sortType]).getTime() - new Date(a[sortType]).getTime()
+          : b[sortType] - a[sortType];
       });
       setTodos(sortedTodos);
     };
 
     sortTodos(sortType);
   }, [sortType]);
+
+  const filterMethod = (label, value) => {    
+    setFiltersAnchorEl(null);
+    setIsFiltered(true);
+    setFilterLabel(label);
+    setFilterValue(value);
+  }
+
+  const clearFilters = () => {    
+    setFiltersAnchorEl(null);
+    setIsFiltered(false);
+    setFilterLabel([]);
+    setFilterValue([]);
+  }
+
+  useEffect(() => {
+    const filterTodos = (filterLabel, filterValue) => {
+
+      console.log('FilterLabel: ' + filterLabel);
+      console.log('FilterValue: ' + filterValue);      
+
+      const filteredTodos = [...todos].filter((todo) => {
+        return todo[filterLabel] === filterValue
+      });
+
+      setFilteredTodos(filteredTodos);
+
+      console.log(filteredTodos);
+      
+    }
+    filterTodos(filterLabel, filterValue);
+
+  }, [filterValue]);
 
   const classes = useStyles();
 
@@ -226,7 +266,6 @@ function Dashboard() {
             label="Search Your Todo"
             onChange={ (e) => searchTodo(e)}
             size="small"
-            autoFocus
             InputProps={{
               endAdornment: (
                 <InputAdornment>
@@ -250,8 +289,8 @@ function Dashboard() {
             onClose={hanndleMenuClose}
             elevation={1}
           >
-            <MenuItem onClick={() => { handleMenuItemclick("priority"); }}>Priority</MenuItem>
-            <MenuItem onClick={() => { handleMenuItemclick("dueDate");}}>Due date</MenuItem>
+            <MenuItem onClick={() => {handleMenuItemclick("priority");}}>Priority</MenuItem>
+            <MenuItem onClick={() => {handleMenuItemclick("dueDate");}}>Due date</MenuItem>
             <MenuItem onClick={() => {handleMenuItemclick("status");}}>Status</MenuItem>
           </Menu>
           {/* END: SORT BUTTON */}
@@ -267,9 +306,14 @@ function Dashboard() {
             onClose={hanndleMenuClose}
             elevation={1}
           >
-            <MenuItem onClick={() => { handleMenuItemclick("priority"); }}>Filter 1</MenuItem>
-            <MenuItem onClick={() => { handleMenuItemclick("dueDate"); }}>Filter 2</MenuItem>
-            <MenuItem onClick={() => { handleMenuItemclick("status"); }}>Filter 3</MenuItem>
+            <MenuItem disabled={true}>Priority</MenuItem>
+            <MenuItem onClick={() => { filterMethod('priority', 3); }}>High</MenuItem>
+            <MenuItem onClick={() => { filterMethod('priority', 2); }}>Medium</MenuItem>
+            <MenuItem onClick={() => { filterMethod('priority', 1); }}>Low</MenuItem>
+            <MenuItem disabled={true}>Status</MenuItem>
+            <MenuItem onClick={() => { filterMethod('status', 1); }}>New</MenuItem>
+            <MenuItem onClick={() => { filterMethod('status', 2); }}>In-progress</MenuItem>
+            <MenuItem onClick={() => { clearFilters(); }}>Clear Filters</MenuItem>
           </Menu>
           {/* END: FILTERS */}
         </CardContent>
@@ -288,6 +332,8 @@ function Dashboard() {
           changeCompleted={changeCompleted}
           changeStatus={changeStatus}
           search={search}
+          isFiltered={isFiltered}
+          filteredTodos={filteredTodos}
         />
       ) : (
         <EmptyData icon ={AddIcon}message="Create your first Todo" />

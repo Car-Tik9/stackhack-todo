@@ -95,12 +95,13 @@ const ToDoList = (props) => {
   const classes = useStyles();
 
   return (
+        
     <Card>
       <CardHeader
         disableTypography={true}
         title={
-          <Typography variant="h5" component="div">
-            Todo
+          <Typography variant="h3" component="div">
+            Todos
           </Typography>
         }
         action={
@@ -146,7 +147,8 @@ const ToDoList = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.todos.filter((todo)=>{
+            {
+              (!props.isFiltered ? props.todos : props.filteredTodos).filter((todo)=>{
               if(props.search == null)
                 return todo
               else if(todo.title.toLowerCase().includes(props.search.toLowerCase()) || todo.description.toLowerCase().includes(props.search.toLowerCase())){
