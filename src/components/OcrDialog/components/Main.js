@@ -1,12 +1,9 @@
 import React, { useState, Fragment } from "react";
-import { Stepper, Step, StepLabel, Button, Box } from "@material-ui/core";
+import { Stepper, Step, StepLabel } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import UploadImage from "./UploadImage";
 import TodoCard from "./TodoCards";
 import Summary from "./Summary";
-
-
-
 
 const useStyles = makeStyles((theme) => ({
   stepper: {

@@ -17,7 +17,7 @@ import TodoSnackBar from "./snackbar/TodoSnackBar";
 //Custom Components
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
-
+import PageLoader from "../utils/PageLoader";
 
 const useStyles = makeStyles((theme) => ({
   buttonConatainer: {
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 function Dashboard() {
   const user = useContext(userContext);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [todos, setTodos] = useState([]);
   const [isOpenDlg, setisOpenDlg] = useState(false);
   const [currentTodo, setCurrentTodo] = useState();
@@ -55,6 +56,7 @@ function Dashboard() {
     TodoApi.get(`/todo/getTodos/${user.email}`)
       .then((res) => {
         if (res.status === 200) {
+          setIsLoading(false);
           setTodos(res.data.todos);
           setReload(false);
         }
@@ -227,182 +229,193 @@ function Dashboard() {
     filterTodos(filterLabel, filterValue);
   }, [filterValue]);
 
+  const hadleClose = () => {
+    setOpenSnack(false);
+    setMessage('');
+  }
   const classes = useStyles();
 
-  return (
-    <div style={{ margin: 16 }}>
-      <TodoDialog
-        open={isOpenDlg}
-        updateTodo={updateTodo}
-        isEditing={editing}
-        addTodo={addTodo}
-        handleDialogClose={handleDialogClose}
-        todo={currentTodo}
-      />
-      <OcrDialog
-        open={openOcrDlg}
-        setReload={setReload}
-        handleDialogClose={setOpenOcrDlg}
-      />
-      <AddTodo addTodo={addTodo} />
-
-      <div className={classes.buttonConatainer}>
-        <Button
-              align="end"
-              variant="outlined"
-              className={classes.button}
+  const DashBoardContent = () => {
+    return (
+      <div style={{ margin: 16 }}>
+        <TodoDialog
+          open={isOpenDlg}
+          updateTodo={updateTodo}
+          isEditing={editing}
+          addTodo={addTodo}
+          handleDialogClose={handleDialogClose}
+          todo={currentTodo}
+        />
+        <OcrDialog
+          open={openOcrDlg}
+          setReload={setReload}
+          handleDialogClose={setOpenOcrDlg}
+        />
+        <AddTodo addTodo={addTodo} />
+  
+        <div className={classes.buttonConatainer}>
+          <Button
+                align="end"
+                variant="outlined"
+                className={classes.button}
+                onClick={() => {
+                  setisOpenDlg(true);
+                }}
+                size="small"
+                color="primary"
+                startIcon={<AddIcon />}
+              >
+                Add Todo
+              </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => setOpenOcrDlg(true)}
+            className={classes.button}
+          >
+            Open OCR Dialog
+          </Button>
+          <Button
+            onClick={() => {history.push('/dashboard')}}
+            variant="outlined"
+            size="small"
+            className={classes.button}
+          >
+            View Archieved
+          </Button>
+          {/* END: SEARCH */}
+          {/* START: SORT BUTTON */}
+          <Button
+            className={classes.button}
+            variant="outlined"
+            size="small"
+            startIcon={<SortIcon />}
+            onClick={handleSortCllck}
+          >
+            Sort
+          </Button>
+          <Menu
+            id="sort-todo"
+            anchorEl={sortAnchorEl}
+            keepMounted
+            open={Boolean(sortAnchorEl)}
+            onClose={hanndleMenuClose}
+            elevation={1}
+          >
+            <MenuItem
               onClick={() => {
-                setisOpenDlg(true);
+                handleMenuItemclick("priority");
               }}
-              size="small"
-              color="primary"
-              startIcon={<AddIcon />}
             >
-              Add Todo
-            </Button>
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => setOpenOcrDlg(true)}
-          className={classes.button}
-        >
-          Open OCR Dialog
-        </Button>
-        <Button
-          onClick={() => {history.push('/view-archieved')}}
-          variant="outlined"
-          size="small"
-          className={classes.button}
-        >
-          View Archieved
-        </Button>
-        {/* END: SEARCH */}
-        {/* START: SORT BUTTON */}
-        <Button
-          className={classes.button}
-          variant="outlined"
-          size="small"
-          startIcon={<SortIcon />}
-          onClick={handleSortCllck}
-        >
-          Sort
-        </Button>
-        <Menu
-          id="sort-todo"
-          anchorEl={sortAnchorEl}
-          keepMounted
-          open={Boolean(sortAnchorEl)}
-          onClose={hanndleMenuClose}
-          elevation={1}
-        >
-          <MenuItem
-            onClick={() => {
-              handleMenuItemclick("priority");
-            }}
+              Priority
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleMenuItemclick("dueDate");
+              }}
+            >
+              Due date
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleMenuItemclick("status");
+              }}
+            >
+              Status
+            </MenuItem>
+          </Menu>
+          
+          <Button
+            variant={isFiltered ? "contained" : "outlined"}
+            size="small"
+            startIcon={<FilterListIcon />}
+            onClick={handleFilterCllck}
+            className={classes.button}
           >
-            Priority
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleMenuItemclick("dueDate");
-            }}
+            Filters
+          </Button>
+          <Menu
+            id="filter-todo"
+            anchorEl={filtersAnchorEl}
+            keepMounted
+            open={Boolean(filtersAnchorEl)}
+            onClose={hanndleMenuClose}
+            elevation={1}
           >
-            Due date
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleMenuItemclick("status");
-            }}
-          >
-            Status
-          </MenuItem>
-        </Menu>
-        
-        <Button
-          variant={isFiltered ? "contained" : "outlined"}
-          size="small"
-          startIcon={<FilterListIcon />}
-          onClick={handleFilterCllck}
-          className={classes.button}
-        >
-          Filters
-        </Button>
-        <Menu
-          id="filter-todo"
-          anchorEl={filtersAnchorEl}
-          keepMounted
-          open={Boolean(filtersAnchorEl)}
-          onClose={hanndleMenuClose}
-          elevation={1}
-        >
-          <MenuItem disabled={true}>Priority</MenuItem>
-          <MenuItem
-            onClick={() => {
-              filterMethod("priority", 3);
-            }}
-          >
-            High
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              filterMethod("priority", 2);
-            }}
-          >
-            Medium
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              filterMethod("priority", 1);
-            }}
-          >
-            Low
-          </MenuItem>
-          <MenuItem disabled={true}>Status</MenuItem>
-          <MenuItem
-            onClick={() => {
-              filterMethod("status", 1);
-            }}
-          >
-            New
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              filterMethod("status", 2);
-            }}
-          >
-            In-progress
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              clearFilters();
-            }}
-          >
-            Clear Filters
-          </MenuItem>
-        </Menu>
+            <MenuItem disabled={true}>Priority</MenuItem>
+            <MenuItem
+              onClick={() => {
+                filterMethod("priority", 3);
+              }}
+            >
+              High
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                filterMethod("priority", 2);
+              }}
+            >
+              Medium
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                filterMethod("priority", 1);
+              }}
+            >
+              Low
+            </MenuItem>
+            <MenuItem disabled={true}>Status</MenuItem>
+            <MenuItem
+              onClick={() => {
+                filterMethod("status", 1);
+              }}
+            >
+              New
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                filterMethod("status", 2);
+              }}
+            >
+              In-progress
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                clearFilters();
+              }}
+            >
+              Clear Filters
+            </MenuItem>
+          </Menu>
+        </div>
+        <TodoSnackBar open={openSnack} message={message} handleClose={hadleClose}/>
+        {
+          todos.length > 0 ? (
+            <ToDoList
+              todos={todos}
+              deleteTodo={deleteTodo}
+              addTodo={setisOpenDlg}
+              editTodo={editTodo}
+              changePriority={changePriority}
+              changeCompleted={changeCompleted}
+              changeStatus={changeStatus}
+              isFiltered={isFiltered}
+              filteredTodos={filteredTodos}
+            />
+          ) : (
+            <EmptyData
+              height={500}
+              icon={AddIcon}
+              message="Create your first Todo"
+            />
+          )
+        }
       </div>
-      <TodoSnackBar open={openSnack} message={message} handleClose={handleClose}></TodoSnackBar>
-      {todos.length > 0 ? (
-        <ToDoList
-          todos={todos}
-          deleteTodo={deleteTodo}
-          addTodo={setisOpenDlg}
-          editTodo={editTodo}
-          changePriority={changePriority}
-          changeCompleted={changeCompleted}
-          changeStatus={changeStatus}
-          isFiltered={isFiltered}
-          filteredTodos={filteredTodos}
-        />
-        
-      ) : (
-        <EmptyData
-          height={500}
-          icon={AddIcon}
-          message="Create your first Todo"
-        />
-      )}
-    </div>
+    );
+  }
+
+  return (    
+    isLoading ? <PageLoader /> : <DashBoardContent />
   );
 }
 
