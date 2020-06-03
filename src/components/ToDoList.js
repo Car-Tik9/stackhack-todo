@@ -11,6 +11,7 @@ import {
   Typography,
   TextField,
   InputAdornment,
+  TableContainer,
 } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -39,14 +40,17 @@ import PriorityMenuItem from "./MenuItems/PriorityMenuItem";
 import StatusMenuItem from "./MenuItems/StatusMenuItem";
 
 const useStyles = makeStyles((theme) => ({
-  cardContentPadding: {
+  cardContent: {
     padding: 0,
+  },
+  tableContainer:{
+    maxHeight:600
   },
   tableHeader: {
     backgroundColor: "#fafafa",
     textTransform: "uppercase",
     fontSize: 12,
-    padding: 10,
+    padding: 12,
   },
   divider: {
     height: 2,
@@ -56,15 +60,6 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     marginRight: theme.spacing(2),
-  },
-  textDanger: {
-    color: "#f83245",
-  },
-  textInfo: {
-    color: "#11c5db",
-  },
-  textWarning: {
-    color: "#f4772e",
   },
 }));
 
@@ -107,8 +102,9 @@ const ToDoList = (props) => {
           </Fragment>
         }
       ></CardHeader>
-      <CardContent className={classes.cardContentPadding}>
-        <Table aria-label="simple table">
+      <CardContent className={classes.cardContent}>
+      <TableContainer className={classes.tableContainer}>
+        <Table stickyHeader aria-label="simple table">
           <TableHead className={classes.tableHeader}>
             <TableRow>
               <TableCell className={classes.headerCell}></TableCell>
@@ -146,34 +142,34 @@ const ToDoList = (props) => {
               })
               .map((todo, index) => (
                 <TableRow key={index}>
-                  <TableCell component="th" scope="todo">
+                  <TableCell className={classes.headerCell} component="th" scope="todo">
                     <Checkbox
                       checked={false}
                       inputProps={{ "aria-label": "primary checkbox" }}
                       onChange={() => props.changeCompleted(todo._id, true)}
                     />
                   </TableCell>
-                  <TableCell align="left">{todo.title}</TableCell>
-                  <TableCell align="left">
+                  <TableCell className={classes.headerCell} align="left">{todo.title}</TableCell>
+                  <TableCell  className={classes.headerCell} align="left">
                     {getChipLabel(todo.chipId)}
                   </TableCell>
-                  <TableCell align="left" aria-controls={index}>
+                  <TableCell align="left" className={classes.headerCell}>
                     <PriorityMenuItem
                       todo={todo}
                       handlePriorityChange={props.changePriority}
                     />
                   </TableCell>
-                  <TableCell align="left">
+                  <TableCell className={classes.headerCell} >
                     <StatusMenuItem
                       todo={todo}
                       handleStatusChange={props.changeStatus}
                     />
                   </TableCell>
-                  <TableCell align="left">
+                  <TableCell  className={classes.headerCell} align="left">
                     <Moment format="Do MMM YYYY">{todo.dueDate}</Moment>
                   </TableCell>
 
-                  <TableCell align="left">
+                  <TableCell  className={classes.headerCell} align="left">
                     <IconButton
                       size="small"
                       className={classes.icon}
@@ -192,6 +188,7 @@ const ToDoList = (props) => {
               ))}
           </TableBody>
         </Table>
+        </TableContainer>
       </CardContent>
       <CardActions>
         <Button align="end" variant="outlined" size="small" color="primary">
