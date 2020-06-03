@@ -3,6 +3,7 @@ import { Stepper, Step, StepLabel, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import UploadImage from "./UploadImage";
 import TodoCard from "./TodoCards";
+import Summary from "./Summary";
 
 
 
@@ -21,7 +22,7 @@ const Main = (props) => {
   const [step, setStep] = useState(0);
   const [todos, setTodos] = useState([]);
   const [confidence, setConfidence] = useState(0);
-  const steps = ["Upload Image", "Edit Tods", "Add Todos"];
+  const steps = ["Upload Image", "Edit Tods", "Summary"];
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -38,8 +39,14 @@ const Main = (props) => {
             todos={todos}
             confidence={confidence}
             handleNext={handleNext}
+            handleBack={handleBack}
           />
         );
+      case 2:{
+        return (
+          <Summary/>
+        )
+      }
       default:
         return <UploadImage />;
     }

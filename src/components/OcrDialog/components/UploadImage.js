@@ -22,9 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const UploadImage = (props) => {
-  const [uploads, setUploads] = useState([]);
   const [processing, setProcessing] = useState(false);
-
   const handleChangeFile = (event) => {
     if (event.target.files[0]) {
       var uploads = [];
@@ -33,13 +31,13 @@ const UploadImage = (props) => {
         let upload = event.target.files[key];
         uploads.push(URL.createObjectURL(upload));
       }
-      setUploads(uploads);
+      generateText(uploads);
     } else {
-      setUploads([]);
+      return;
     }
   };
 
-  const generateText = () => {
+  const generateText = (uploads) => {
     return new Promise((resolve, reject) => {
       setProcessing(true);
       for (var i = 0; i < uploads.length; i++) {
@@ -56,30 +54,19 @@ const UploadImage = (props) => {
             let arrayOfLines = text.match(/[^\r\n]+/g);
             props.setConfidence(parseInt(confidence));
             props.setTodos(arrayOfLines);
+            setProcessing(false);
+            props.handleNext();
             resolve(true);
           });
       }
     });
   };
-
-  const handleNextClick = () => {
-    generateText().then(
-      (result) => {
-        setProcessing(false);
-        props.handleNext();
-      },
-      (err) => {
-        alert(err);
-      }
-    );
-  }
-  const classes = useStyles();
   return (
     <Fragment>
-       <Box display="flex" justifyContent="center">
+      <Box display="flex" justifyContent="center">
         <BeatLoader color="#6200EE" loading={processing} />
       </Box>
-      <UsageDisplay/>
+      <UsageDisplay />
       <Box display="flex" justifyContent="center" style={{ margin: 16 }}>
         <Button
           color="primary"
@@ -91,16 +78,6 @@ const UploadImage = (props) => {
           <input type="file" style={{ display: "none" }} />
         </Button>
       </Box>
-      <div className={classes.buttons}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleNextClick}
-          className={classes.button}
-        >
-          Next
-        </Button>
-      </div>
     </Fragment>
   );
 };

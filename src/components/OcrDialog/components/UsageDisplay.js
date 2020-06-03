@@ -27,7 +27,7 @@ const UsageDisplay = () => {
   const classes = useStyles();
   return (
     <Fragment>
-    <Typography color="secondary" align="center" className={classes.headerTitle} variant="h5">Tadaaa...!! Upload your screenshots and convert them into todos</Typography>
+    <Typography color="secondary" align="center" className={classes.headerTitle} variant="h5">Tadaaa...!! Upload your Images and convert them into todos</Typography>
     <Box display="flex" justifyContent="space-around" alignItems="center">
       <div className={classes.imageConatiner}>
         <img
