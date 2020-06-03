@@ -6,7 +6,7 @@ const OcrDialog = (props) => {
     return (
         <Dialog maxWidth="md" fullWidth={true} open={props.open}>
             <DialogContent>
-                <Main handleDialogClose={props.handleDialogClose}/>
+                <Main setReload={props.setReload} handleDialogClose={props.handleDialogClose}/>
             </DialogContent>
         </Dialog>
     )

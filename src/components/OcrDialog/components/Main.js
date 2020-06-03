@@ -45,7 +45,7 @@ const Main = (props) => {
         );
       case 2:{
         return (
-          <Summary handleNext={handleNext} handleDialogClose={props.handleDialogClose}/>
+          <Summary handleNext={handleNext} setReload={props.setReload} handleDialogClose={props.handleDialogClose}/>
         )
       }
       default:

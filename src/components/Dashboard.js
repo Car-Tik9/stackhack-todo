@@ -47,23 +47,24 @@ function Dashboard() {
   const [filtersAnchorEl, setFiltersAnchorEl] = useState(null);
   const [sortType, setSortType] = useState();
   const [search, setSearch] = useState(null);
-
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [filterLabel, setFilterLabel] = useState([]);
   const [filterValue, setFilterValue] = useState([]);
+  const [reload,setReload] = useState(false);
 
   useEffect(() => {
     TodoApi.get(`/todo/getTodos/${user.email}`)
       .then((res) => {
         if (res.status === 200) {
           setTodos(res.data.todos);
+          setReload(false)
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [reload]);
 
  
   const handleSortCllck = (event) => {
@@ -254,7 +255,7 @@ function Dashboard() {
       >
         Open OCR Dialog
       </Button>
-      <OcrDialog open={openOcrDlg} handleDialogClose={setOpenOcrDlg} />
+      <OcrDialog open={openOcrDlg} setReload={setReload} handleDialogClose={setOpenOcrDlg} />
       <AddTodo addTodo={addTodo} />
 
       {/* START: Todo Controls */}

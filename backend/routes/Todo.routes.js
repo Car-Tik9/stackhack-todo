@@ -14,7 +14,7 @@ router.post('/addTodo',(req,res) => {
 
 router.post('/addBulkTodos',(req,res) => {
     Todo.insertMany(req.body).then( todos => {
-        res.status(200).json({'message':'todo deleted successfully'})
+        res.status(200).json({'message':'todo deleted successfully',todos})
     }).catch(err => {
         console.log(err)
         res.status(422).json(`error:${err.message}`);

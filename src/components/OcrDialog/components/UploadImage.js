@@ -1,6 +1,6 @@
 import { Box, Button } from "@material-ui/core";
 import React, { Fragment, useState } from "react";
-import BeatLoader from "react-spinners/BeatLoader";
+import PropagateLoader from "react-spinners/PropagateLoader";
 import UsageDisplay from "./UsageDisplay";
 
 var Tesseract = window.Tesseract;
@@ -46,8 +46,8 @@ const UploadImage = (props) => {
   };
   return (
     <Fragment>
-      <Box display="flex" justifyContent="center">
-        <BeatLoader color="#6200EE" loading={processing} />
+      <Box display="flex" justifyContent="center" marginBottom="24px">
+        <PropagateLoader color="#6200EE" loading={processing} />
       </Box>
       <UsageDisplay />
       <Box display="flex" justifyContent="center" style={{ margin: 16 }}>

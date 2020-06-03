@@ -7,7 +7,7 @@ import history from "../../../utils/history";
 const Summary = (props) => {
   const handleGoToDashBoardClick = () => {
     props.handleDialogClose(false);
-    history.push("/dashboard");
+    props.setReload(true);
   };
   return (
     <Fragment>
