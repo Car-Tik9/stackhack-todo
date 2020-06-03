@@ -20,22 +20,16 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/styles";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
 import SearchIcon from "@material-ui/icons/Search";
+import Tooltip from '@material-ui/core/Tooltip';
 
 import history from "../utils/history";
 //Thirdparty packages
 import Moment from "react-moment";
 
-import {
-  getPriorityButton,
-  getStatusButton,
-  getChipLabel,
-} from "../utils/todoUtils";
+import { getChipLabel } from "../utils/todoUtils";
 import PriorityMenuItem from "./MenuItems/PriorityMenuItem";
 import StatusMenuItem from "./MenuItems/StatusMenuItem";
 
@@ -143,11 +137,13 @@ const ToDoList = (props) => {
               .map((todo, index) => (
                 <TableRow key={index}>
                   <TableCell className={classes.headerCell} component="th" scope="todo">
-                    <Checkbox
-                      checked={false}
-                      inputProps={{ "aria-label": "primary checkbox" }}
-                      onChange={() => props.changeCompleted(todo._id, true)}
-                    />
+                    <Tooltip title="Mark as Completed" arrow>
+                      <Checkbox
+                        checked={false}
+                        inputProps={{ "aria-label": "primary checkbox" }}
+                        onChange={() => props.changeCompleted(todo._id, true)}
+                      />
+                    </Tooltip>
                   </TableCell>
                   <TableCell className={classes.headerCell} align="left">{todo.title}</TableCell>
                   <TableCell  className={classes.headerCell} align="left">

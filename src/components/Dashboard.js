@@ -1,12 +1,9 @@
 //Material Components
-import { Button, IconButton } from "@material-ui/core";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import { Button } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/AddCircle";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import SearchIcon from "@material-ui/icons/Search";
 import SortIcon from "@material-ui/icons/Sort";
 import { makeStyles } from "@material-ui/styles";
 import React, { useContext, useEffect, useState } from "react";
@@ -15,6 +12,7 @@ import { userContext } from "../utils/userContext";
 import AddTodo from "./AddTodo";
 import EmptyData from "./EmptyData";
 import OcrDialog from "./OcrDialog/OcrDialog";
+
 //Custom Components
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
@@ -39,7 +37,7 @@ function Dashboard() {
   const [currentTodo, setCurrentTodo] = useState();
   const [editing, setEditing] = useState(false);
   const [openOcrDlg, setOpenOcrDlg] = useState(false);
-  const [sortAnchorEl, setSortAnchorEl] = React.useState(null);
+  const [sortAnchorEl, setSortAnchorEl] = useState(null);
   const [filtersAnchorEl, setFiltersAnchorEl] = useState(null);
   const [sortType, setSortType] = useState();
   
@@ -111,7 +109,6 @@ function Dashboard() {
   };
 
   const changePriority = (_id, priority) => {
-    // menuItemClick(_id);
     TodoApi.post("/todo/updatePriority", { _id, priority })
       .then((res) => {
         if (res.status === 200) {
@@ -209,16 +206,10 @@ function Dashboard() {
 
   useEffect(() => {
     const filterTodos = (filterLabel, filterValue) => {
-      console.log("FilterLabel: " + filterLabel);
-      console.log("FilterValue: " + filterValue);
-
       const filteredTodos = [...todos].filter((todo) => {
         return todo[filterLabel] === filterValue;
       });
-
       setFilteredTodos(filteredTodos);
-
-      console.log(filteredTodos);
     };
     filterTodos(filterLabel, filterValue);
   }, [filterValue]);
