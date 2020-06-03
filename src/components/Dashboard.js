@@ -229,6 +229,10 @@ function Dashboard() {
     filterTodos(filterLabel, filterValue);
   }, [filterValue]);
 
+  const hadleClose = () => {
+    setOpenSnack(false);
+    setMessage('');
+  }
   const classes = useStyles();
 
   const DashBoardContent = () => {
@@ -384,6 +388,7 @@ function Dashboard() {
             </MenuItem>
           </Menu>
         </div>
+        <TodoSnackBar open={openSnack} message={message} handleClose={hadleClose}/>
         {
           todos.length > 0 ? (
             <ToDoList
