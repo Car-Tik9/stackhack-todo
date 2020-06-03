@@ -17,6 +17,7 @@ import OcrDialog from "./OcrDialog/OcrDialog";
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
 import history from "../utils/history";
+import TodoSnackBar from "./snackbar/TodoSnackBar";
 
 const useStyles = makeStyles((theme) => ({
   buttonConatainer: {
@@ -41,12 +42,14 @@ function Dashboard() {
   const [sortAnchorEl, setSortAnchorEl] = useState(null);
   const [filtersAnchorEl, setFiltersAnchorEl] = useState(null);
   const [sortType, setSortType] = useState();
-  
+
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [filterLabel, setFilterLabel] = useState([]);
   const [filterValue, setFilterValue] = useState([]);
   const [reload, setReload] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [message,setMessage] = useState('');
 
   useEffect(() => {
     TodoApi.get(`/todo/getTodos/${user.email}`)
@@ -60,7 +63,10 @@ function Dashboard() {
         console.log(err);
       });
   }, [reload]);
-
+  const handleClose = () =>{
+    setOpenSnack(false);
+    setMessage('')
+  }
   const handleSortCllck = (event) => {
     setSortAnchorEl(event.currentTarget);
     clearFilters();
@@ -84,6 +90,8 @@ function Dashboard() {
       .then((res) => {
         if (res.status === 200) {
           setTodos([...todos, res.data.todo]);
+          setOpenSnack(true)
+          setMessage("Todo Added Successfully")
         }
       })
       .catch((err) => {
@@ -96,6 +104,8 @@ function Dashboard() {
       .then((res) => {
         if (res.status === 200) {
           setTodos(todos.filter((todo) => todo._id !== _id));
+          setOpenSnack(true)
+          setMessage("Todo Deleted Successfully")
         }
       })
       .catch((err) => {
@@ -153,6 +163,8 @@ function Dashboard() {
               todo._id === updatedTodo._id ? updatedTodo : todo
             )
           );
+          setOpenSnack(true)
+          setMessage("Todo Updated Successfully")
         }
       })
       .catch((err) => {
@@ -369,6 +381,7 @@ function Dashboard() {
           </MenuItem>
         </Menu>
       </div>
+      <TodoSnackBar open={openSnack} message={message} handleClose={handleClose}></TodoSnackBar>
       {todos.length > 0 ? (
         <ToDoList
           todos={todos}
@@ -381,6 +394,7 @@ function Dashboard() {
           isFiltered={isFiltered}
           filteredTodos={filteredTodos}
         />
+        
       ) : (
         <EmptyData
           height={500}
