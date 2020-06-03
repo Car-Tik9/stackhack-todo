@@ -295,7 +295,9 @@ function Dashboard() {
           </Menu>
           {/* END: SORT BUTTON */}
           {/* START: FILTERS */}
-          <Button variant="outlined" size="medium" startIcon={<FilterListIcon />} onClick={handleFilterCllck} >
+          <Button variant={isFiltered ? "contained" : "outlined"} size="medium" 
+            startIcon={<FilterListIcon />} 
+            onClick={handleFilterCllck} >
             Filters
           </Button>
           <Menu
