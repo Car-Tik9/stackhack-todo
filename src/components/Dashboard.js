@@ -16,6 +16,7 @@ import OcrDialog from "./OcrDialog/OcrDialog";
 //Custom Components
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
+import history from "../utils/history";
 
 const useStyles = makeStyles((theme) => ({
   buttonConatainer: {
@@ -255,6 +256,14 @@ function Dashboard() {
         >
           Open OCR Dialog
         </Button>
+        <Button
+          onClick={() => {history.push('/dashboard')}}
+          variant="outlined"
+          size="small"
+          className={classes.button}
+        >
+          View Archieved
+        </Button>
         {/* END: SEARCH */}
         {/* START: SORT BUTTON */}
         <Button
@@ -296,13 +305,13 @@ function Dashboard() {
             Status
           </MenuItem>
         </Menu>
-        {/* END: SORT BUTTON */}
-        {/* START: FILTERS */}
+        
         <Button
           variant={isFiltered ? "contained" : "outlined"}
           size="small"
           startIcon={<FilterListIcon />}
           onClick={handleFilterCllck}
+          className={classes.button}
         >
           Filters
         </Button>
@@ -359,9 +368,7 @@ function Dashboard() {
             Clear Filters
           </MenuItem>
         </Menu>
-        {/* END: FILTERS */}
       </div>
-      {/* END: Todo COntrols */}
       {todos.length > 0 ? (
         <ToDoList
           todos={todos}

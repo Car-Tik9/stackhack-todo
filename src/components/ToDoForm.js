@@ -142,7 +142,7 @@ const ToDoForm = (props) => {
               inputVariant="outlined"
               id="date"
               format="MM/dd/yyyy"
-              label="Date of Journey"
+              label="Due date"
               size="small"
               value={todo.dueDate}
               disablePast
@@ -175,7 +175,7 @@ const ToDoForm = (props) => {
         <Grid item xs={12}>
           <Box display="flex" flexDirection="row-reverse">
             <Button type="submit" variant="contained" color="primary">
-              {props.isEditing ? "Edit Todo" : "Add Todo"}
+              {props.isEditing ? "Update Todo" : "Add Todo"}
             </Button>
             <Button
               onClick={handleDialogClose}

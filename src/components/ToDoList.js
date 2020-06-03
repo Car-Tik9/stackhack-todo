@@ -1,31 +1,20 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment, useState } from "react";
+
 
 //Material Components
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  IconButton,
-  Typography,
-  TextField,
-  InputAdornment,
-  TableContainer,
-} from "@material-ui/core";
+import { Card, CardContent, CardHeader, IconButton, InputAdornment, TableContainer, TextField, Typography } from "@material-ui/core";
+import Checkbox from "@material-ui/core/Checkbox";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/styles";
-import Checkbox from "@material-ui/core/Checkbox";
 import SearchIcon from "@material-ui/icons/Search";
 import Tooltip from '@material-ui/core/Tooltip';
+import EditIcon from "@material-ui/icons/Edit";
 
-import history from "../utils/history";
 //Thirdparty packages
 import Moment from "react-moment";
 
@@ -62,9 +51,6 @@ const ToDoList = (props) => {
   const searchTodo = (event) => {
     let keyword = event.target.value;
     setSearch(keyword);
-  };
-  const handleArchievedClick = () => {
-    history.push("/view-archieved");
   };
   const classes = useStyles();
 
@@ -186,20 +172,6 @@ const ToDoList = (props) => {
         </Table>
         </TableContainer>
       </CardContent>
-      <CardActions>
-        <Button align="end" variant="outlined" size="small" color="primary">
-          View All
-        </Button>
-        <Button
-          onClick={handleArchievedClick}
-          align="end"
-          variant="outlined"
-          size="small"
-          color="primary"
-        >
-          View Archieved
-        </Button>
-      </CardActions>
     </Card>
   );
 };
