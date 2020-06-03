@@ -1,6 +1,7 @@
 import { Button, Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
+import TodoSnackBar from "./snackbar/TodoSnackBar";
 
 const useStyles = makeStyles((theme) => ({
   addTodoContainer: {
@@ -22,7 +23,6 @@ const AddTodo = (props) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setTodo({
       ...todo,
       [name]: value,
@@ -32,17 +32,23 @@ const AddTodo = (props) => {
   const handleAddClick = () =>{
       props.addTodo(todo);
       setTodo(initialToDoState)
+      setOpen(true)
   }
 
   const handleKeyDown = (event) => {
     if (event.which === 13 || event.keyCode === 13) {
         props.addTodo(todo);
         setTodo(initialToDoState)
+        setOpen(true)
     }
   }
 
+  const handleClose =() => {
+    setOpen(false)
+  }
   const classes = useStyles();
   const [todo, setTodo] = useState(initialToDoState);
+  const [open,setOpen] = useState(false)
   return (
     <div className={classes.addTodoContainer}>
       <Grid container spacing={2}>
@@ -55,7 +61,10 @@ const AddTodo = (props) => {
           </Button>
         </Grid>
       </Grid>
+      <TodoSnackBar message="Todo Addded Successfully" handleClose={handleClose} open={open}/>
     </div>
   );
 };
-export default AddTodo;
+
+export default AddTodo
+
