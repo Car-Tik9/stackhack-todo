@@ -104,6 +104,22 @@ const TodoCard = (props) => {
           icon={MoodBad}
           message="We Could not process Uploaded Image"
         />
+        <Typography variant="h6" align="center" component="h3">
+          Please Upload Another Image with proper text and try again..!!
+          </Typography>
+        <Box
+        className={classes.buttonContainer}
+        display="flex"
+        justifyContent="flex-end"
+      >
+        <Button
+          className={classes.button}
+          variant="contained"
+          onClick={props.handleBack}
+        >
+          Back
+        </Button>
+      </Box>
       </Fragment>
     );
   }
