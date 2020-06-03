@@ -4,6 +4,7 @@ import TodoApi from "../../api/TodoApi";
 import ArchievedTodoList from "./ArchievedTodoList";
 import { Typography } from "@material-ui/core";
 import EmptyData from "../EmptyData";
+import HighLighOff from '@material-ui/icons/HighlightOffRounded'
 
 const ArchievedTodosMain = () => {
   const user = useContext(userContext);
@@ -44,7 +45,7 @@ const ArchievedTodosMain = () => {
             todos={todos}
           ></ArchievedTodoList>
       ) : (
-        <EmptyData message='No Archieved todos '/>
+        <EmptyData icon ={HighLighOff} message='No Archieved todos '/>
       )}
     </div>
   );

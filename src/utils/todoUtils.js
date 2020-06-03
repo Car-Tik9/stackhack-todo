@@ -8,6 +8,7 @@ export const getPriorityButton = (priority) => {
         <Button
           style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
           size="small"
+          variant="contained"
         >Low
         </Button>
       );
@@ -15,6 +16,7 @@ export const getPriorityButton = (priority) => {
       return (
         <Button
           size="small"
+          variant="contained"
           style={{ backgroundColor: "#98c14a", "cursor": "pointer", "color": "white"}}
         >Medium
         </Button>
@@ -24,12 +26,14 @@ export const getPriorityButton = (priority) => {
         <Button
           style={{ backgroundColor: "#dc143c", "cursor": "pointer", "color": "white"}}
           size="small"
+          variant="contained"
         >High
         </Button>
       );
     default:
       return (
         <Button
+        variant="contained"
           style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
           size="small"
         >Low
@@ -45,6 +49,7 @@ export const getStatusButton = (status) => {
         <Button
           style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
           size="small"
+          variant="contained"
         >New
         </Button>
       );
@@ -52,6 +57,7 @@ export const getStatusButton = (status) => {
       return (
         <Button
           size="small"
+          variant="contained"
           style={{ backgroundColor: "rgb(81, 133, 252)", "cursor": "pointer", "color": "white"}}
         >In progress
         </Button>
@@ -61,7 +67,7 @@ export const getStatusButton = (status) => {
         <Button
           style={{ backgroundColor: "rgb(77, 215, 120)", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="default"
+          variant="contained"
         >Completed
         </Button>
       );
@@ -70,7 +76,7 @@ export const getStatusButton = (status) => {
         <Button
           style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
           size="small"
-          variant="default"
+          variant="contained"
         >New
         </Button>
       );
