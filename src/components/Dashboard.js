@@ -15,6 +15,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { makeStyles } from "@material-ui/styles";
+import AddIcon from "@material-ui/icons/AddCircle"
 
 //Custom Components
 import TodoDialog from "./TodoDialog";
@@ -289,7 +290,7 @@ function Dashboard() {
           search={search}
         />
       ) : (
-        <EmptyData message="Create your first Todo" />
+        <EmptyData icon ={AddIcon}message="Create your first Todo" />
       )}
     </div>
   );

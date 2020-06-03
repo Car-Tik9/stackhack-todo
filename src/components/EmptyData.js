@@ -3,10 +3,11 @@ import { Box, Typography } from '@material-ui/core'
 import HighLighOff from '@material-ui/icons/HighlightOffRounded'
 
 const EmptyData = (props) => {
+    const {icon:Icon} = props;
     return(
         <Box display="flex" alignItems="center" justifyContent="center" height="500px" flexDirection='column'>
-            <HighLighOff style={{fontSize:150}}>
-            </HighLighOff>
+            <Icon style={{fontSize:150}}>
+            </Icon>
             <Typography variant="h5" component="h4">{props.message}</Typography>
         </Box>
     )
