@@ -8,16 +8,16 @@ import SortIcon from "@material-ui/icons/Sort";
 import { makeStyles } from "@material-ui/styles";
 import React, { useContext, useEffect, useState } from "react";
 import TodoApi from "../api/TodoApi";
+import history from "../utils/history";
 import { userContext } from "../utils/userContext";
 import AddTodo from "./AddTodo";
 import EmptyData from "./EmptyData";
 import OcrDialog from "./OcrDialog/OcrDialog";
-
+import TodoSnackBar from "./snackbar/TodoSnackBar";
 //Custom Components
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
-import history from "../utils/history";
-import TodoSnackBar from "./snackbar/TodoSnackBar";
+
 
 const useStyles = makeStyles((theme) => ({
   buttonConatainer: {
@@ -269,7 +269,7 @@ function Dashboard() {
           Open OCR Dialog
         </Button>
         <Button
-          onClick={() => {history.push('/dashboard')}}
+          onClick={() => {history.push('/view-archieved')}}
           variant="outlined"
           size="small"
           className={classes.button}
