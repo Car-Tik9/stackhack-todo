@@ -7,8 +7,9 @@ import { withStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import React, { forwardRef } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
-
-
+import { Cookies } from 'react-cookie';
+import history from "../../utils/history";
+const cookie = new Cookies();
 
 const styles = theme =>({
      root:{},
@@ -68,7 +69,10 @@ const CustomRouterLink = forwardRef((props, ref) => (
 
 class SidebarNav extends React.Component{
     
-
+    handleSignout = () => {
+        cookie.remove("token");
+        history.push({pathname:"/signin",message:"You have been logged out successfully"});
+      }
     render(){
         const { className , classes, ...rest } = this.props;
         return (
@@ -91,7 +95,7 @@ class SidebarNav extends React.Component{
                 <Hidden lgUp>
                     <ListItem className = {classes.item} 
                     disableGutters>
-                        <Button className ={ classes.button}>
+                        <Button onClick={this.handleSignout} className ={ classes.button}>
                             <div className ={classes.icon}>
                                 <InputIcon></InputIcon>
                             </div>
