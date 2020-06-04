@@ -18,6 +18,7 @@ import TodoSnackBar from "./snackbar/TodoSnackBar";
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
 import PageLoader from "../utils/PageLoader";
+import PopoverButton from "./PopoverButton";
 
 const useStyles = makeStyles((theme) => ({
   buttonConatainer: {
@@ -254,6 +255,7 @@ function Dashboard() {
         <AddTodo addTodo={addTodo} />
   
         <div className={classes.buttonConatainer}>
+          <PopoverButton handleOpen={setOpenOcrDlg}/>
           <Button
                 align="end"
                 variant="outlined"
@@ -267,14 +269,6 @@ function Dashboard() {
               >
                 Add Todo
               </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={() => setOpenOcrDlg(true)}
-            className={classes.button}
-          >
-            Open OCR Dialog
-          </Button>
           <Button
             onClick={() => {history.push('/dashboard')}}
             variant="outlined"

@@ -30,13 +30,15 @@ const AddTodo = (props) => {
   };
 
   const handleAddClick = () =>{
+    if(todo.title !==''){
       props.addTodo(todo);
       setTodo(initialToDoState)
       setOpen(true)
+    }
   }
 
   const handleKeyDown = (event) => {
-    if (event.which === 13 || event.keyCode === 13) {
+    if ((event.which === 13 || event.keyCode === 13) && todo.title!=='') {
         props.addTodo(todo);
         setTodo(initialToDoState)
         setOpen(true)
