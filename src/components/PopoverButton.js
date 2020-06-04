@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Tooltip} from '@material-ui/core'
+import { Button, Tooltip, Typography} from '@material-ui/core'
 
 
 const PopoverButton = (props) => {
     return (
-        <Tooltip  title="Import your todos hassle free" arrow >
+        <Tooltip  title={<Typography style={{color:'white',padding:8}}variant="body1" component="h1">Import your todos hassle free ...!</Typography>} arrow >
         <Button
             variant="contained"
             size="small"
