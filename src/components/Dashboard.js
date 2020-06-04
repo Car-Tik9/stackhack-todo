@@ -270,7 +270,7 @@ function Dashboard() {
                 Add Todo
               </Button>
           <Button
-            onClick={() => {history.push('/dashboard')}}
+            onClick={() => {history.push('/view-archieved')}}
             variant="outlined"
             size="small"
             className={classes.button}
