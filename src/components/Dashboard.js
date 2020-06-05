@@ -2,25 +2,27 @@
 import { Button } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import AddIcon from "@material-ui/icons/AddCircle";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import AddIcon from "@material-ui/icons/AddCircle";
 import SortIcon from "@material-ui/icons/Sort";
 import { makeStyles } from "@material-ui/styles";
 import React, { useContext, useEffect, useState } from "react";
 import TodoApi from "../api/TodoApi";
-import history from "../utils/history";
 import { userContext } from "../utils/userContext";
 import AddTodo from "./AddTodo";
 import EmptyData from "./EmptyData";
 import OcrDialog from "./OcrDialog/OcrDialog";
 import TodoSnackBar from "./snackbar/TodoSnackBar";
+
 //Custom Components
 import TodoDialog from "./TodoDialog";
 import ToDoList from "./ToDoList";
 import PageLoader from "../utils/PageLoader";
 import PopoverButton from "./PopoverButton";
+import AddTodoButton from './Dashboard/AddTodoButton';
+import ArchievedButton from './Dashboard/ArchievedButton';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   buttonConatainer: {
     display: "flex",
     height: 30,
@@ -256,28 +258,9 @@ function Dashboard() {
   
         <div className={classes.buttonConatainer}>
           <PopoverButton handleOpen={setOpenOcrDlg}/>
-          <Button
-                align="end"
-                variant="outlined"
-                className={classes.button}
-                onClick={() => {
-                  setisOpenDlg(true);
-                }}
-                size="small"
-                color="primary"
-                startIcon={<AddIcon />}
-              >
-                Add Todo
-              </Button>
-          <Button
-            onClick={() => {history.push('/view-archieved')}}
-            variant="outlined"
-            size="small"
-            className={classes.button}
-          >
-            View Archieved
-          </Button>
-          {/* END: SEARCH */}
+          <AddTodoButton setisOpenDlg={setisOpenDlg}/>
+          <ArchievedButton />
+
           {/* START: SORT BUTTON */}
           <Button
             className={classes.button}
