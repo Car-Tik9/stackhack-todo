@@ -28,7 +28,7 @@ const ArchievedTodoList = (props) => {
           <Grid container alignItems="center">
               <Grid item xs={1}>
                 <Tooltip title="Mark as Open" arrow>
-                  <Checkbox checked={false} onChange={() => props.changeCompleted(todo._id, false)}></Checkbox>
+                  <Checkbox onChange={() => props.changeCompleted(todo._id, false)}></Checkbox>
                 </Tooltip>
               </Grid>
               <Grid item xs={5}>

@@ -66,7 +66,11 @@ router.post('/updatePriority',(req,res) => {
 
 router.post('/updateCompleted',(req,res) => {
     const {_id,completed} = req.body;
-    Todo.findByIdAndUpdate({_id},{completed}).then( updatedTodo => {
+    let status = 1
+    if(completed){
+        status = 3
+    }
+    Todo.findByIdAndUpdate({_id},{completed,'status':status}).then( updatedTodo => {
         res.status(200).json({'message':'Todo updated suceesfully',updatedTodo})
     }).catch( err => {
         res.status(422).json(`error:${err.message}`);
