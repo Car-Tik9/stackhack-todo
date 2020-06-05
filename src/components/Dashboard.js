@@ -1,7 +1,7 @@
 //Material Components
-import AddIcon from "@material-ui/icons/AddCircle";
+import AddIcon from "@material-ui/icons/AddCircleOutlineRounded";
 import { makeStyles } from "@material-ui/styles";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, Fragment } from "react";
 import TodoApi from "../api/TodoApi";
 import { userContext } from "../utils/userContext";
 import AddTodo from "./AddTodo";
@@ -18,6 +18,7 @@ import AddTodoButton from './Dashboard/AddTodoButton';
 import ArchievedButton from './Dashboard/ArchievedButton';
 import Sort from './Dashboard/Sort';
 import Filters from './Dashboard/Filters';
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   buttonConatainer: {
@@ -234,10 +235,9 @@ function Dashboard() {
           ) : (
             <EmptyData
               height={500}
-              icon={AddIcon}
               message="Create your first Todo"
               setisOpenDlg={setisOpenDlg}
-            />
+            ><AddIcon style={{fontSize:150}}onClick={() => setisOpenDlg(true)}></AddIcon></EmptyData>
           )
         }
       </div>

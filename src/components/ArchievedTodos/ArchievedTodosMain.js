@@ -54,9 +54,8 @@ const ArchievedTodosMain = () => {
         ) : (
           <EmptyData
             height={500}
-            icon={HighLighOff}
             message="No Archieved todos "
-          />
+          ><HighLighOff style={{fontSize:150}}></HighLighOff></EmptyData>
         )}
       </div>
     );
