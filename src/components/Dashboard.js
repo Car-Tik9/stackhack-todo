@@ -4,7 +4,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import AddIcon from "@material-ui/icons/AddCircle";
-import SortIcon from "@material-ui/icons/Sort";
 import { makeStyles } from "@material-ui/styles";
 import React, { useContext, useEffect, useState } from "react";
 import TodoApi from "../api/TodoApi";
@@ -21,6 +20,7 @@ import PageLoader from "../utils/PageLoader";
 import PopoverButton from "./PopoverButton";
 import AddTodoButton from './Dashboard/AddTodoButton';
 import ArchievedButton from './Dashboard/ArchievedButton';
+import Sort from './Dashboard/Sort';
 
 const useStyles = makeStyles(() => ({
   buttonConatainer: {
@@ -43,7 +43,7 @@ function Dashboard() {
   const [currentTodo, setCurrentTodo] = useState();
   const [editing, setEditing] = useState(false);
   const [openOcrDlg, setOpenOcrDlg] = useState(false);
-  const [sortAnchorEl, setSortAnchorEl] = useState(null);
+  // const [sortAnchorEl, setSortAnchorEl] = useState(null);
   const [filtersAnchorEl, setFiltersAnchorEl] = useState(null);
   const [sortType, setSortType] = useState();
 
@@ -72,23 +72,23 @@ function Dashboard() {
     setOpenSnack(false);
     setMessage('')
   }
-  const handleSortCllck = (event) => {
-    setSortAnchorEl(event.currentTarget);
-    clearFilters();
-  };
+  // const handleSortCllck = (event) => {
+  //   setSortAnchorEl(event.currentTarget);
+  //   clearFilters();
+  // };
 
   const handleFilterCllck = (event) => {
     setFiltersAnchorEl(event.currentTarget);
   };
 
-  const hanndleMenuClose = () => {
-    setSortAnchorEl(null);
-  };
+  // const hanndleMenuClose = () => {
+  //   setSortAnchorEl(null);
+  // };
 
-  const handleMenuItemclick = (sortType) => {
-    hanndleMenuClose();
-    setSortType(sortType);
-  };
+  // const handleMenuItemclick = (sortType) => {
+  //   hanndleMenuClose();
+  //   setSortType(sortType);
+  // };
 
   const addTodo = (todo) => {
     TodoApi.post("/todo/addTodo", { ...todo, username: user.email })
@@ -254,24 +254,15 @@ function Dashboard() {
           setReload={setReload}
           handleDialogClose={setOpenOcrDlg}
         />
-        <AddTodo addTodo={addTodo} />
-  
+        <AddTodo addTodo={addTodo} />  
         <div className={classes.buttonConatainer}>
           <PopoverButton handleOpen={setOpenOcrDlg}/>
           <AddTodoButton setisOpenDlg={setisOpenDlg}/>
           <ArchievedButton />
 
           {/* START: SORT BUTTON */}
-          <Button
-            className={classes.button}
-            variant="outlined"
-            size="small"
-            startIcon={<SortIcon />}
-            onClick={handleSortCllck}
-          >
-            Sort
-          </Button>
-          <Menu
+          <Sort todos={todos} setTodos={setTodos} setSortType={setSortType} clearFilters={clearFilters}/>
+          {/* <Menu
             id="sort-todo"
             anchorEl={sortAnchorEl}
             keepMounted
@@ -300,7 +291,7 @@ function Dashboard() {
             >
               Status
             </MenuItem>
-          </Menu>
+          </Menu> */}
           
           <Button
             variant={isFiltered ? "contained" : "outlined"}
@@ -316,7 +307,7 @@ function Dashboard() {
             anchorEl={filtersAnchorEl}
             keepMounted
             open={Boolean(filtersAnchorEl)}
-            onClose={hanndleMenuClose}
+            // onClose={hanndleMenuClose}
             elevation={1}
           >
             <MenuItem disabled={true}>Priority</MenuItem>
