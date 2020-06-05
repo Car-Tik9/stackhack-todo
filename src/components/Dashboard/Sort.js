@@ -18,6 +18,7 @@ const Sort = (props) => {
 	const classes = useStyles();
 
 	const [sortAnchorEl, setSortAnchorEl] = useState(null);
+	const [sortType, setSortType] = useState();
 
 	const handleSortClick = (event) => {
 		setSortAnchorEl(event.currentTarget);
@@ -27,9 +28,19 @@ const Sort = (props) => {
 		setSortAnchorEl(null);
 	};
 
+	const sortTodos = (type) => {
+		const sortedTodos = [...(props.todos)].sort(function (a, b) {
+		  return type === "dueDate"
+			? new Date(b[type]).getTime() - new Date(a[type]).getTime()
+			: b[type] - a[type];
+		});
+		props.setTodos(sortedTodos);
+	};
+
 	const handleMenuItemclick = (sortType) => {
 		handleMenuClose();
-		props.setSortType(sortType);		
+		sortTodos(sortType);
+		setSortType(sortType);		
 		props.clearFilters();
 	};
 
