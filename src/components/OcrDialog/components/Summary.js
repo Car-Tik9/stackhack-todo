@@ -13,9 +13,8 @@ const Summary = (props) => {
     <Fragment>
       <EmptyData
         height={300}
-        icon={HappyIcon}
         message="Todos has been successfully added"
-      ></EmptyData>
+      ><HappyIcon style={{fontSize:150}}></HappyIcon></EmptyData>
       <Box display="flex" justifyContent="flex-end">
         <Button
           variant="contained"

@@ -1,20 +1,25 @@
 import React from "react";
-import { Button, Chip } from "@material-ui/core";
-import ShoppingIcon from '@material-ui/icons/ShoppingCart'
-import WorkIcon from '@material-ui/icons/Work'
-import HomeIcon from '@material-ui/icons/Home'
-import PersonalIcon from '@material-ui/icons/Face'
-import OtherIcon from '@material-ui/icons/More'
+import { Button, Chip, Typography, Tooltip } from "@material-ui/core";
+import ShoppingIcon from "@material-ui/icons/ShoppingCart";
+import WorkIcon from "@material-ui/icons/Work";
+import HomeIcon from "@material-ui/icons/Home";
+import PersonalIcon from "@material-ui/icons/Face";
+import OtherIcon from "@material-ui/icons/More";
 
 export const getPriorityButton = (priority) => {
   switch (priority) {
     case 1:
       return (
         <Button
-          style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
+          style={{
+            backgroundColor: "#7fd9ff",
+            cursor: "pointer",
+            color: "white",
+          }}
           size="small"
           variant="contained"
-        >Low
+        >
+          Low
         </Button>
       );
     case 2:
@@ -22,26 +27,41 @@ export const getPriorityButton = (priority) => {
         <Button
           size="small"
           variant="contained"
-          style={{ backgroundColor: "#98c14a", "cursor": "pointer", "color": "white"}}
-        >Medium
+          style={{
+            backgroundColor: "#98c14a",
+            cursor: "pointer",
+            color: "white",
+          }}
+        >
+          Medium
         </Button>
       );
     case 3:
       return (
         <Button
-          style={{ backgroundColor: "#dc143c", "cursor": "pointer", "color": "white"}}
+          style={{
+            backgroundColor: "#dc143c",
+            cursor: "pointer",
+            color: "white",
+          }}
           size="small"
           variant="contained"
-        >High
+        >
+          High
         </Button>
       );
     default:
       return (
         <Button
-        variant="contained"
-          style={{ backgroundColor: "#7fd9ff", "cursor": "pointer", "color": "white"}}
+          variant="contained"
+          style={{
+            backgroundColor: "#7fd9ff",
+            cursor: "pointer",
+            color: "white",
+          }}
           size="small"
-        >Low
+        >
+          Low
         </Button>
       );
   }
@@ -52,10 +72,15 @@ export const getStatusButton = (status) => {
     case 1:
       return (
         <Button
-          style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
+          style={{
+            backgroundColor: "rgb(252, 113, 80)",
+            cursor: "pointer",
+            color: "white",
+          }}
           size="small"
           variant="contained"
-        >New
+        >
+          New
         </Button>
       );
     case 2:
@@ -63,55 +88,99 @@ export const getStatusButton = (status) => {
         <Button
           size="small"
           variant="contained"
-          style={{ backgroundColor: "rgb(81, 133, 252)", "cursor": "pointer", "color": "white"}}
-        >In progress
+          style={{
+            backgroundColor: "rgb(81, 133, 252)",
+            cursor: "pointer",
+            color: "white",
+          }}
+        >
+          In progress
         </Button>
       );
     case 3:
       return (
         <Button
-          style={{ backgroundColor: "rgb(77, 215, 120)", "cursor": "pointer", "color": "white"}}
+          style={{
+            backgroundColor: "rgb(77, 215, 120)",
+            cursor: "pointer",
+            color: "white",
+          }}
           size="small"
           variant="contained"
-        >Completed
+        >
+          Completed
         </Button>
       );
     default:
       return (
         <Button
-          style={{ backgroundColor: "rgb(252, 113, 80)", "cursor": "pointer", "color": "white"}}
+          style={{
+            backgroundColor: "rgb(252, 113, 80)",
+            cursor: "pointer",
+            color: "white",
+          }}
           size="small"
           variant="contained"
-        >New
+        >
+          New
         </Button>
       );
   }
+};
+
+const ToolTipWrapper = (props) => {
+  return (
+    <Tooltip
+      title={
+        <Typography
+          style={{ color: "white", padding: 4 }}
+          variant="body1"
+          component="h1"
+        >
+          {props.title}
+        </Typography>
+      }
+      arrow
+    >
+      {props.children}
+    </Tooltip>
+  );
 };
 
 export const getChipLabel = (chipId) => {
   switch (chipId) {
     case 1:
       return (
-       <PersonalIcon/>
+        <ToolTipWrapper title="Personal">
+          <PersonalIcon />
+        </ToolTipWrapper>
       );
     case 2:
       return (
-        <ShoppingIcon/>
+        <ToolTipWrapper title="Shopping">
+          <ShoppingIcon />
+        </ToolTipWrapper>
       );
     case 3:
       return (
-        <HomeIcon/>
+        <ToolTipWrapper title="Home">
+          <HomeIcon />
+        </ToolTipWrapper>
       );
 
     case 4:
       return (
-        <WorkIcon/>
+        <ToolTipWrapper title="Work">
+          <WorkIcon />
+        </ToolTipWrapper>
       );
     case 5:
       return (
-         <OtherIcon/>
+        <ToolTipWrapper title="Other">
+          <OtherIcon />
+        </ToolTipWrapper>
       );
     default:
-      return null
+      return null;
   }
 };

@@ -101,9 +101,8 @@ const TodoCard = (props) => {
     return (
       <Fragment>
         <EmptyData
-          icon={MoodBad}
           message="We Could not process Uploaded Image"
-        />
+        ><MoodBad style={{fontSize:150}}></MoodBad></EmptyData>
         <Typography variant="h6" align="center" component="h3">
           Please Upload Another Image with proper text and try again..!!
           </Typography>

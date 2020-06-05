@@ -122,7 +122,6 @@ const ToDoList = (props) => {
                   <TableCell className={classes.headerCell} component="th" scope="todo">
                     <Tooltip title="Mark as Completed" arrow>
                       <Checkbox
-                        checked={false}
                         inputProps={{ "aria-label": "primary checkbox" }}
                         onChange={() => props.changeCompleted(todo._id, true)}
                       />
