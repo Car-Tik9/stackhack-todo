@@ -6,8 +6,7 @@ const EmptyData = (props) => {
     const {icon:Icon} = props;
     return(
         <Box display="flex" alignItems="center" justifyContent="center" height={props.height} flexDirection='column'>
-            <Icon style={{fontSize:150}}>
-            </Icon>
+            <Icon style={{fontSize:150, cursor: "pointer"}} onClick={() => { props.setisOpenDlg(true); }} />
             <Typography variant="h5" component="h4">{props.message}</Typography>
         </Box>
     )

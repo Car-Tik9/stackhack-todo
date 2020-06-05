@@ -193,6 +193,7 @@ function Dashboard() {
     setOpenSnack(false);
     setMessage('');
   }
+
   const classes = useStyles();
 
   const DashBoardContent = () => {
@@ -238,6 +239,7 @@ function Dashboard() {
               height={500}
               icon={AddIcon}
               message="Create your first Todo"
+              setisOpenDlg={setisOpenDlg}
             />
           )
         }
