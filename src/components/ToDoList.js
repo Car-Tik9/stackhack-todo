@@ -26,9 +26,6 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     padding: 0,
   },
-  tableContainer:{
-    maxHeight:600
-  },
   tableHeader: {
     backgroundColor: "#fafafa",
     textTransform: "uppercase",
